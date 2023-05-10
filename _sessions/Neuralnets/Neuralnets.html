@@ -1,0 +1,587 @@
+<!DOCTYPE html>
+<html lang="" xml:lang="">
+  <head>
+    <title>Neural networks</title>
+    <meta charset="utf-8" />
+    <meta name="author" content="Machine Learning with R   The R Bootcamp @ DHLab                  " />
+    <script src="libs/header-attrs/header-attrs.js"></script>
+    <link href="libs/remark-css/default.css" rel="stylesheet" />
+    <link rel="stylesheet" href="baselrbootcamp.css" type="text/css" />
+  </head>
+  <body>
+    <textarea id="source">
+class: center, middle, inverse, title-slide
+
+.title[
+# Neural networks
+]
+.author[
+### Machine Learning with R<br> <a href='https://therbootcamp.github.io'> The R Bootcamp @ DHLab </a> <br> <a href='https://therbootcamp.github.io/AML_2022DHLab/'> <i class='fas fa-clock' style='font-size:.9em;'></i> </a>  <a href='https://therbootcamp.github.io'> <i class='fas fa-home' style='font-size:.9em;' ></i> </a>  <a href='mailto:therbootcamp@gmail.com'> <i class='fas fa-envelope' style='font-size: .9em;'></i> </a>  <a href='https://www.linkedin.com/company/basel-r-bootcamp/'> <i class='fab fa-linkedin' style='font-size: .9em;'></i> </a>
+]
+.date[
+### September 2022
+]
+
+---
+
+
+layout: true
+
+&lt;div class="my-footer"&gt;
+  &lt;span style="text-align:center"&gt;
+    &lt;span&gt; 
+      &lt;img src="https://raw.githubusercontent.com/therbootcamp/therbootcamp.github.io/master/_sessions/_image/by-sa.png" height=14 style="vertical-align: middle"/&gt;
+    &lt;/span&gt;
+    &lt;a href="https://therbootcamp.github.io/"&gt;
+      &lt;span style="padding-left:82px"&gt; 
+        &lt;font color="#7E7E7E"&gt;
+          www.therbootcamp.com
+        &lt;/font&gt;
+      &lt;/span&gt;
+    &lt;/a&gt;
+    &lt;a href="https://therbootcamp.github.io/"&gt;
+      &lt;font color="#7E7E7E"&gt;
+      Machine Learning with R @ DHLab  | September 2022
+      &lt;/font&gt;
+    &lt;/a&gt;
+    &lt;/span&gt;
+  &lt;/div&gt; 
+
+---
+
+class: middle, center
+
+
+
+
+# What do you think?
+
+---
+
+# Back in the 50s and 60s
+
+
+&lt;div align="center"&gt;
+&lt;iframe width="800" height="450" src="https://www.youtube.com/embed/cNxadbrN_aI?rel=0" frameborder="0" allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture" allowfullscreen&gt;&lt;/iframe&gt;
+&lt;/div&gt;
+
+
+---
+
+# Perceptron
+
+.pull-left35[
+
+
+&lt;ul&gt;
+  &lt;li class="m1"&gt;&lt;span&gt;Developed by &lt;high&gt;Frank Rosenblatt&lt;/high&gt; in 1958.&lt;/span&gt;&lt;/li&gt;
+  &lt;li class="m2"&gt;&lt;span&gt;The first &lt;high&gt;feedforward neural network&lt;/high&gt;.&lt;/span&gt;&lt;/li&gt;
+  &lt;li class="m3"&gt;&lt;span&gt;Consists of...&lt;/span&gt;&lt;/li&gt;
+  &lt;ul&gt;
+    &lt;li&gt;&lt;span&gt;An &lt;high&gt;input layer&lt;/high&gt; of nodes.&lt;/span&gt;&lt;/li&gt;
+    &lt;li&gt;&lt;span&gt;A &lt;high&gt;bias&lt;/high&gt;.&lt;/span&gt;&lt;/li&gt;
+    &lt;li&gt;&lt;span&gt;&lt;high&gt;Weights&lt;/high&gt; projecting the inputs to a single output node.&lt;/span&gt;&lt;/li&gt;
+    &lt;li&gt;&lt;span&gt;A single &lt;high&gt;output neuron with a &lt;high&gt;step activation&lt;/high&gt; function.&lt;/span&gt;&lt;/li&gt;
+    &lt;li&gt;&lt;span&gt;A &lt;high&gt;loss&lt;/high&gt; function.&lt;/span&gt;&lt;/li&gt;
+    &lt;li&gt;&lt;span&gt;A rule for &lt;high&gt;updating&lt;/high&gt;.&lt;/span&gt;&lt;/li&gt;
+  &lt;/ul&gt;
+&lt;/ul&gt;
+
+
+]
+
+.pull-right6[
+
+&lt;p align = "right"&gt;
+&lt;img src="image/perceptron_1.png" height=380px&gt;&lt;br&gt;
+&lt;/p&gt;
+
+]
+
+
+---
+
+# Perceptron
+
+.pull-left35[
+
+
+&lt;ul&gt;
+  &lt;li class="m1"&gt;&lt;span&gt;Developed by &lt;high&gt;Frank Rosenblatt&lt;/high&gt; in 1958.&lt;/span&gt;&lt;/li&gt;
+  &lt;li class="m2"&gt;&lt;span&gt;The first &lt;high&gt;feedforward neural network&lt;/high&gt;.&lt;/span&gt;&lt;/li&gt;
+  &lt;li class="m3"&gt;&lt;span&gt;Consists of...&lt;/span&gt;&lt;/li&gt;
+  &lt;ul&gt;
+    &lt;li&gt;&lt;span&gt;An &lt;high&gt;input layer&lt;/high&gt; of nodes.&lt;/span&gt;&lt;/li&gt;
+    &lt;li&gt;&lt;span&gt;A &lt;high&gt;bias&lt;/high&gt;.&lt;/span&gt;&lt;/li&gt;
+    &lt;li&gt;&lt;span&gt;&lt;high&gt;Weights&lt;/high&gt; projecting the inputs to a single output node.&lt;/span&gt;&lt;/li&gt;
+    &lt;li&gt;&lt;span&gt;A single &lt;high&gt;output neuron with a &lt;high&gt;step activation&lt;/high&gt; function.&lt;/span&gt;&lt;/li&gt;
+    &lt;li&gt;&lt;span&gt;A &lt;high&gt;loss&lt;/high&gt; function.&lt;/span&gt;&lt;/li&gt;
+    &lt;li&gt;&lt;span&gt;A rule for &lt;high&gt;updating&lt;/high&gt;.&lt;/span&gt;&lt;/li&gt;
+  &lt;/ul&gt;
+&lt;/ul&gt;
+
+
+
+]
+
+.pull-right6[
+
+&lt;p align = "center"&gt;
+&lt;img src="image/rosenblatt_sm.png" height=400px&gt;&lt;br&gt;
+&lt;font style="font-size:10px"&gt;Rosenblatt with Perceptron, adapted from &lt;a href="https://www.nzz.ch/digital/ehre-fuer-die-deep-learning-mafia-ld.1472761"&gt;nzz.ch&lt;/a&gt;&lt;/font&gt;
+&lt;/p&gt;
+
+]
+
+---
+
+# Input
+
+.pull-left3[
+
+&lt;ul&gt;
+  &lt;li class="m1"&gt;&lt;span&gt;Inputs take information from features, implying typically &lt;high&gt;n(features) = n(inputs)&lt;/high&gt;.&lt;/span&gt;&lt;/li&gt;
+  &lt;li class="m2"&gt;&lt;span&gt;Typically a &lt;high&gt;bias&lt;/high&gt; is added as one extra input.&lt;/span&gt;&lt;/li&gt;
+  &lt;li class="m3"&gt;&lt;span&gt;Higher dimensional inputs are typically &lt;high&gt;flattened to 1D&lt;/high&gt;.&lt;/span&gt;&lt;/li&gt;
+  &lt;li class="m4"&gt;&lt;span&gt;Images are translated into &lt;high&gt;grey values&lt;/high&gt; or rgb.&lt;/span&gt;&lt;/li&gt;
+&lt;/ul&gt;
+
+]
+
+.pull-right6[
+
+&lt;p align = "right"&gt;
+&lt;img src="image/perceptron_2.png" height=380px&gt;&lt;br&gt;
+&lt;/p&gt;
+
+]
+
+---
+
+# Input
+
+.pull-left3[
+
+&lt;ul&gt;
+  &lt;li class="m1"&gt;&lt;span&gt;Inputs take information from features, implying typically &lt;high&gt;n(features) = n(inputs)&lt;/high&gt;.&lt;/span&gt;&lt;/li&gt;
+  &lt;li class="m2"&gt;&lt;span&gt;Typically a &lt;high&gt;bias&lt;/high&gt; is added as one extra input.&lt;/span&gt;&lt;/li&gt;
+  &lt;li class="m3"&gt;&lt;span&gt;Higher dimensional inputs are typically &lt;high&gt;flattened to 1D&lt;/high&gt;.&lt;/span&gt;&lt;/li&gt;
+  &lt;li class="m4"&gt;&lt;span&gt;Images are translated into &lt;high&gt;grey values&lt;/high&gt; or rgb.&lt;/span&gt;&lt;/li&gt;
+&lt;/ul&gt;
+
+]
+
+.pull-right6[
+
+&lt;p align = "right"&gt;
+&lt;img src="image/perceptron_3.png" height=380px&gt;&lt;br&gt;
+&lt;/p&gt;
+
+]
+
+---
+
+# Input
+
+.pull-left3[
+
+&lt;ul&gt;
+  &lt;li class="m1"&gt;&lt;span&gt;Inputs take information from features, implying typically &lt;high&gt;n(features) = n(inputs)&lt;/high&gt;.&lt;/span&gt;&lt;/li&gt;
+  &lt;li class="m2"&gt;&lt;span&gt;Typically a &lt;high&gt;bias&lt;/high&gt; is added as one extra input.&lt;/span&gt;&lt;/li&gt;
+  &lt;li class="m3"&gt;&lt;span&gt;Higher dimensional inputs are typically &lt;high&gt;flattened to 1D&lt;/high&gt;.&lt;/span&gt;&lt;/li&gt;
+  &lt;li class="m4"&gt;&lt;span&gt;Images are translated into &lt;high&gt;grey values&lt;/high&gt; or rgb.&lt;/span&gt;&lt;/li&gt;
+&lt;/ul&gt;
+
+]
+
+.pull-right6[
+
+&lt;p align = "right"&gt;
+&lt;img src="image/perceptron_4.png" height=380px&gt;&lt;br&gt;
+&lt;/p&gt;
+
+]
+
+---
+
+# Weights
+
+.pull-left3[
+
+&lt;ul&gt;
+  &lt;li class="m1"&gt;&lt;span&gt;Weights &lt;high&gt;project the input&lt;/high&gt; to the next/final layer.&lt;/span&gt;&lt;/li&gt;
+  &lt;li class="m2"&gt;&lt;span&gt;Typically initialized to small &lt;high&gt;random values&lt;/high&gt;.&lt;/span&gt;&lt;/li&gt;
+&lt;/ul&gt;
+
+]
+
+.pull-right6[
+
+&lt;p align = "right"&gt;
+&lt;img src="image/perceptron_5.png" height=380px&gt;&lt;br&gt;
+&lt;/p&gt;
+
+]
+
+
+---
+
+# Output
+
+.pull-left3[
+
+&lt;ul&gt;
+  &lt;li class="m1"&gt;&lt;span&gt;A &lt;high&gt;linear combination&lt;/high&gt; of the projecting inputs and their weights passed thorough a &lt;high&gt;step activation&lt;/high&gt; function.&lt;/span&gt;&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;p style="padding-top:20px"&gt;&lt;u&gt;Output activation&lt;/u&gt;&lt;/p&gt;
+
+`$$\begin{align*}  a^L &amp;= \sigma(z^{L}) = \sigma(w^\intercal a^{L-1}) \\ &amp; =\sigma(w_1 \cdot a^{L-1}_1 + \cdots + w_j \cdot a^{L-1}_j) \\ &amp; =\sigma(w_1 \cdot x_1+ \cdots + w_j \cdot x_j) \end{align*}$$`
+
+
+&lt;p style="padding-top:20px"&gt;&lt;u&gt;Step activation function&lt;/u&gt;&lt;/p&gt;
+
+`$$\sigma(z) = {\begin{cases}{}
+        0, &amp; \text{for } z \leq 0 \\
+        1, &amp; \text{for } z &gt; 0 \end{cases}}$$`
+
+]
+
+.pull-right6[
+
+&lt;p align = "right"&gt;
+&lt;img src="image/perceptron_6.png" height=380px&gt;&lt;br&gt;
+&lt;/p&gt;
+
+]
+
+
+---
+
+# Loss
+
+.pull-left3[
+
+&lt;ul&gt;
+  &lt;li class="m1"&gt;&lt;span&gt;Loss summarizes the &lt;high&gt;mismatch between the output activation and the criterion&lt;/high&gt;.&lt;/span&gt;&lt;/li&gt;&lt;br&gt;
+  &lt;li class="m2"&gt;&lt;span&gt;Loss is used as a &lt;high&gt;means to update the weights&lt;/high&gt;.&lt;/span&gt;&lt;/li&gt;
+&lt;/ul&gt;
+
+`$$L_i(w_t) = y_i - \sigma(w_t^\intercal x_i)$$`
+
+]
+
+.pull-right6[
+
+&lt;p align = "right"&gt;
+&lt;img src="image/perceptron_7.png" height=380px&gt;&lt;br&gt;
+&lt;/p&gt;
+
+]
+
+
+---
+
+# Update
+
+.pull-left3[
+
+&lt;ul&gt;
+  &lt;li class="m1"&gt;&lt;span&gt;A given weight is &lt;high&gt;updated proportional to the loss&lt;/high&gt;, the input that is projected by the weight, and a learning rate &lt;mono&gt;r&lt;/mono&gt;.&lt;/span&gt;&lt;/li&gt;&lt;br&gt;
+&lt;/ul&gt;
+
+&lt;p style="padding-top:20px"&gt;&lt;u&gt;Weight updating&lt;/u&gt;&lt;/p&gt;
+
+`$$\large w^{t+1}_j = w^t_{j} + r \cdot L_i \cdot x_{ji}$$`
+
+]
+
+.pull-right6[
+
+&lt;p align = "right"&gt;
+&lt;img src="image/perceptron_8.png" height=380px&gt;&lt;br&gt;
+&lt;/p&gt;
+
+]
+
+---
+
+# Today...
+
+
+&lt;p align = "center"&gt;
+&lt;img src="image/neural_nets.png"&gt;&lt;br&gt;
+&lt;font style="font-size:10px"&gt;adapted from &lt;a href="asimovinstitute.com"&gt;asimovinstitute.com&lt;/a&gt;&lt;/font&gt;
+&lt;/p&gt;
+
+
+
+---
+
+# Why should you care?
+
+.pull-left2[
+
+&lt;br&gt;&lt;br&gt;&lt;br&gt;&lt;br&gt;
+
+&lt;ul&gt;
+  &lt;li class="m1"&gt;&lt;span&gt;Predictive tools&lt;/span&gt;&lt;/li&gt;&lt;br&gt;
+  &lt;li class="m2"&gt;&lt;span&gt;Representations&lt;/span&gt;&lt;/li&gt;&lt;br&gt;
+  &lt;li class="m3"&gt;&lt;span&gt;Models of the mind&lt;/span&gt;&lt;/li&gt;
+&lt;/ul&gt;
+]
+
+.pull-right7[
+
+&lt;br&gt;
+
+&lt;p align = "center"&gt;
+&lt;img src="image/brain.png" height=360px&gt;&lt;br&gt;
+&lt;font style="font-size:10px"&gt;from &lt;a href="https://favpng.com/png_view/brain-human-brain-cognitive-science-neural-oscillation-clip-art-png/2UjbFG8S"&gt;favpng.com&lt;/a&gt;&lt;/font&gt;
+&lt;/p&gt;
+
+]
+
+---
+
+# Predictive tools
+
+.pull-left25[
+
+&lt;br&gt;&lt;br&gt;
+
+&lt;ul&gt;
+  &lt;li class="m1"&gt;&lt;span&gt;What is the &lt;high&gt;upper bound&lt;/high&gt; predictability of the output?&lt;/span&gt;&lt;/li&gt;&lt;br&gt;
+  &lt;li class="m2"&gt;&lt;span&gt;How do different &lt;high&gt;inputs contribute&lt;/high&gt; to achieving predictive performance?&lt;/span&gt;&lt;/li&gt;
+&lt;/ul&gt;
+
+]
+
+.pull-right65[
+
+&lt;br&gt;
+
+&lt;p align = "center"&gt;
+&lt;img src="image/blackbox.png" height=260px&gt;&lt;br&gt;
+&lt;/p&gt;
+
+]
+
+---
+
+# Representations
+
+
+.pull-left25[
+
+&lt;br&gt;
+
+&lt;ul&gt;
+  &lt;li class="m1"&gt;&lt;span&gt;Treat neural network as an &lt;high&gt;as-if model&lt;/high&gt; and study the inferred computations.&lt;/span&gt;&lt;/li&gt;&lt;br&gt;&lt;br&gt;&lt;br&gt;&lt;br&gt;
+  &lt;li class="m2"&gt;&lt;span&gt;Use the neural network to extract &lt;high&gt;meaningful representations&lt;/high&gt; from the environment.&lt;/span&gt;&lt;/li&gt;
+&lt;/ul&gt;
+
+]
+
+.pull-right65[
+
+
+&lt;p align = "center"&gt;
+&lt;img src="image/blackbox2.png" height=420px&gt;&lt;br&gt;
+&lt;/p&gt;
+
+]
+
+---
+
+# Models of the mind
+
+.pull-left25[
+
+&lt;br&gt;&lt;br&gt;&lt;br&gt;&lt;br&gt;
+
+&lt;ul&gt;
+  &lt;li class="m1"&gt;&lt;span&gt;Use neural network as an &lt;high&gt;actual model of cognitive processing&lt;/high&gt; in the brain.&lt;/span&gt;&lt;/li&gt;
+&lt;/ul&gt;
+
+]
+
+.pull-right65[
+
+&lt;br&gt;&lt;br&gt;
+
+&lt;p align = "center"&gt;
+&lt;img src="image/blackbox3.png" height=240px&gt;&lt;br&gt;
+&lt;/p&gt;
+
+]
+
+
+---
+
+.pull-left4[
+
+# Models of the mind
+
+&lt;p align = "center"&gt;
+&lt;img src="image/neuron.png" height=400px&gt;&lt;br&gt;
+&lt;font style="font-size:10px"&gt;adapted from &lt;a href="pinterest.de"&gt;pinterest.de&lt;/a&gt;&lt;/font&gt;
+&lt;/p&gt;
+
+]
+
+.pull-right5[
+
+&lt;br&gt;
+
+&lt;p align = "center"&gt;
+&lt;img src="image/cortex.png" height=500px&gt;&lt;br&gt;
+&lt;font style="font-size:10px"&gt;by Santiago Ramon y Cajal, from &lt;a href="https://en.wikipedia.org/wiki/Cerebral_cortex"&gt;wikipedia.org&lt;/a&gt;&lt;/font&gt;
+&lt;/p&gt;
+
+
+]
+
+---
+
+class: middle, center
+
+&lt;h1&gt;&lt;a href=https://therbootcamp.github.io/ML_2022DHLab/index.html&gt;Schedule&lt;/a&gt;&lt;/h1&gt;
+
+    </textarea>
+<style data-target="print-only">@media screen {.remark-slide-container{display:block;}.remark-slide-scaler{box-shadow:none;}}</style>
+<script src="https://remarkjs.com/downloads/remark-latest.min.js"></script>
+<script>var slideshow = remark.create({
+"highlightStyle": "github",
+"highlightLines": true,
+"countIncrementalSlides": false,
+"ratio": "16:9"
+});
+if (window.HTMLWidgets) slideshow.on('afterShowSlide', function (slide) {
+  window.dispatchEvent(new Event('resize'));
+});
+(function(d) {
+  var s = d.createElement("style"), r = d.querySelector(".remark-slide-scaler");
+  if (!r) return;
+  s.type = "text/css"; s.innerHTML = "@page {size: " + r.style.width + " " + r.style.height +"; }";
+  d.head.appendChild(s);
+})(document);
+
+(function(d) {
+  var el = d.getElementsByClassName("remark-slides-area");
+  if (!el) return;
+  var slide, slides = slideshow.getSlides(), els = el[0].children;
+  for (var i = 1; i < slides.length; i++) {
+    slide = slides[i];
+    if (slide.properties.continued === "true" || slide.properties.count === "false") {
+      els[i - 1].className += ' has-continuation';
+    }
+  }
+  var s = d.createElement("style");
+  s.type = "text/css"; s.innerHTML = "@media print { .has-continuation { display: none; } }";
+  d.head.appendChild(s);
+})(document);
+// delete the temporary CSS (for displaying all slides initially) when the user
+// starts to view slides
+(function() {
+  var deleted = false;
+  slideshow.on('beforeShowSlide', function(slide) {
+    if (deleted) return;
+    var sheets = document.styleSheets, node;
+    for (var i = 0; i < sheets.length; i++) {
+      node = sheets[i].ownerNode;
+      if (node.dataset["target"] !== "print-only") continue;
+      node.parentNode.removeChild(node);
+    }
+    deleted = true;
+  });
+})();
+// add `data-at-shortcutkeys` attribute to <body> to resolve conflicts with JAWS
+// screen reader (see PR #262)
+(function(d) {
+  let res = {};
+  d.querySelectorAll('.remark-help-content table tr').forEach(tr => {
+    const t = tr.querySelector('td:nth-child(2)').innerText;
+    tr.querySelectorAll('td:first-child .key').forEach(key => {
+      const k = key.innerText;
+      if (/^[a-z]$/.test(k)) res[k] = t;  // must be a single letter (key)
+    });
+  });
+  d.body.setAttribute('data-at-shortcutkeys', JSON.stringify(res));
+})(document);
+(function() {
+  "use strict"
+  // Replace <script> tags in slides area to make them executable
+  var scripts = document.querySelectorAll(
+    '.remark-slides-area .remark-slide-container script'
+  );
+  if (!scripts.length) return;
+  for (var i = 0; i < scripts.length; i++) {
+    var s = document.createElement('script');
+    var code = document.createTextNode(scripts[i].textContent);
+    s.appendChild(code);
+    var scriptAttrs = scripts[i].attributes;
+    for (var j = 0; j < scriptAttrs.length; j++) {
+      s.setAttribute(scriptAttrs[j].name, scriptAttrs[j].value);
+    }
+    scripts[i].parentElement.replaceChild(s, scripts[i]);
+  }
+})();
+(function() {
+  var links = document.getElementsByTagName('a');
+  for (var i = 0; i < links.length; i++) {
+    if (/^(https?:)?\/\//.test(links[i].getAttribute('href'))) {
+      links[i].target = '_blank';
+    }
+  }
+})();
+// adds .remark-code-has-line-highlighted class to <pre> parent elements
+// of code chunks containing highlighted lines with class .remark-code-line-highlighted
+(function(d) {
+  const hlines = d.querySelectorAll('.remark-code-line-highlighted');
+  const preParents = [];
+  const findPreParent = function(line, p = 0) {
+    if (p > 1) return null; // traverse up no further than grandparent
+    const el = line.parentElement;
+    return el.tagName === "PRE" ? el : findPreParent(el, ++p);
+  };
+
+  for (let line of hlines) {
+    let pre = findPreParent(line);
+    if (pre && !preParents.includes(pre)) preParents.push(pre);
+  }
+  preParents.forEach(p => p.classList.add("remark-code-has-line-highlighted"));
+})(document);</script>
+
+<script>
+slideshow._releaseMath = function(el) {
+  var i, text, code, codes = el.getElementsByTagName('code');
+  for (i = 0; i < codes.length;) {
+    code = codes[i];
+    if (code.parentNode.tagName !== 'PRE' && code.childElementCount === 0) {
+      text = code.textContent;
+      if (/^\\\((.|\s)+\\\)$/.test(text) || /^\\\[(.|\s)+\\\]$/.test(text) ||
+          /^\$\$(.|\s)+\$\$$/.test(text) ||
+          /^\\begin\{([^}]+)\}(.|\s)+\\end\{[^}]+\}$/.test(text)) {
+        code.outerHTML = code.innerHTML;  // remove <code></code>
+        continue;
+      }
+    }
+    i++;
+  }
+};
+slideshow._releaseMath(document);
+</script>
+<!-- dynamically load mathjax for compatibility with self-contained -->
+<script>
+(function () {
+  var script = document.createElement('script');
+  script.type = 'text/javascript';
+  script.src  = 'https://mathjax.rstudio.com/latest/MathJax.js?config=TeX-MML-AM_CHTML';
+  if (location.protocol !== 'file:' && /^https?:/.test(script.src))
+    script.src  = script.src.replace(/^https?:/, '');
+  document.getElementsByTagName('head')[0].appendChild(script);
+})();
+</script>
+  </body>
+</html>

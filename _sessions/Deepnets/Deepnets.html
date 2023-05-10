@@ -1,0 +1,1143 @@
+<!DOCTYPE html>
+<html lang="" xml:lang="">
+  <head>
+    <title>Deep neural networks</title>
+    <meta charset="utf-8" />
+    <meta name="author" content="Machine Learning with R   The R Bootcamp @ DHLab                  " />
+    <script src="libs/header-attrs/header-attrs.js"></script>
+    <link href="libs/remark-css/default.css" rel="stylesheet" />
+    <link rel="stylesheet" href="baselrbootcamp.css" type="text/css" />
+  </head>
+  <body>
+    <textarea id="source">
+class: center, middle, inverse, title-slide
+
+.title[
+# Deep neural networks
+]
+.author[
+### Machine Learning with R<br> <a href='https://therbootcamp.github.io'> The R Bootcamp @ DHLab </a> <br> <a href='https://therbootcamp.github.io/AML_2022DHLab/'> <i class='fas fa-clock' style='font-size:.9em;'></i> </a>  <a href='https://therbootcamp.github.io'> <i class='fas fa-home' style='font-size:.9em;' ></i> </a>  <a href='mailto:therbootcamp@gmail.com'> <i class='fas fa-envelope' style='font-size: .9em;'></i> </a>  <a href='https://www.linkedin.com/company/basel-r-bootcamp/'> <i class='fab fa-linkedin' style='font-size: .9em;'></i> </a>
+]
+.date[
+### September 2022
+]
+
+---
+
+
+layout: true
+
+&lt;div class="my-footer"&gt;
+  &lt;span style="text-align:center"&gt;
+    &lt;span&gt; 
+      &lt;img src="https://raw.githubusercontent.com/therbootcamp/therbootcamp.github.io/master/_sessions/_image/by-sa.png" height=14 style="vertical-align: middle"/&gt;
+    &lt;/span&gt;
+    &lt;a href="https://therbootcamp.github.io/"&gt;
+      &lt;span style="padding-left:82px"&gt; 
+        &lt;font color="#7E7E7E"&gt;
+          www.therbootcamp.com
+        &lt;/font&gt;
+      &lt;/span&gt;
+    &lt;/a&gt;
+    &lt;a href="https://therbootcamp.github.io/"&gt;
+      &lt;font color="#7E7E7E"&gt;
+      Machine Learning with R @ DHLab  | September 2022
+      &lt;/font&gt;
+    &lt;/a&gt;
+    &lt;/span&gt;
+  &lt;/div&gt; 
+
+---
+
+
+
+
+
+
+
+
+# Deep feedforward networks
+
+.pull-left3[
+
+&lt;ul&gt;
+  &lt;li class="m1"&gt;&lt;span&gt;Deep feedforward networks have &lt;high&gt;"many" hidden layers&lt;/high&gt;.&lt;/span&gt;&lt;/li&gt;
+  &lt;li class="m2"&gt;&lt;span&gt;Increasing depth means &lt;high&gt;more abstraction&lt;/high&gt; and &lt;high&gt;flexibility&lt;/high&gt;.&lt;/span&gt;&lt;/li&gt;
+  &lt;li class="m3"&gt;&lt;span&gt;Custom specification of:&lt;/span&gt;&lt;/li&gt;
+  &lt;ul&gt;
+    &lt;li&gt;&lt;span&gt;&lt;high&gt;Number&lt;/high&gt; of hidden layers.&lt;/span&gt;&lt;/li&gt;
+    &lt;li&gt;&lt;span&gt;&lt;high&gt;Size&lt;/high&gt; of hidden layers.&lt;/span&gt;&lt;/li&gt;
+    &lt;li&gt;&lt;span&gt;&lt;high&gt;Activation&lt;/high&gt; functions.&lt;/span&gt;&lt;/li&gt;
+    &lt;li&gt;&lt;span&gt;&lt;high&gt;Loss&lt;/high&gt; functions.&lt;/span&gt;&lt;/li&gt;
+  &lt;/ul&gt;
+&lt;/ul&gt;
+
+]
+
+
+.pull-right6[
+
+&lt;p align = "right"&gt;
+&lt;img src="image/deepfeedforward.png" height=380px&gt;&lt;br&gt;
+&lt;/p&gt;
+
+]
+
+
+---
+
+.pull-left4[
+
+# Activation functions
+
+&lt;ul&gt;
+  &lt;li class="m1"&gt;&lt;span&gt;Activation function determine the &lt;high&gt;nodes' activation&lt;/high&gt; as a function on the input to the node.&lt;/span&gt;&lt;/li&gt;
+  &lt;li class="m2"&gt;&lt;span&gt;For hidden layers, &lt;high&gt;ReLU is the default&lt;/high&gt;.&lt;/span&gt;&lt;/li&gt;
+  &lt;ul&gt;
+    &lt;li&gt;&lt;span&gt;No &lt;high&gt;vanishing gradient&lt;/high&gt;.&lt;/span&gt;&lt;/li&gt;  
+    &lt;li&gt;&lt;span&gt;&lt;high&gt;Easy&lt;/high&gt; to compute.&lt;/span&gt;&lt;/li&gt; 
+    &lt;li&gt;&lt;span&gt;&lt;high&gt;Sparse&lt;/high&gt; representations.&lt;/span&gt;&lt;/li&gt; 
+  &lt;/ul&gt;
+  &lt;li class="m3"&gt;&lt;span&gt;Activation for the output must &lt;high&gt;match the criterion&lt;/high&gt;.&lt;/span&gt;&lt;/li&gt;
+&lt;/ul&gt;
+
+
+
+&lt;p style="padding-top:20px"&gt;&lt;u&gt;ReLU&lt;/u&gt;&lt;/p&gt;
+
+&lt;!---
+$$ \sigma(w^\intercal a) = \sigma(z) = { \begin{cases}
+        0, &amp; \text{for } z \leq 0 \\
+        z, &amp; \text{for } z &gt; 0 \end{cases}} $$
+---&gt;
+&lt;p align="center"&gt;&lt;img src="image/relu.png" height=80px&gt;&lt;/img&gt;&lt;/p&gt;
+
+]
+
+.pull-right5[
+
+&lt;br&gt;
+
+&lt;p align = "center"&gt;
+&lt;img src="image/activation.png" height=520px&gt;&lt;br&gt;
+&lt;font style="font-size:10px"&gt;see &lt;a href="https://machinelearningmastery.com/rectified-linear-activation-function-for-deep-learning-neural-networks/"&gt;this&lt;/a&gt;&lt;/font&gt;
+&lt;/p&gt;
+
+]
+
+
+---
+
+.pull-left4[
+
+# Multi-class activation 
+
+&lt;ul&gt;
+  &lt;li class="m1"&gt;&lt;span&gt;A &lt;high&gt;multi-class criterion&lt;/high&gt; requires multiple outputs.&lt;/span&gt;&lt;/li&gt;
+  &lt;li class="m2"&gt;&lt;span&gt;&lt;high&gt;One-hot coding&lt;/high&gt;&lt;br&gt;&lt;br&gt; 2 &amp;rarr; 0, 1, 0, 0, 0&lt;br&gt; 5 &amp;rarr; 0, 0, 0, 0, 1&lt;/span&gt;&lt;/li&gt;
+  &lt;li class="m3"&gt;&lt;span&gt;The &lt;high&gt;softmax activation function&lt;/high&gt; results in matching probabilistic predictions.&lt;/span&gt;&lt;/li&gt;
+&lt;/ul&gt;
+
+
+
+&lt;p style="padding-top:20px"&gt;&lt;u&gt;Softmax&lt;/u&gt;&lt;/p&gt;
+
+$$\Large \sigma(z_j) = \frac{e^{z_j}}{\sum_k e^{z_k}} $$
+
+]
+
+.pull-right5[
+
+&lt;br&gt;&lt;br&gt;&lt;br&gt;
+
+&lt;p align = "center"&gt;
+&lt;img src="image/softmax.png" &gt;&lt;br&gt;
+&lt;/p&gt;
+
+]
+
+
+---
+
+.pull-left4[
+
+# Loss
+
+&lt;ul&gt;
+  &lt;li class="m1"&gt;&lt;span&gt;Loss functions are chosen to &lt;high&gt;match the prediction problem&lt;/high&gt; at hand.&lt;/span&gt;&lt;/li&gt;&lt;br&gt;
+  &lt;li class="m2"&gt;&lt;span&gt;Typically, cross-entropy is used for &lt;high&gt;classification&lt;/high&gt; and mean squared error for &lt;high&gt;regression&lt;/high&gt;.&lt;/span&gt;&lt;/li&gt;&lt;br&gt;
+  &lt;li class="m3"&gt;&lt;span&gt;There is &lt;high&gt;no correct loss function&lt;/high&gt;, but some are &lt;high&gt;more useful than others&lt;/high&gt;.&lt;/span&gt;&lt;/li&gt;
+&lt;/ul&gt;
+
+]
+
+.pull-right5[
+
+&lt;br&gt;&lt;br&gt;
+
+&lt;p align="center"&gt;&lt;u&gt;Zero-one loss&lt;/u&gt;&lt;/p&gt;
+
+&lt;!---
+
+$$    L_{01} = {\begin{cases}{}
+        0, &amp; \text{for } a^L = y \\
+        1, &amp; \text{for } a^L \neq y \end{cases}}$$`
+---&gt;
+
+&lt;p align="center"&gt;&lt;img src="image/zeroone.png" height=80px&gt;&lt;/img&gt;&lt;/p&gt;
+
+&lt;p align="center"&gt;&lt;u&gt;Binary cross-entropy&lt;/u&gt;&lt;/p&gt;
+
+`$$H=\sum_i -y_i \cdot log(a_i^L) - (1-y_i) \cdot log(1-a_i^L)$$`
+&lt;p align="center"&gt;&lt;u&gt;Categorical cross-entropy&lt;/u&gt;&lt;/p&gt;
+
+`$$H=\sum_{i}\sum_{j} -y_{ij} \cdot log(a_{ij}^L) - (1-y_{ij}) \cdot log(1-a_{ij}^L)$$`
+
+&lt;p align="center"&gt;&lt;u&gt;Mean squared error&lt;/u&gt;&lt;/p&gt;
+
+`$$MSE = \frac{1}{n}\sum_i y_i - a_i^L$$`
+
+]
+
+---
+
+# Gradient descent
+
+
+.pull-left4[
+
+&lt;ul&gt;
+  &lt;li class="m1"&gt;&lt;span&gt;Or how to &lt;high&gt;fit deep feedforward networks&lt;/high&gt;.&lt;/span&gt;&lt;/li&gt;
+  &lt;li class="m2"&gt;&lt;span&gt;The gradient expresses the &lt;high&gt;change in the Loss function&lt;/high&gt; due changes in the weights &lt;mono&gt;w&lt;/mono&gt;.&lt;/span&gt;&lt;/li&gt;
+  &lt;li class="m3"&gt;&lt;span&gt;Weights are updated in the &lt;high&gt;direction opposite to the gradient&lt;/high&gt; scaled by a &lt;high&gt;learning rate &amp;alpha;&lt;/high&gt;.&lt;/span&gt;&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;!---
+$$ w_{t+1} = w_t - \alpha \cdot \nabla_{w} \cdot \sum_{1}^{m} L_{m}(w) $$
+---&gt;
+&lt;br&gt;
+
+&lt;u&gt;Updating rule&lt;/u&gt;
+
+&lt;p align="center"&gt;&lt;img src="image/gradient_descent.png" height=90px&gt;&lt;/img&gt;&lt;/p&gt;
+
+
+]
+
+.pull-right5[
+
+&lt;p align = "center"&gt;
+&lt;img src="image/landscape.png"&gt;&lt;br&gt;
+&lt;font style="font-size:10px"&gt;from &lt;a href="https://www.cs.umd.edu/~tomg/projects/landscapes/"&gt;cs.umd.edu&lt;/a&gt;, see &lt;a href="https://blog.paperspace.com/intro-to-optimization-in-deep-learning-gradient-descent/"&gt;this&lt;/a&gt; and &lt;a href="https://blog.paperspace.com/intro-to-optimization-momentum-rmsprop-adam/"&gt;this&lt;/a&gt;&lt;/font&gt;
+&lt;/p&gt;
+
+]
+
+---
+
+
+
+# Gradient descent
+
+
+
+.pull-left4[
+
+&lt;ul&gt;
+  &lt;li class="m1"&gt;&lt;span&gt;Or how to &lt;high&gt;fit deep feedforward networks&lt;/high&gt;.&lt;/span&gt;&lt;/li&gt;
+  &lt;li class="m2"&gt;&lt;span&gt;The gradient expresses the &lt;high&gt;change in the Loss function&lt;/high&gt; due changes in the weights &lt;mono&gt;w&lt;/mono&gt;.&lt;/span&gt;&lt;/li&gt;
+  &lt;li class="m3"&gt;&lt;span&gt;Weights are updated in the &lt;high&gt;direction opposite to the gradient&lt;/high&gt; scaled by a &lt;high&gt;learning rate &amp;alpha;&lt;/high&gt;.&lt;/span&gt;&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;!---
+$$ w_{t+1} = w_t - \alpha \cdot \nabla_{w} \cdot \sum_{1}^{m} L_{m}(w) $$
+---&gt;
+&lt;br&gt;
+
+&lt;u&gt;Updating rule&lt;/u&gt;
+
+&lt;p align="center"&gt;&lt;img src="image/gradient_descent.png" height=90px&gt;&lt;/img&gt;&lt;/p&gt;
+
+]
+
+.pull-right5[
+
+&lt;p align = "center"&gt;
+&lt;img src="image/gradient1.gif"&gt;&lt;br&gt;
+&lt;font style="font-size:10px"&gt;from &lt;a href="https://blog.paperspace.com/intro-to-optimization-in-deep-learning-gradient-descent/"&gt;blog.paperspace.com&lt;/a&gt;&lt;/font&gt;
+&lt;/p&gt;
+
+]
+
+---
+
+
+
+# Gradient descent
+
+.pull-left4[
+
+&lt;ul&gt;
+  &lt;li class="m1"&gt;&lt;span&gt;Or how to &lt;high&gt;fit deep feedforward networks&lt;/high&gt;.&lt;/span&gt;&lt;/li&gt;
+  &lt;li class="m2"&gt;&lt;span&gt;The gradient expresses the &lt;high&gt;change in the Loss function&lt;/high&gt; due changes in the weights &lt;mono&gt;w&lt;/mono&gt;.&lt;/span&gt;&lt;/li&gt;
+  &lt;li class="m3"&gt;&lt;span&gt;Weights are updated in the &lt;high&gt;direction opposite to the gradient&lt;/high&gt; scaled by a &lt;high&gt;learning rate &amp;alpha;&lt;/high&gt;.&lt;/span&gt;&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;!---
+$$ w_{t+1} = w_t - \alpha \cdot \nabla_{w} \cdot \sum_{1}^{m} L_{m}(w) $$
+---&gt;
+&lt;br&gt;
+
+&lt;u&gt;Updating rule&lt;/u&gt;
+
+&lt;p align="center"&gt;&lt;img src="image/gradient_descent.png" height=90px&gt;&lt;/img&gt;&lt;/p&gt;
+
+]
+
+.pull-right5[
+
+&lt;p align = "center"&gt;
+&lt;img src="image/gradient2.png" height=385px&gt;&lt;br&gt;
+&lt;font style="font-size:10px"&gt;from &lt;a href="https://blog.paperspace.com/intro-to-optimization-in-deep-learning-gradient-descent/"&gt;blog.paperspace.com&lt;/a&gt;&lt;/font&gt;
+&lt;/p&gt;
+
+]
+
+---
+
+# Gradient descent
+
+.pull-left4[
+
+&lt;ul&gt;
+  &lt;li class="m1"&gt;&lt;span&gt;Or how to &lt;high&gt;fit deep feedforward networks&lt;/high&gt;.&lt;/span&gt;&lt;/li&gt;
+  &lt;li class="m2"&gt;&lt;span&gt;The gradient expresses the &lt;high&gt;change in the Loss function&lt;/high&gt; due changes in the weights &lt;mono&gt;w&lt;/mono&gt;.&lt;/span&gt;&lt;/li&gt;
+  &lt;li class="m3"&gt;&lt;span&gt;Weights are updated in the &lt;high&gt;direction opposite to the gradient&lt;/high&gt; scaled by a &lt;high&gt;learning rate &amp;alpha;&lt;/high&gt;.&lt;/span&gt;&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;!---
+$$ w_{t+1} = w_t - \alpha \cdot \nabla_{w} \cdot \sum_{1}^{m} L_{m}(w) $$
+---&gt;
+&lt;br&gt;
+
+&lt;u&gt;Updating rule&lt;/u&gt;
+
+&lt;p align="center"&gt;&lt;img src="image/gradient_descent.png" height=90px&gt;&lt;/img&gt;&lt;/p&gt;
+
+]
+
+.pull-right5[
+
+&lt;p align = "center"&gt;
+&lt;img src="image/gradient3.png"&gt;&lt;br&gt;
+&lt;font style="font-size:10px"&gt;from &lt;a href="https://blog.paperspace.com/intro-to-optimization-in-deep-learning-gradient-descent/"&gt;blog.paperspace.com&lt;/a&gt;&lt;/font&gt;
+&lt;/p&gt;
+
+]
+
+---
+
+# Stochastic gradient descent
+
+.pull-left4[
+
+&lt;ul&gt;
+  &lt;li class="m1"&gt;&lt;span&gt;The weights can be &lt;high&gt;updated after&lt;/high&gt;...&lt;/high&gt;&lt;br&gt;&lt;br&gt;one random sample &amp;rarr; &lt;high&gt;stochastic&lt;/high&gt; GD&lt;br&gt;some samples &amp;rarr; &lt;high&gt;mini-batch&lt;/high&gt; GD&lt;br&gt;all samples &amp;rarr; &lt;high&gt;batch&lt;/high&gt; GD.&lt;/span&gt;&lt;/li&gt;&lt;br&gt;
+  &lt;li class="m2"&gt;&lt;span&gt;Typically, stochastic or mini-batch gradient descent are preferred for &lt;high&gt;efficiency&lt;/high&gt; reasons.&lt;/span&gt;&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;!---
+$$ w_{t+1} = w_t - \alpha \cdot \nabla_{w} \cdot \sum_{1}^{m} L_{m}(w) $$
+---&gt;
+&lt;br&gt;
+
+&lt;u&gt;Updating rule&lt;/u&gt;
+
+&lt;p align="center"&gt;&lt;img src="image/gradient_descent.png" height=90px&gt;&lt;/img&gt;&lt;/p&gt;
+
+]
+
+.pull-right5[
+
+&lt;p align = "center"&gt;
+&lt;img src="image/gradient3.png"&gt;&lt;br&gt;
+&lt;font style="font-size:10px"&gt;from &lt;a href="https://blog.paperspace.com/intro-to-optimization-in-deep-learning-gradient-descent/"&gt;blog.paperspace.com&lt;/a&gt;&lt;/font&gt;
+&lt;/p&gt;
+
+]
+
+---
+
+
+# Adam
+
+.pull-left4[
+
+&lt;ul&gt;
+  &lt;li class="m1"&gt;&lt;span&gt;&lt;high&gt;Ada&lt;/high&gt;ptive &lt;high&gt;m&lt;/high&gt;oment estimation.&lt;/span&gt;&lt;/li&gt;&lt;br&gt;
+  &lt;li class="m2"&gt;&lt;span&gt;Successfully deals with &lt;high&gt;local minima&lt;/high&gt; and &lt;high&gt;unbalanced data&lt;/high&gt;.&lt;/span&gt;&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;u&gt;Expected 1st moment (momentum)&lt;/u&gt;
+
+`$$m_{t} = \beta_1 m_{t-1} + (1-\beta_1) \nabla_{w}$$`
+
+&lt;u&gt;Expected 2nd moment (change)&lt;/u&gt;
+
+`$$v_{t} = \beta_2 v_{t-1} + (1-\beta_2) \nabla_{w}^2$$`
+
+&lt;u&gt;Updating rule&lt;/u&gt;
+
+`$$w_{t+1} = w_t - \frac{\alpha}{\sqrt{\frac{v_{t}}{1-\beta_2}}+\epsilon} \frac{m_t}{1-\beta_1}$$`
+
+]
+
+.pull-right5[
+
+&lt;p align = "center"&gt;
+&lt;img src="image/gradient_ani_1.gif"&gt;&lt;br&gt;
+&lt;font style="font-size:10px"&gt;from &lt;a href="https://ruder.io/optimizing-gradient-descent/"&gt;ruder.io&lt;/a&gt;&lt;/font&gt;
+&lt;/p&gt;
+
+]
+
+
+---
+
+# Backpropagation
+
+.pull-left3[
+
+&lt;ul&gt;
+  &lt;li class="m1"&gt;&lt;span&gt;Solves the problem of determining &lt;high&gt;gradients in deep networks&lt;/high&gt;.&lt;/span&gt;&lt;/li&gt;&lt;br&gt;
+  &lt;li class="m2"&gt;&lt;span&gt;Propagates gradients from the output layer &lt;high&gt;back through the network&lt;/high&gt;.&lt;/span&gt;&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;p style="padding-top:30px;padding-bottom:20px"&gt;&lt;u&gt;Gradient under BP&lt;/u&gt;&lt;/p&gt;
+
+`$$\Large \nabla_{w_{jk}^l}L = a_{k}^{l-1} \delta_{j}^{l}$$`
+
+]
+
+.pull-right6[
+
+
+&lt;br&gt;
+&lt;p align = "center"&gt;
+&lt;img src="image/backprob.png"&gt;&lt;br&gt;
+&lt;font style="font-size:10px"&gt;see &lt;a href="http://neuralnetworksanddeeplearning.com/chap2.html"&gt;this&lt;/a&gt;&lt;/font&gt;
+&lt;/p&gt;
+
+]
+
+
+
+---
+
+.pull-left5[
+
+# Depth &amp; Size
+
+&lt;ul&gt;
+  &lt;li class="m1"&gt;&lt;span&gt;&lt;high&gt;Universal approximation theorem&lt;/high&gt;: A network with a single hidden layer can approximate any function.&lt;/span&gt;&lt;/li&gt;&lt;br&gt;
+  &lt;li class="m2"&gt;&lt;span&gt;Still, &lt;high&gt;depth trumps width&lt;/high&gt;:&lt;br&gt;&lt;br&gt;&lt;i&gt;Empirically, greater depth does seem to result in better generalization for a wide variety of tasks. […] This suggests that using deep architectures does indeed express a useful prior over the space of functions the model learns.&lt;/i&gt;&lt;br&gt;Goodfellow et al. (2016, p. 201)&lt;/span&gt;&lt;/li&gt;&lt;br&gt;
+  &lt;li class="m3"&gt;&lt;span&gt;For the rest, &lt;high&gt;try&lt;/high&gt;...&lt;/span&gt;&lt;/li&gt;
+  &lt;ul&gt;
+    &lt;li&gt;&lt;span&gt;Intuition&lt;/span&gt;&lt;/li&gt;    
+    &lt;li&gt;&lt;span&gt;Experimentation&lt;/span&gt;&lt;/li&gt; 
+    &lt;li&gt;&lt;span&gt;Exhaustive search&lt;/span&gt;&lt;/li&gt; 
+  &lt;/ul&gt;
+&lt;/ul&gt;
+
+
+
+
+]
+
+.pull-right4[
+
+&lt;br&gt;
+
+&lt;p align = "center"&gt;
+&lt;img src="image/deepwide.png"&gt;&lt;br&gt;
+&lt;/p&gt;
+
+]
+
+---
+
+.pull-left4[
+
+# Flexibility control
+
+&lt;ul&gt;
+  &lt;li class="m1"&gt;&lt;span&gt;Neural networks can easily become &lt;high&gt;too flexible for achieving good predictive accuracy&lt;/high&gt;.&lt;/span&gt;&lt;/li&gt;&lt;br&gt;
+  &lt;li class="m2"&gt;&lt;span&gt;Ways to &lt;high&gt;control network flexibility&lt;/high&gt;:&lt;/span&gt;&lt;/li&gt;&lt;br&gt;
+  &lt;ul&gt;
+    &lt;li&gt;&lt;span&gt;Reduce depth / width&lt;/span&gt;&lt;/li&gt;&lt;br&gt;    
+    &lt;li&gt;&lt;span&gt;L1/L2 regularization&lt;br&gt;&lt;br&gt;Adds loss proportional to magnitude of the weight.&lt;/span&gt;&lt;/li&gt;&lt;br&gt;
+    &lt;li&gt;&lt;span&gt;Dropout&lt;br&gt;&lt;br&gt; Randomly set the activation of nodes to 0.&lt;/span&gt;&lt;/li&gt;
+  &lt;/ul&gt;
+&lt;/ul&gt;
+
+]
+
+.pull-right4[
+
+&lt;br&gt;
+
+&lt;p align = "center"&gt;
+&lt;img src="image/deepwide.png"&gt;&lt;br&gt;
+&lt;/p&gt;
+
+]
+
+
+---
+
+.pull-left4[
+
+# `keras`
+
+&lt;ul&gt;
+  &lt;li class="m1"&gt;&lt;span&gt;&lt;mono&gt;keras&lt;/mono&gt; is a high-level wrapper package for &lt;highm&gt;tensorflow&lt;/highm&gt;, Google's high-performance deep learning library.&lt;/high&gt;.&lt;/span&gt;&lt;/li&gt;&lt;br&gt;
+  &lt;li class="m2"&gt;&lt;span&gt;Keras is written in Python, but there exists a convenient wrapper for R.&lt;/span&gt;&lt;/li&gt;
+  &lt;/ul&gt;
+&lt;/ul&gt;
+
+]
+
+
+.pull-right5[
+
+&lt;br&gt;&lt;br&gt;
+
+&lt;p align = "center"&gt;
+&lt;img src="image/keras.png"&gt;&lt;br&gt;
+&lt;font style="font-size:10px"&gt;adapted from &lt;a href="https://medium.com/ai%C2%B3-theory-practice-business/tensorflow-1-0-vs-2-0-part-3-tf-keras-ea403bd752c0"&gt;medium.com&lt;/a&gt;&lt;/font&gt;
+&lt;/p&gt;
+
+]
+
+---
+
+.pull-left4[
+
+# MNIST
+
+
+&lt;ul&gt;
+  &lt;li class="m1"&gt;&lt;span&gt;The Modified National Institute of Standards and Technology database is best known for the &lt;high&gt;handwritten digit dataset&lt;/high&gt;, the go-to training data set for image recognition.&lt;/span&gt;&lt;/li&gt;&lt;br&gt;
+  &lt;li class="m2"&gt;&lt;span&gt;It contains &lt;high&gt;28x28px greyscale images&lt;/high&gt; (features) and associated &lt;high&gt;integer labels&lt;/high&gt; (criterion) indicating the &lt;high&gt;correct digits.&lt;/span&gt;&lt;/li&gt;
+  &lt;/ul&gt;
+&lt;/ul&gt;
+
+]
+
+
+.pull-right5[
+
+&lt;br&gt;
+
+![](Deepnets_files/figure-html/unnamed-chunk-2-1.png)&lt;!-- --&gt;
+
+]
+
+
+---
+
+# MNIST
+
+.pull-left4[
+
+&lt;ul&gt;
+  &lt;li class="m1"&gt;&lt;span&gt;The Modified National Institute of Standards and Technology database is best known for the &lt;high&gt;handwritten digit dataset&lt;/high&gt;, the go-to training data set for image recognition.&lt;/span&gt;&lt;/li&gt;&lt;br&gt;
+  &lt;li class="m2"&gt;&lt;span&gt;It contains &lt;high&gt;28x28px greyscale images&lt;/high&gt; (features) and associated &lt;high&gt;integer labels&lt;/high&gt; (criterion) indicating the &lt;high&gt;correct digits.&lt;/span&gt;&lt;/li&gt;
+  &lt;/ul&gt;
+&lt;/ul&gt;
+
+
+
+]
+
+
+.pull-right5[
+
+
+```r
+# image
+img_train[1, 4:11, 4:11]
+```
+
+```
+##      [,1] [,2] [,3] [,4] [,5] [,6] [,7] [,8]
+## [1,]    0    0    0    0    0    0    0    0
+## [2,]    0    0    0    0    0    0    0    0
+## [3,]    0    0    0    0    0    0    0    0
+## [4,]    0    0    0    0    0   30   36   94
+## [5,]    0    0    0    0   49  238  253  253
+## [6,]    0    0    0    0   18  219  253  253
+## [7,]    0    0    0    0    0   80  156  107
+## [8,]    0    0    0    0    0    0   14    1
+```
+
+```r
+# category
+digit_train[1:18]
+```
+
+```
+##  [1] 5 0 4 1 9 2 1 3 1 4 3 5 3 6 1 7 2 8
+```
+
+]
+
+---
+
+# Data preprocessing
+
+.pull-left3[
+
+&lt;ul&gt;
+  &lt;li class="m1"&gt;&lt;span&gt;For neural network modeling, features and criterion typically must be first &lt;high&gt;transformed into the correct shapes&lt;/high&gt;.&lt;/span&gt;&lt;/li&gt;&lt;br&gt;
+  &lt;/ul&gt;
+&lt;/ul&gt;
+
+
+]
+
+
+.pull-right6[
+
+
+```r
+# reshape &amp; rescale images
+img_train &lt;- array_reshape(img_train, c(nrow(img_train), 784))
+img_train &lt;- img_train / 255
+
+# expand criterion
+digit_train &lt;- to_categorical(digit_train, 10)
+```
+
+```
+## Loaded Tensorflow version 2.9.2
+```
+
+```r
+# expanded criterion
+digit_train[1:3,1:8]
+```
+
+```
+##      [,1] [,2] [,3] [,4] [,5] [,6] [,7] [,8]
+## [1,]    0    0    0    0    0    1    0    0
+## [2,]    1    0    0    0    0    0    0    0
+## [3,]    0    0    0    0    1    0    0    0
+```
+
+]
+
+---
+
+# `keras_model_sequential()`
+
+.pull-left4[
+
+&lt;ul&gt;
+  &lt;li class="m1"&gt;&lt;span&gt;&lt;high&gt;Convenient interface&lt;/high&gt; for specifying deep neural networks using &lt;mono&gt;keras&lt;/mono&gt;.&lt;/span&gt;&lt;/li&gt;
+  &lt;li class="m2"&gt;&lt;span&gt;Allows &lt;high&gt;sequential build-up&lt;/high&gt; of the network in a layer-by-layer fashion.&lt;/span&gt;&lt;/li&gt;
+  &lt;li class="m3"&gt;&lt;span&gt;&lt;highm&gt;layer_dense&lt;/highm&gt; is the most common of dozens of layer types available.&lt;/span&gt;&lt;/li&gt;
+  &lt;/ul&gt;
+&lt;/ul&gt;
+
+
+&lt;table style="cellspacing:0; cellpadding:0; border:none; padding-top:10px" width=100%&gt;
+  &lt;col width="40%"&gt;
+  &lt;col width="60%"&gt;
+&lt;tr&gt;
+  &lt;td bgcolor="white"&gt;
+    &lt;b&gt;Argument&lt;/b&gt;
+  &lt;/td&gt;
+  &lt;td bgcolor="white"&gt;
+    &lt;b&gt;Description&lt;/b&gt;
+  &lt;/td&gt; 
+&lt;/tr&gt;
+&lt;tr&gt;
+  &lt;td bgcolor="white"&gt;
+  &lt;mono&gt;input_shape&lt;/mono&gt;
+  &lt;/td&gt;
+  &lt;td bgcolor="white"&gt;
+  Shape/Size of input layer
+  &lt;/td&gt; 
+&lt;/tr&gt;
+&lt;tr&gt;
+  &lt;td bgcolor="white"&gt;
+  &lt;mono&gt;units&lt;/mono&gt; 
+  &lt;/td&gt;
+  &lt;td bgcolor="white"&gt;
+   Number of nodes.    
+  &lt;/td&gt; 
+&lt;/tr&gt;
+&lt;tr&gt;
+  &lt;td bgcolor="white"&gt;
+  &lt;mono&gt;activation&lt;/mono&gt; 
+  &lt;/td&gt;
+  &lt;td bgcolor="white"&gt;
+  Character specifying activation function.
+  &lt;/td&gt; 
+&lt;/tr&gt;
+&lt;tr&gt;
+  &lt;td bgcolor="white"&gt;
+  &lt;mono&gt;*_regularizer&lt;/mono&gt; 
+  &lt;/td&gt;
+  &lt;td bgcolor="white"&gt;
+  Regularization options.
+  &lt;/td&gt; 
+&lt;/tr&gt;
+&lt;/table&gt;
+]
+
+
+.pull-right5[
+
+
+```r
+# initialize model
+model &lt;- keras_model_sequential() 
+
+# build up model layer by layer
+model %&gt;% 
+  layer_dense(input_shape = c(784),
+              units = 256, 
+              activation = 'relu') %&gt;% 
+  layer_dense(units = 128, 
+              activation = 'relu') %&gt;%
+  layer_dense(units = 10, 
+              activation = 'softmax')
+```
+
+]
+
+---
+
+# `keras_model_sequential()`
+
+
+
+
+
+```r
+# inspect model
+summary(model)
+```
+
+```
+## Model: "sequential"
+## ____________________________________________________________________________________________________
+##  Layer (type)                                Output Shape                            Param #        
+## ====================================================================================================
+##  dense_2 (Dense)                             (None, 256)                             200960         
+##  dense_1 (Dense)                             (None, 128)                             32896          
+##  dense (Dense)                               (None, 10)                              1290           
+## ====================================================================================================
+## Total params: 235,146
+## Trainable params: 235,146
+## Non-trainable params: 0
+## ____________________________________________________________________________________________________
+```
+
+
+---
+
+# `compile()`
+
+.pull-left4[
+
+&lt;ul&gt;
+  &lt;li class="m1"&gt;&lt;span&gt;The &lt;mono&gt;compile&lt;/mono&gt; function &lt;high&gt;finalizes the setup&lt;/high&gt; of the neural network.&lt;/span&gt;&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;table style="cellspacing:0; cellpadding:0; border:none; padding-top:10px" width=100%&gt;
+  &lt;col width="40%"&gt;
+  &lt;col width="60%"&gt;
+&lt;tr&gt;
+  &lt;td bgcolor="white"&gt;
+    &lt;b&gt;Argument&lt;/b&gt;
+  &lt;/td&gt;
+  &lt;td bgcolor="white"&gt;
+    &lt;b&gt;Description&lt;/b&gt;
+  &lt;/td&gt; 
+&lt;/tr&gt;
+&lt;tr&gt;
+  &lt;td bgcolor="white"&gt;
+  &lt;mono&gt;loss&lt;/mono&gt;
+  &lt;/td&gt;
+  &lt;td bgcolor="white"&gt;
+  Loss function
+  &lt;/td&gt; 
+&lt;/tr&gt;
+&lt;tr&gt;
+  &lt;td bgcolor="white"&gt;
+  &lt;mono&gt;optimizer&lt;/mono&gt; 
+  &lt;/td&gt;
+  &lt;td bgcolor="white"&gt;
+   The optimizer used to update weights.    
+  &lt;/td&gt; 
+&lt;/tr&gt;
+&lt;tr&gt;
+  &lt;td bgcolor="white"&gt;
+  &lt;mono&gt;metrics&lt;/mono&gt; 
+  &lt;/td&gt;
+  &lt;td bgcolor="white"&gt;
+  Additional metrics to track during optimization.
+  &lt;/td&gt; 
+&lt;/tr&gt;
+&lt;/table&gt;
+
+]
+
+
+.pull-right5[
+
+
+```r
+# set up loss function and optimizer
+model %&gt;% compile(
+  
+  # loss for multi-class prediction
+  loss = 'categorical_crossentropy',
+  
+  # optimizer for weight updating 
+  optimizer = "adam",
+  
+  # metrics to track along
+  metrics = c('accuracy')
+  )
+```
+
+]
+
+---
+
+# `fit()`
+
+.pull-left4[
+
+&lt;ul&gt;
+  &lt;li class="m1"&gt;&lt;span&gt;The &lt;mono&gt;fit&lt;/mono&gt; function &lt;high&gt;carries out the optimization&lt;/high&gt;.&lt;/span&gt;&lt;/li&gt;
+&lt;/ul&gt;
+
+
+&lt;table style="cellspacing:0; cellpadding:0; border:none; padding-top:10px" width=100%&gt;
+  &lt;col width="40%"&gt;
+  &lt;col width="60%"&gt;
+&lt;tr&gt;
+  &lt;td bgcolor="white"&gt;
+    &lt;b&gt;Argument&lt;/b&gt;
+  &lt;/td&gt;
+  &lt;td bgcolor="white"&gt;
+    &lt;b&gt;Description&lt;/b&gt;
+  &lt;/td&gt; 
+&lt;/tr&gt;
+&lt;tr&gt;
+  &lt;td bgcolor="white"&gt;
+  &lt;mono&gt;epochs&lt;/mono&gt;
+  &lt;/td&gt;
+  &lt;td bgcolor="white"&gt;
+  How often to iterate over the data.
+  &lt;/td&gt; 
+&lt;/tr&gt;
+&lt;tr&gt;
+  &lt;td bgcolor="white"&gt;
+  &lt;mono&gt;batch_size&lt;/mono&gt; 
+  &lt;/td&gt;
+  &lt;td bgcolor="white"&gt;
+   Update weights every this many samples.    
+  &lt;/td&gt; 
+&lt;/tr&gt;
+&lt;tr&gt;
+  &lt;td bgcolor="white"&gt;
+  &lt;mono&gt;validation_split&lt;/mono&gt; 
+  &lt;/td&gt;
+  &lt;td bgcolor="white"&gt;
+  Carry out concurrent validation.
+  &lt;/td&gt; 
+&lt;/tr&gt;
+&lt;/table&gt;
+
+]
+
+
+.pull-right5[
+
+
+```r
+# Fit neural network to data
+history &lt;- model %&gt;% fit(
+  
+  # training features  and criterion
+  img_train, digit_train, 
+  
+  # number of iterations
+  epochs = 5,
+  
+  # number of samples per update
+  batch_size = 10
+  )
+```
+
+]
+
+
+---
+
+.pull-left4[
+
+# `fit()`
+
+&lt;ul&gt;
+  &lt;li class="m1"&gt;&lt;span&gt;The &lt;mono&gt;fit&lt;/mono&gt; function &lt;high&gt;carries out the optimization&lt;/high&gt;.&lt;/span&gt;&lt;/li&gt;
+&lt;/ul&gt;
+
+
+&lt;table style="cellspacing:0; cellpadding:0; border:none; padding-top:10px" width=100%&gt;
+  &lt;col width="40%"&gt;
+  &lt;col width="60%"&gt;
+&lt;tr&gt;
+  &lt;td bgcolor="white"&gt;
+    &lt;b&gt;Argument&lt;/b&gt;
+  &lt;/td&gt;
+  &lt;td bgcolor="white"&gt;
+    &lt;b&gt;Description&lt;/b&gt;
+  &lt;/td&gt; 
+&lt;/tr&gt;
+&lt;tr&gt;
+  &lt;td bgcolor="white"&gt;
+  &lt;mono&gt;epochs&lt;/mono&gt;
+  &lt;/td&gt;
+  &lt;td bgcolor="white"&gt;
+  How often to iterate over the data.
+  &lt;/td&gt; 
+&lt;/tr&gt;
+&lt;tr&gt;
+  &lt;td bgcolor="white"&gt;
+  &lt;mono&gt;batch_size&lt;/mono&gt; 
+  &lt;/td&gt;
+  &lt;td bgcolor="white"&gt;
+   Update weights every this many samples.    
+  &lt;/td&gt; 
+&lt;/tr&gt;
+&lt;tr&gt;
+  &lt;td bgcolor="white"&gt;
+  &lt;mono&gt;validation_split&lt;/mono&gt; 
+  &lt;/td&gt;
+  &lt;td bgcolor="white"&gt;
+  Carry out concurrent validation.
+  &lt;/td&gt; 
+&lt;/tr&gt;
+&lt;/table&gt;
+
+
+]
+
+
+.pull-right5[
+
+&lt;br&gt;
+
+
+```r
+# Plot performance across optimization
+plot(history) + theme_minimal()
+```
+
+![](Deepnets_files/figure-html/unnamed-chunk-10-1.png)&lt;!-- --&gt;
+
+]
+
+---
+
+.pull-left3[
+
+# `evaluate`
+
+&lt;ul&gt;
+  &lt;li class="m1"&gt;&lt;span&gt;The &lt;mono&gt;evaluate&lt;/mono&gt; function determines &lt;high&gt;predictive performance&lt;/high&gt; for the test set.&lt;/span&gt;&lt;/li&gt;&lt;br&gt;
+  &lt;li class="m2"&gt;&lt;span&gt;Test set must be &lt;high&gt;preprocessed exactly like the training set&lt;/high&gt;.&lt;/span&gt;&lt;/li&gt;
+&lt;/ul&gt;
+]
+
+
+.pull-right6[
+
+&lt;br&gt;&lt;br&gt;&lt;br&gt;
+
+
+```r
+# test data
+c(img_test, digit_test) %&lt;-% digit$test
+
+# reshape &amp; rescale images
+img_test &lt;- array_reshape(img_test, c(nrow(img_test), 784))
+img_test &lt;- img_test / 255
+
+# expand criterion
+digit_test &lt;- to_categorical(digit_test, 10)
+
+# evaluate predictive performance
+model %&gt;% evaluate(img_test, digit_test)
+```
+
+```
+##     loss accuracy 
+##     1.01     0.68
+```
+
+]
+
+
+
+---
+
+class: middle, center
+
+&lt;h1&gt;&lt;a href=https://therbootcamp.github.io/ML_2022DHLab/_sessions/Deepnets/Deepnets_practical.html&gt;Practical&lt;/a&gt;&lt;/h1&gt;
+
+
+    </textarea>
+<style data-target="print-only">@media screen {.remark-slide-container{display:block;}.remark-slide-scaler{box-shadow:none;}}</style>
+<script src="https://remarkjs.com/downloads/remark-latest.min.js"></script>
+<script>var slideshow = remark.create({
+"highlightStyle": "github",
+"highlightLines": true,
+"countIncrementalSlides": false,
+"ratio": "16:9"
+});
+if (window.HTMLWidgets) slideshow.on('afterShowSlide', function (slide) {
+  window.dispatchEvent(new Event('resize'));
+});
+(function(d) {
+  var s = d.createElement("style"), r = d.querySelector(".remark-slide-scaler");
+  if (!r) return;
+  s.type = "text/css"; s.innerHTML = "@page {size: " + r.style.width + " " + r.style.height +"; }";
+  d.head.appendChild(s);
+})(document);
+
+(function(d) {
+  var el = d.getElementsByClassName("remark-slides-area");
+  if (!el) return;
+  var slide, slides = slideshow.getSlides(), els = el[0].children;
+  for (var i = 1; i < slides.length; i++) {
+    slide = slides[i];
+    if (slide.properties.continued === "true" || slide.properties.count === "false") {
+      els[i - 1].className += ' has-continuation';
+    }
+  }
+  var s = d.createElement("style");
+  s.type = "text/css"; s.innerHTML = "@media print { .has-continuation { display: none; } }";
+  d.head.appendChild(s);
+})(document);
+// delete the temporary CSS (for displaying all slides initially) when the user
+// starts to view slides
+(function() {
+  var deleted = false;
+  slideshow.on('beforeShowSlide', function(slide) {
+    if (deleted) return;
+    var sheets = document.styleSheets, node;
+    for (var i = 0; i < sheets.length; i++) {
+      node = sheets[i].ownerNode;
+      if (node.dataset["target"] !== "print-only") continue;
+      node.parentNode.removeChild(node);
+    }
+    deleted = true;
+  });
+})();
+// add `data-at-shortcutkeys` attribute to <body> to resolve conflicts with JAWS
+// screen reader (see PR #262)
+(function(d) {
+  let res = {};
+  d.querySelectorAll('.remark-help-content table tr').forEach(tr => {
+    const t = tr.querySelector('td:nth-child(2)').innerText;
+    tr.querySelectorAll('td:first-child .key').forEach(key => {
+      const k = key.innerText;
+      if (/^[a-z]$/.test(k)) res[k] = t;  // must be a single letter (key)
+    });
+  });
+  d.body.setAttribute('data-at-shortcutkeys', JSON.stringify(res));
+})(document);
+(function() {
+  "use strict"
+  // Replace <script> tags in slides area to make them executable
+  var scripts = document.querySelectorAll(
+    '.remark-slides-area .remark-slide-container script'
+  );
+  if (!scripts.length) return;
+  for (var i = 0; i < scripts.length; i++) {
+    var s = document.createElement('script');
+    var code = document.createTextNode(scripts[i].textContent);
+    s.appendChild(code);
+    var scriptAttrs = scripts[i].attributes;
+    for (var j = 0; j < scriptAttrs.length; j++) {
+      s.setAttribute(scriptAttrs[j].name, scriptAttrs[j].value);
+    }
+    scripts[i].parentElement.replaceChild(s, scripts[i]);
+  }
+})();
+(function() {
+  var links = document.getElementsByTagName('a');
+  for (var i = 0; i < links.length; i++) {
+    if (/^(https?:)?\/\//.test(links[i].getAttribute('href'))) {
+      links[i].target = '_blank';
+    }
+  }
+})();
+// adds .remark-code-has-line-highlighted class to <pre> parent elements
+// of code chunks containing highlighted lines with class .remark-code-line-highlighted
+(function(d) {
+  const hlines = d.querySelectorAll('.remark-code-line-highlighted');
+  const preParents = [];
+  const findPreParent = function(line, p = 0) {
+    if (p > 1) return null; // traverse up no further than grandparent
+    const el = line.parentElement;
+    return el.tagName === "PRE" ? el : findPreParent(el, ++p);
+  };
+
+  for (let line of hlines) {
+    let pre = findPreParent(line);
+    if (pre && !preParents.includes(pre)) preParents.push(pre);
+  }
+  preParents.forEach(p => p.classList.add("remark-code-has-line-highlighted"));
+})(document);</script>
+
+<script>
+slideshow._releaseMath = function(el) {
+  var i, text, code, codes = el.getElementsByTagName('code');
+  for (i = 0; i < codes.length;) {
+    code = codes[i];
+    if (code.parentNode.tagName !== 'PRE' && code.childElementCount === 0) {
+      text = code.textContent;
+      if (/^\\\((.|\s)+\\\)$/.test(text) || /^\\\[(.|\s)+\\\]$/.test(text) ||
+          /^\$\$(.|\s)+\$\$$/.test(text) ||
+          /^\\begin\{([^}]+)\}(.|\s)+\\end\{[^}]+\}$/.test(text)) {
+        code.outerHTML = code.innerHTML;  // remove <code></code>
+        continue;
+      }
+    }
+    i++;
+  }
+};
+slideshow._releaseMath(document);
+</script>
+<!-- dynamically load mathjax for compatibility with self-contained -->
+<script>
+(function () {
+  var script = document.createElement('script');
+  script.type = 'text/javascript';
+  script.src  = 'https://mathjax.rstudio.com/latest/MathJax.js?config=TeX-MML-AM_CHTML';
+  if (location.protocol !== 'file:' && /^https?:/.test(script.src))
+    script.src  = script.src.replace(/^https?:/, '');
+  document.getElementsByTagName('head')[0].appendChild(script);
+})();
+</script>
+  </body>
+</html>

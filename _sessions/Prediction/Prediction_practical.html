@@ -1,0 +1,1713 @@
+<!DOCTYPE html>
+
+<html>
+
+<head>
+
+<meta charset="utf-8" />
+<meta name="generator" content="pandoc" />
+<meta http-equiv="X-UA-Compatible" content="IE=EDGE" />
+
+
+
+
+<title>Prediction</title>
+
+<script src="Prediction_practical_files/header-attrs-2.16/header-attrs.js"></script>
+<script src="Prediction_practical_files/jquery-3.6.0/jquery-3.6.0.min.js"></script>
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<link href="Prediction_practical_files/bootstrap-3.3.5/css/bootstrap.min.css" rel="stylesheet" />
+<script src="Prediction_practical_files/bootstrap-3.3.5/js/bootstrap.min.js"></script>
+<script src="Prediction_practical_files/bootstrap-3.3.5/shim/html5shiv.min.js"></script>
+<script src="Prediction_practical_files/bootstrap-3.3.5/shim/respond.min.js"></script>
+<style>h1 {font-size: 34px;}
+       h1.title {font-size: 38px;}
+       h2 {font-size: 30px;}
+       h3 {font-size: 24px;}
+       h4 {font-size: 18px;}
+       h5 {font-size: 16px;}
+       h6 {font-size: 12px;}
+       code {color: inherit; background-color: rgba(0, 0, 0, 0.04);}
+       pre:not([class]) { background-color: white }</style>
+<script src="Prediction_practical_files/navigation-1.1/tabsets.js"></script>
+<link href="Prediction_practical_files/highlightjs-9.12.0/default.css" rel="stylesheet" />
+<script src="Prediction_practical_files/highlightjs-9.12.0/highlight.js"></script>
+
+<style type="text/css">
+  code{white-space: pre-wrap;}
+  span.smallcaps{font-variant: small-caps;}
+  span.underline{text-decoration: underline;}
+  div.column{display: inline-block; vertical-align: top; width: 50%;}
+  div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+  ul.task-list{list-style: none;}
+    </style>
+
+<style type="text/css">code{white-space: pre;}</style>
+<script type="text/javascript">
+if (window.hljs) {
+  hljs.configure({languages: []});
+  hljs.initHighlightingOnLoad();
+  if (document.readyState && document.readyState === "complete") {
+    window.setTimeout(function() { hljs.initHighlighting(); }, 0);
+  }
+}
+</script>
+
+
+
+
+
+
+<link rel="stylesheet" href="practical.css" type="text/css" />
+
+
+
+<style type = "text/css">
+.main-container {
+  max-width: 940px;
+  margin-left: auto;
+  margin-right: auto;
+}
+img {
+  max-width:100%;
+}
+.tabbed-pane {
+  padding-top: 12px;
+}
+.html-widget {
+  margin-bottom: 20px;
+}
+button.code-folding-btn:focus {
+  outline: none;
+}
+summary {
+  display: list-item;
+}
+details > summary > p:only-child {
+  display: inline;
+}
+pre code {
+  padding: 0;
+}
+</style>
+
+
+
+<!-- tabsets -->
+
+<style type="text/css">
+.tabset-dropdown > .nav-tabs {
+  display: inline-table;
+  max-height: 500px;
+  min-height: 44px;
+  overflow-y: auto;
+  border: 1px solid #ddd;
+  border-radius: 4px;
+}
+
+.tabset-dropdown > .nav-tabs > li.active:before {
+  content: "";
+  font-family: 'Glyphicons Halflings';
+  display: inline-block;
+  padding: 10px;
+  border-right: 1px solid #ddd;
+}
+
+.tabset-dropdown > .nav-tabs.nav-tabs-open > li.active:before {
+  content: "&#xe258;";
+  border: none;
+}
+
+.tabset-dropdown > .nav-tabs.nav-tabs-open:before {
+  content: "";
+  font-family: 'Glyphicons Halflings';
+  display: inline-block;
+  padding: 10px;
+  border-right: 1px solid #ddd;
+}
+
+.tabset-dropdown > .nav-tabs > li.active {
+  display: block;
+}
+
+.tabset-dropdown > .nav-tabs > li > a,
+.tabset-dropdown > .nav-tabs > li > a:focus,
+.tabset-dropdown > .nav-tabs > li > a:hover {
+  border: none;
+  display: inline-block;
+  border-radius: 4px;
+  background-color: transparent;
+}
+
+.tabset-dropdown > .nav-tabs.nav-tabs-open > li {
+  display: block;
+  float: none;
+}
+
+.tabset-dropdown > .nav-tabs > li {
+  display: none;
+}
+</style>
+
+<!-- code folding -->
+
+
+
+
+</head>
+
+<body>
+
+
+<div class="container-fluid main-container">
+
+
+
+
+<div id="header">
+
+
+
+<h1 class="title toc-ignore">Prediction</h1>
+<h4 class="author"><table style='table-layout:fixed;width:100%;border:0;padding:0;margin:0'>
+<col width='10%'>
+<col width='10%'>
+<tr style="border:none">
+<td style="display:block;width:100%;text-align:left;vertical-align:bottom;padding:0;margin:0;border:none" nowrap>
+<font style='font-style:normal'>Machine Learning with R</font><br>
+<a href='https://therbootcamp.github.io/ML_2022DHLab/'>
+<i class='fas fa-clock' style='font-size:.9em;' ></i> </a>
+<a href='https://therbootcamp.github.io'>
+<i class='fas fa-home' style='font-size:.9em;'></i> </a>
+<a href='mailto:therbootcamp@gmail.com'>
+<i class='fas fa-envelope' style='font-size: .9em;'></i> </a>
+<a href='https://www.linkedin.com/company/basel-r-bootcamp/'>
+<i class='fab fa-linkedin' style='font-size: .9em;'></i> </a>
+<a href='https://therbootcamp.github.io'>
+<font style='font-style:normal'>The R Bootcamp @ DHLab</font> </a>
+</td>
+<td style="width:100%;vertical-align:bottom;text-align:right;padding:0;margin:0;border:none">
+<img src='https://raw.githubusercontent.com/therbootcamp/therbootcamp.github.io/master/_sessions/_image/by-sa.png' style='height:15px;width:80px'/>
+</td>
+</tr>
+</table></h4>
+
+</div>
+
+
+<p align="center">
+<img width="100%" src="https://cdn-images-1.medium.com/max/1200/0*F0y1bmOEzCFCcPE_" margin=0><br>
+<font style="font-size:10px">from <a
+href="https://Medium.com/">Medium.com</a></font>
+</p>
+<div id="section" class="section level1 tabset">
+<h1 class="tabset"></h1>
+<div id="overview" class="section level2">
+<h2>Overview</h2>
+<p>By the end of this practical you will know how to:</p>
+<ol style="list-style-type: decimal">
+<li>Fit regression, decision trees and random forests to training
+data.</li>
+<li>Evaluate model fitting <em>and</em> prediction performance in a test
+set.</li>
+<li>Compare the fitting and prediction performance of two models.</li>
+<li>Explore the effects of features on model predictions.</li>
+</ol>
+</div>
+<div id="tasks" class="section level2">
+<h2>Tasks</h2>
+<div id="a---setup" class="section level3">
+<h3>A - Setup</h3>
+<ol style="list-style-type: decimal">
+<li><p>Open your <code>TheRBootcamp</code> R project. It should already
+have the folders <code>1_Data</code> and <code>2_Code</code>. Make sure
+that the data file(s) listed in the <code>Datasets</code> section are in
+your <code>1_Data</code> folder.</p></li>
+<li><p>Open a new R script and save it as a new file called
+<code>Prediction_practical.R</code> in the <code>2_Code</code>
+folder.</p></li>
+<li><p>Using <code>library()</code> load the set of packages for this
+practical listed in the packages section above.</p></li>
+</ol>
+<pre class="r"><code># Load packages necessary for this script
+library(rpart.plot)
+library(tidyverse)
+library(tidymodels)
+tidymodels_prefer() # to resolve common conflicts</code></pre>
+<ol start="4" style="list-style-type: decimal">
+<li>We will again work with the <code>airbnb</code> data. Load the
+dataset using the code below.</li>
+</ol>
+<pre class="r"><code># airbnb data
+airbnb &lt;- read_csv(file = &quot;1_Data/airbnb.csv&quot;)</code></pre>
+<ol start="5" style="list-style-type: decimal">
+<li>You should already be familiar with the dataset, but you can refresh
+your memory by checking the variable names with <code>names()</code> and
+the contents using <code>View()</code>.</li>
+</ol>
+</div>
+<div id="b---splitting-the-data-into-training-and-test-set"
+class="section level3">
+<h3>B - Splitting the data into training and test set</h3>
+<ol style="list-style-type: decimal">
+<li>In the previous practical, we used the complete <code>airbnb</code>
+dataset to fit the models. To avoid over-fitting, we will now split the
+data into a training- and a test-set. Use the
+<code>initial_split()</code> function to create a split. Pass it the
+<code>airbnb</code> data as argument and save the output as
+<code>airbnb_split</code>.</li>
+</ol>
+<pre class="r"><code># initialize split
+XX &lt;- XX(XX)</code></pre>
+<pre class="r"><code>airbnb_split &lt;- initial_split(airbnb)</code></pre>
+<ol start="2" style="list-style-type: decimal">
+<li>Create a training-set using the <code>training()</code> function.
+Pass it the <code>airbnb_split</code> object as argument and save the
+output as <code>airbnb_train</code>.</li>
+</ol>
+<pre class="r"><code># training data
+XX &lt;- XX(XX)</code></pre>
+<pre class="r"><code>airbnb_train &lt;- training(airbnb_split)</code></pre>
+<ol start="3" style="list-style-type: decimal">
+<li>Create a test-set using the <code>testing()</code> function. Pass it
+the <code>airbnb_split</code> object as argument and save the output as
+<code>airbnb_test</code>.</li>
+</ol>
+<pre class="r"><code># test data
+XX &lt;- XX(XX)</code></pre>
+<pre class="r"><code>airbnb_test &lt;- testing(airbnb_split)</code></pre>
+</div>
+<div id="b---fitting" class="section level3">
+<h3>B - Fitting</h3>
+<p>Your goal in this set of tasks is again to fit models predicting
+<code>price</code>, the price of Airbnbs located in Berlin.</p>
+<div id="regression" class="section level4">
+<h4>Regression</h4>
+<ol style="list-style-type: decimal">
+<li>Define a recipe called <code>lm_recipe</code> by calling the
+<code>recipe()</code> function. Use all available predictors by setting
+the formula to <code>price ~ .</code> and use the
+<code>airbnb_train</code> data. Also, add a pipe (<code>%&gt;%</code>)
+and <code>step_dummy(all_nominal_predictors())</code> to dummy-code all
+categorical predictors.</li>
+</ol>
+<pre class="r"><code># create recipe
+XX &lt;- 
+  XX(XX, data = XX) %&gt;% 
+  XX(XX())</code></pre>
+<pre class="r"><code># create recipe
+lm_recipe &lt;- 
+  recipe(price ~ ., data = airbnb_train) %&gt;% 
+  step_dummy(all_nominal_predictors())</code></pre>
+<ol start="2" style="list-style-type: decimal">
+<li>Print the recipe.</li>
+</ol>
+<pre class="r"><code>lm_recipe</code></pre>
+<pre><code>Recipe
+
+Inputs:
+
+      role #variables
+   outcome          1
+ predictor         22
+
+Operations:
+
+Dummy variables from all_nominal_predictors()</code></pre>
+<ol start="3" style="list-style-type: decimal">
+<li>Create a regression model by</li>
+</ol>
+<ul>
+<li>calling the <code>linear_reg()</code> function.</li>
+<li>adding a pipe and setting the enginge to <code>"lm"</code> using
+<code>set_engine()</code>.</li>
+<li>specifying the problem mode to <code>"regression"</code> using
+<code>set_mode()</code>.</li>
+<li>saving the output as <code>lm_model</code>.</li>
+</ul>
+<pre class="r"><code># set up the regression model
+XX &lt;- 
+  XX() %&gt;% 
+  XX(XX) %&gt;% 
+  XX(XX)</code></pre>
+<pre class="r"><code># set up the regression model
+lm_model &lt;- 
+  linear_reg() %&gt;% 
+  set_engine(&quot;lm&quot;) %&gt;% 
+  set_mode(&quot;regression&quot;)</code></pre>
+<ol start="4" style="list-style-type: decimal">
+<li>Print the model.</li>
+</ol>
+<pre class="r"><code>lm_model</code></pre>
+<pre><code>Linear Regression Model Specification (regression)
+
+Computational engine: lm </code></pre>
+<ol start="5" style="list-style-type: decimal">
+<li>Create a workflow called <code>lm_workflow</code> using
+<code>workflow()</code> and add the <code>lm_recipe</code> and
+<code>lm_model</code> objects using <code>add_recipe()</code> and
+<code>add_model()</code>.</li>
+</ol>
+<pre class="r"><code># lm workflow 
+lm_workflow &lt;- 
+  XX() %&gt;% 
+  XX(XX) %&gt;% 
+  XX(XX)</code></pre>
+<pre class="r"><code># lm workflow 
+lm_workflow &lt;- 
+  workflow() %&gt;% 
+  add_recipe(lm_recipe) %&gt;% 
+  add_model(lm_model)</code></pre>
+<ol start="6" style="list-style-type: decimal">
+<li>Print the workflow.</li>
+</ol>
+<pre class="r"><code>lm_workflow</code></pre>
+<pre><code>══ Workflow ════════════════════════════════════════════════════════════════════
+Preprocessor: Recipe
+Model: linear_reg()
+
+── Preprocessor ────────────────────────────────────────────────────────────────
+1 Recipe Step
+
+• step_dummy()
+
+── Model ───────────────────────────────────────────────────────────────────────
+Linear Regression Model Specification (regression)
+
+Computational engine: lm </code></pre>
+<ol start="7" style="list-style-type: decimal">
+<li>Fit the model on the training data by passing the
+<code>lm_workflow</code> and the <code>aribnb_train</code> data to the
+<code>fit()</code> function and save the output as
+<code>price_lm</code>.</li>
+</ol>
+<pre class="r"><code># Fit the regression model
+XX &lt;-
+  XX %&gt;% 
+  XX(XX)</code></pre>
+<pre class="r"><code># Fit the regression model
+price_lm &lt;-
+  lm_workflow %&gt;% 
+  fit(airbnb_train)</code></pre>
+<ol start="8" style="list-style-type: decimal">
+<li>Using the <code>tidy()</code> function on the <code>price_lm</code>
+object, take a look at the parameter estimates.</li>
+</ol>
+<pre class="r"><code># regression model parameters
+tidy(price_lm)</code></pre>
+<pre><code># A tibble: 35 × 5
+   term                    estimate std.error statistic  p.value
+   &lt;chr&gt;                      &lt;dbl&gt;     &lt;dbl&gt;     &lt;dbl&gt;    &lt;dbl&gt;
+ 1 (Intercept)            -187.       92.3       -2.03  4.30e- 2
+ 2 accommodates             27.2       2.28      11.9   1.60e-30
+ 3 bedrooms                 12.7       5.86       2.17  3.02e- 2
+ 4 bathrooms                17.9       9.49       1.89  5.96e- 2
+ 5 cleaning_fee             -0.301     0.114     -2.64  8.40e- 3
+ 6 availability_90_days     -0.0576    0.0965    -0.597 5.51e- 1
+ 7 host_response_rate       -0.205     0.351     -0.583 5.60e- 1
+ 8 host_superhostTRUE       10.0       6.47       1.55  1.22e- 1
+ 9 host_listings_count       0.411     0.736      0.558 5.77e- 1
+10 review_scores_accuracy    9.83      7.96       1.24  2.17e- 1
+# … with 25 more rows</code></pre>
+<ol start="9" style="list-style-type: decimal">
+<li>Using the <code>predict()</code> function, to extract the model
+predictions from <code>price_lm</code> and bind them together with the
+true values from <code>airbnb_train</code> using
+<code>bind_cols()</code>.</li>
+</ol>
+<pre class="r"><code># get predicted values from training data
+lm_pred &lt;-
+  XX %&gt;% 
+  XX(XX) %&gt;% 
+  XX(airbnb_train %&gt;% select(price))</code></pre>
+<pre class="r"><code># get predicted values from training data
+lm_pred &lt;-
+  price_lm %&gt;% 
+  predict(new_data = airbnb_test) %&gt;% 
+  bind_cols(airbnb_test %&gt;% select(price))</code></pre>
+<ol start="10" style="list-style-type: decimal">
+<li>Using the <code>metrics()</code> function, evaluate the model
+performance. Pass it the <code>price</code> variable as
+<code>truth</code> and the <code>.pred</code> variable as
+<code>estimate</code>.</li>
+</ol>
+<pre class="r"><code># evaluate performance
+XX(lm_pred, truth = XX, estimate = XX)</code></pre>
+<pre class="r"><code># evaluate performance
+metrics(lm_pred, truth = price, estimate = .pred)</code></pre>
+<pre><code># A tibble: 3 × 3
+  .metric .estimator .estimate
+  &lt;chr&gt;   &lt;chr&gt;          &lt;dbl&gt;
+1 rmse    standard      41.6  
+2 rsq     standard       0.468
+3 mae     standard      30.9  </code></pre>
+<ol start="11" style="list-style-type: decimal">
+<li>Using the following code, plot the fitted against the true value, to
+judge how well our model performed.</li>
+</ol>
+<pre class="r"><code># use the lm_pred object to generate the plot
+ggplot(lm_pred, aes(x = .pred, y = price)) + 
+  # Create a diagonal line:
+  geom_abline(lty = 2) + 
+  # Add data points:
+  geom_point(alpha = 0.5) + 
+  labs(title = &quot;Regression: All Features&quot;,
+       subtitle = &quot;Line indicates perfect performance&quot;,
+       x = &quot;Predicted Airbnb Prices in $&quot;,
+       y = &quot;True Airbnb Prices in $&quot;) +
+  # Scale and size the x- and y-axis uniformly:
+  coord_obs_pred()</code></pre>
+<p><img src="Prediction_practical_files/figure-html/unnamed-chunk-26-1.png" width="576" style="display: block; margin: auto;" /></p>
+</div>
+<div id="decision-trees" class="section level4">
+<h4>Decision Trees</h4>
+<ol start="12" style="list-style-type: decimal">
+<li>Decision trees don’t need categorical variables to be dummy coded.
+Create a new recipe called <code>tree_recipe</code> that uses all
+available predictors to predict the <code>price</code> of Airbnbs based
+on the <code>airbnb_train</code> data. In addition, use the
+pre-proccessing step
+<code>step_other(all_nominal_predictors(), threshold = 0.005)</code>.
+This will lump together all cases of categorical variables that make up
+less than 0.5% of the cases into an <code>other</code> category. This
+will prevent issues when assessing performance using the test set.</li>
+</ol>
+<pre class="r"><code>tree_recipe &lt;-
+  recipe(price ~ ., data = airbnb_train) %&gt;% 
+  step_other(all_nominal_predictors(), threshold = 0.005)</code></pre>
+<ol start="13" style="list-style-type: decimal">
+<li>Set up a decision tree model. Use the <code>decision_tree()</code>
+function to specify the model, and set the engine to <code>rpart</code>.
+Set the mode to <code>"regression"</code>. Call the output
+<code>dt_model</code>.</li>
+</ol>
+<pre class="r"><code># set up the decision tree model
+XX &lt;- 
+  XX() %&gt;% 
+  XX(XX) %&gt;% 
+  XX(XX)</code></pre>
+<pre class="r"><code># set up the decision tree model
+dt_model &lt;- 
+  decision_tree() %&gt;% 
+  set_engine(&quot;rpart&quot;) %&gt;% 
+  set_mode(&quot;regression&quot;)</code></pre>
+<ol start="14" style="list-style-type: decimal">
+<li>Create a new workflow <code>dt_workflow</code>, where you add the
+newly created <code>tree_recipe</code> and the
+<code>dt_model</code>.</li>
+</ol>
+<pre class="r"><code># decision tree workflow 
+dt_workflow &lt;- 
+  XX() %&gt;% 
+  XX(XX) %&gt;% 
+  XX(XX)</code></pre>
+<pre class="r"><code># decision tree workflow  
+dt_workflow &lt;- 
+  workflow() %&gt;% 
+  add_recipe(tree_recipe) %&gt;% 
+  add_model(dt_model)</code></pre>
+<ol start="15" style="list-style-type: decimal">
+<li>Print the workflow.</li>
+</ol>
+<pre class="r"><code>dt_workflow</code></pre>
+<pre><code>══ Workflow ════════════════════════════════════════════════════════════════════
+Preprocessor: Recipe
+Model: decision_tree()
+
+── Preprocessor ────────────────────────────────────────────────────────────────
+1 Recipe Step
+
+• step_other()
+
+── Model ───────────────────────────────────────────────────────────────────────
+Decision Tree Model Specification (regression)
+
+Computational engine: rpart </code></pre>
+<ol start="16" style="list-style-type: decimal">
+<li>Fit the model on the training data by passing the
+<code>dt_workflow</code> and the <code>aribnb_train</code> data to the
+<code>fit()</code> function and save the output as
+<code>price_dt</code>.</li>
+</ol>
+<pre class="r"><code># Fit the decision tree
+XX &lt;-
+  XX %&gt;% 
+  XX(XX)</code></pre>
+<pre class="r"><code># Fit the decision tree
+price_dt &lt;-
+  dt_workflow %&gt;% 
+  fit(airbnb_train)</code></pre>
+<ol start="17" style="list-style-type: decimal">
+<li>The <code>tidy()</code> function won’t work with decision tree fit
+objects, but we can print the output using the following code:</li>
+</ol>
+<pre class="r"><code># print the decision tree output
+price_dt %&gt;% 
+  extract_fit_parsnip() %&gt;% 
+  pluck(&quot;fit&quot;)</code></pre>
+<pre><code>n= 893 
+
+node), split, n, deviance, yval
+      * denotes terminal node
+
+ 1) root 893 9230000  73.7  
+   2) accommodates&lt; 11.5 884 1920000  68.1  
+     4) accommodates&lt; 3.5 615  457000  50.7 *
+     5) accommodates&gt;=3.5 269  853000 108.0  
+      10) accommodates&lt; 5.5 180  318000  91.0 *
+      11) accommodates&gt;=5.5 89  383000 142.0 *
+   3) accommodates&gt;=11.5 9 4490000 631.0 *</code></pre>
+<ol start="18" style="list-style-type: decimal">
+<li>Alternatively, we can pass the object you printed in the previous
+task in the <code>rpart.plot</code> function. This will create a
+visualization of the decision tree (in this case, the plot does not look
+very usefull, but depending on the variables used by the model it can
+be).</li>
+</ol>
+<pre class="r"><code>price_dt %&gt;% 
+  extract_fit_parsnip() %&gt;% 
+  pluck(&quot;fit&quot;) %&gt;% 
+  rpart.plot()</code></pre>
+<p><img src="Prediction_practical_files/figure-html/unnamed-chunk-36-1.png" width="576" style="display: block; margin: auto;" /></p>
+<ol start="19" style="list-style-type: decimal">
+<li>Using the <code>predict()</code> function, to extract the model
+predictions from <code>price_dt</code> and bind them together with the
+true values from <code>airbnb_train</code> using
+<code>bind_cols()</code>.</li>
+</ol>
+<pre class="r"><code># get predicted values from training data
+dt_pred &lt;-
+  XX %&gt;% 
+  XX(XX) %&gt;% 
+  XX(airbnb_train %&gt;% select(price))</code></pre>
+<pre class="r"><code># get predicted values from training data
+dt_pred &lt;-
+  price_dt %&gt;% 
+  predict(new_data = airbnb_train) %&gt;% 
+  bind_cols(airbnb_train %&gt;% select(price))</code></pre>
+<ol start="20" style="list-style-type: decimal">
+<li>Using the <code>metrics()</code> function, evaluate the model
+performance. Pass it the <code>price</code> variable as
+<code>truth</code> and the <code>.pred</code> variable as
+<code>estimate</code>.</li>
+</ol>
+<pre class="r"><code># evaluate performance
+XX(dt_pred, truth = XX, estimate = XX)</code></pre>
+<pre class="r"><code># evaluate performance
+metrics(dt_pred, truth = price, estimate = .pred)</code></pre>
+<pre><code># A tibble: 3 × 3
+  .metric .estimator .estimate
+  &lt;chr&gt;   &lt;chr&gt;          &lt;dbl&gt;
+1 rmse    standard      79.5  
+2 rsq     standard       0.388
+3 mae     standard      30.2  </code></pre>
+<ol start="21" style="list-style-type: decimal">
+<li><p>How does the model performance of the decision tree compare to
+the one of the regression model, based on the training data?</p></li>
+<li><p>Using the following code, plot the fitted against the true value,
+to judge how well our model performed.</p></li>
+</ol>
+<pre class="r"><code># use the dt_pred object to generate the plot
+ggplot(dt_pred, aes(x = .pred, y = price)) + 
+  # Create a diagonal line:
+  geom_abline(lty = 2) + 
+  # Add data points:
+  geom_point(alpha = 0.5) + 
+  labs(title = &quot;Decision Tree: All Features&quot;,
+       subtitle = &quot;Line indicates perfect performance&quot;,
+       x = &quot;Predicted Airbnb Prices in $&quot;,
+       y = &quot;True Airbnb Prices in $&quot;) +
+  # Scale and size the x- and y-axis uniformly:
+  coord_obs_pred()</code></pre>
+<p><img src="Prediction_practical_files/figure-html/unnamed-chunk-41-1.png" width="576" style="display: block; margin: auto;" /></p>
+</div>
+<div id="random-forests" class="section level4">
+<h4>Random Forests</h4>
+<ol start="22" style="list-style-type: decimal">
+<li>As random forests are made up of many decision trees, we can use the
+recipe we defined for the decision tree, so we only have to set up a
+random forest model. Use the <code>rand_forest()</code> function to
+specify the model, and set the engine to <code>"ranger"</code>. Set the
+mode to <code>"regression"</code>. Call the output
+<code>rf_model</code>.</li>
+</ol>
+<pre class="r"><code># set up the random forest model
+XX &lt;- 
+  XX() %&gt;% 
+  XX(XX) %&gt;% 
+  XX(XX)</code></pre>
+<pre class="r"><code># set up the random forest model
+rf_model &lt;- 
+  rand_forest() %&gt;% 
+  set_engine(&quot;ranger&quot;) %&gt;% 
+  set_mode(&quot;regression&quot;)</code></pre>
+<ol start="23" style="list-style-type: decimal">
+<li>Create a new workflow <code>rf_workflow</code>, where you add the
+<code>tree_recipe</code> and the newly created
+<code>rf_model</code>.</li>
+</ol>
+<pre class="r"><code># random forest workflow 
+rf_workflow &lt;- 
+  XX() %&gt;% 
+  XX(XX) %&gt;% 
+  XX(XX)</code></pre>
+<pre class="r"><code># random forest workflow  
+rf_workflow &lt;- 
+  workflow() %&gt;% 
+  add_recipe(tree_recipe) %&gt;% 
+  add_model(rf_model)</code></pre>
+<ol start="24" style="list-style-type: decimal">
+<li>Print the workflow.</li>
+</ol>
+<pre class="r"><code>rf_workflow</code></pre>
+<pre><code>══ Workflow ════════════════════════════════════════════════════════════════════
+Preprocessor: Recipe
+Model: rand_forest()
+
+── Preprocessor ────────────────────────────────────────────────────────────────
+1 Recipe Step
+
+• step_other()
+
+── Model ───────────────────────────────────────────────────────────────────────
+Random Forest Model Specification (regression)
+
+Computational engine: ranger </code></pre>
+<ol start="25" style="list-style-type: decimal">
+<li>Fit the model on the training data by passing the
+<code>rf_workflow</code> and the <code>aribnb_train</code> data to the
+<code>fit()</code> function and save the output as
+<code>price_rf</code>.</li>
+</ol>
+<pre class="r"><code># Fit the random forest
+XX &lt;-
+  XX %&gt;% 
+  XX(XX)</code></pre>
+<pre class="r"><code># Fit the random forest
+price_rf &lt;-
+  rf_workflow %&gt;% 
+  fit(airbnb_train)</code></pre>
+<ol start="26" style="list-style-type: decimal">
+<li>The <code>tidy()</code> function won’t work with random forest fit
+objects, but we can print the output using the following code:</li>
+</ol>
+<pre class="r"><code># print the random forest output
+price_rf %&gt;% 
+  extract_fit_parsnip() %&gt;% 
+  pluck(&quot;fit&quot;)</code></pre>
+<pre><code>Ranger result
+
+Call:
+ ranger::ranger(x = maybe_data_frame(x), y = y, num.threads = 1,      verbose = FALSE, seed = sample.int(10^5, 1)) 
+
+Type:                             Regression 
+Number of trees:                  500 
+Sample size:                      893 
+Number of independent variables:  22 
+Mtry:                             4 
+Target node size:                 5 
+Variable importance mode:         none 
+Splitrule:                        variance 
+OOB prediction error (MSE):       5677 
+R squared (OOB):                  0.451 </code></pre>
+<ol start="27" style="list-style-type: decimal">
+<li>Using the <code>predict()</code> function, to extract the model
+predictions from <code>price_rf</code> and bind them together with the
+true values from <code>airbnb_train</code> using
+<code>bind_cols()</code>.</li>
+</ol>
+<pre class="r"><code># get predicted values from training data
+rf_pred &lt;-
+  XX %&gt;% 
+  XX(XX) %&gt;% 
+  XX(airbnb_train %&gt;% select(price))</code></pre>
+<pre class="r"><code># get predicted values from training data
+rf_pred &lt;-
+  price_rf %&gt;% 
+  predict(new_data = airbnb_train) %&gt;% 
+  bind_cols(airbnb_train %&gt;% select(price))</code></pre>
+<ol start="28" style="list-style-type: decimal">
+<li>Using the <code>metrics()</code> function, evaluate the model
+performance. Pass it the <code>price</code> variable as
+<code>truth</code> and the <code>.pred</code> variable as
+<code>estimate</code>.</li>
+</ol>
+<pre class="r"><code># evaluate performance
+XX(rf_pred, truth = XX, estimate = XX)</code></pre>
+<pre class="r"><code># evaluate performance
+metrics(rf_pred, truth = price, estimate = .pred)</code></pre>
+<pre><code># A tibble: 3 × 3
+  .metric .estimator .estimate
+  &lt;chr&gt;   &lt;chr&gt;          &lt;dbl&gt;
+1 rmse    standard      48.4  
+2 rsq     standard       0.803
+3 mae     standard      13.7  </code></pre>
+<ol start="29" style="list-style-type: decimal">
+<li><p>How does the training performance of the random forest compare to
+the ones of the other two models?</p></li>
+<li><p>Using the following code, plot the fitted against the true value,
+to judge how well our model performed.</p></li>
+</ol>
+<pre class="r"><code># use the rf_pred object to generate the plot
+ggplot(rf_pred, aes(x = .pred, y = price)) + 
+  # Create a diagonal line:
+  geom_abline(lty = 2) + 
+  # Add data points:
+  geom_point(alpha = 0.5) + 
+  labs(title = &quot;Random Forest: All Features&quot;,
+       subtitle = &quot;Line indicates perfect performance&quot;,
+       x = &quot;Predicted Airbnb Prices in $&quot;,
+       y = &quot;True Airbnb Prices in $&quot;) +
+  # Scale and size the x- and y-axis uniformly:
+  coord_obs_pred()</code></pre>
+<p><img src="Prediction_practical_files/figure-html/unnamed-chunk-54-1.png" width="576" style="display: block; margin: auto;" /></p>
+</div>
+</div>
+<div id="c---prediction" class="section level3">
+<h3>C - Prediction</h3>
+<ol style="list-style-type: decimal">
+<li>Before we compared the training performances. Now, let’s compare the
+out-of-sample performances on the test-set. First the linear regression.
+Using the <code>predict()</code> function, to extract the model
+predictions from <code>price_lm</code>, but this time based on
+<code>airbnb_test</code> and bind them together with the true values
+from <code>airbnb_test</code> using <code>bind_cols()</code>. Save the
+output as <code>lm_pred_test</code></li>
+</ol>
+<pre class="r"><code># get predicted values from test data
+lm_pred_test &lt;-
+  XX %&gt;% 
+  XX(XX) %&gt;% 
+  XX(airbnb_test %&gt;% select(price))</code></pre>
+<pre class="r"><code># get predicted values from test data
+lm_pred_test &lt;-
+  price_lm %&gt;% 
+  predict(new_data = airbnb_test) %&gt;% 
+  bind_cols(airbnb_test %&gt;% select(price))</code></pre>
+<ol start="2" style="list-style-type: decimal">
+<li>Repeat the step above with the decision tree and random forest fits,
+to create <code>dt_pred_test</code> and <code>rf_pred_test</code>.</li>
+</ol>
+<pre class="r"><code># decision tree
+dt_pred_test &lt;-
+  price_dt %&gt;% 
+  predict(new_data = airbnb_test) %&gt;% 
+  bind_cols(airbnb_test %&gt;% select(price))
+
+# random forest
+rf_pred_test &lt;-
+  price_rf %&gt;% 
+  predict(new_data = airbnb_test) %&gt;% 
+  bind_cols(airbnb_test %&gt;% select(price))</code></pre>
+<ol start="3" style="list-style-type: decimal">
+<li>Using the <code>metrics()</code> function, evaluate the models’
+out-of-sample performances. Pass it the <code>price</code> variable as
+<code>truth</code> and the <code>.pred</code> variable as
+<code>estimate</code>.</li>
+</ol>
+<pre class="r"><code># evaluate performance
+XX(XX, truth = XX, estimate = XX)
+XX(XX, truth = XX, estimate = XX)
+XX(XX, truth = XX, estimate = XX)</code></pre>
+<pre class="r"><code># evaluate performance
+metrics(lm_pred_test, truth = price, estimate = .pred)</code></pre>
+<pre><code># A tibble: 3 × 3
+  .metric .estimator .estimate
+  &lt;chr&gt;   &lt;chr&gt;          &lt;dbl&gt;
+1 rmse    standard      41.6  
+2 rsq     standard       0.468
+3 mae     standard      30.9  </code></pre>
+<pre class="r"><code>metrics(dt_pred_test, truth = price, estimate = .pred)</code></pre>
+<pre><code># A tibble: 3 × 3
+  .metric .estimator .estimate
+  &lt;chr&gt;   &lt;chr&gt;          &lt;dbl&gt;
+1 rmse    standard      45.7  
+2 rsq     standard       0.208
+3 mae     standard      26.7  </code></pre>
+<pre class="r"><code>metrics(rf_pred_test, truth = price, estimate = .pred)</code></pre>
+<pre><code># A tibble: 3 × 3
+  .metric .estimator .estimate
+  &lt;chr&gt;   &lt;chr&gt;          &lt;dbl&gt;
+1 rmse    standard      26.9  
+2 rsq     standard       0.601
+3 mae     standard      19.3  </code></pre>
+<ol start="4" style="list-style-type: decimal">
+<li>Which model performs the best based on the test data?</li>
+</ol>
+<pre class="r"><code># The random forest predictions are still the most accurate.</code></pre>
+<ol start="5" style="list-style-type: decimal">
+<li>Which performance stays the most constant?</li>
+</ol>
+<pre class="r"><code># The regression model&#39;s performance is very similar in the training and 
+# test data. The test performance of the decision tree drops somewhat and
+# the test performance of the random forest has the most significant drop
+# in comparison to it&#39;s training performance.</code></pre>
+<ol start="5" style="list-style-type: decimal">
+<li>Which of the three models has the best prediction performance?</li>
+</ol>
+<pre class="r"><code># The random forest predictions are still the most accurate.</code></pre>
+</div>
+<div id="d---classification" class="section level3">
+<h3>D - Classification</h3>
+<ol style="list-style-type: decimal">
+<li>Let’s again turn to a classification example. We will again focus on
+the <code>host_superhost</code> variable. Like in the previous
+practical, we first have to change our criterion to be a
+<code>factor</code>. We again explicitly specify <code>TRUE</code> as
+first level.</li>
+</ol>
+<pre class="r"><code># Recode host_superhost to be a factor with TRUE as first level
+airbnb &lt;-
+  airbnb %&gt;% 
+  mutate(host_superhost = factor(host_superhost, levels = c(TRUE, FALSE)))</code></pre>
+<ol start="2" style="list-style-type: decimal">
+<li>Create a split that balances the proportion of the two levels of
+<code>host_superhost</code> and that uses 80% of the data for the
+training.</li>
+</ol>
+<pre class="r"><code>airbnb_split &lt;- initial_split(XX, prop = XX, strata = XX)</code></pre>
+<pre class="r"><code>airbnb_split &lt;- initial_split(airbnb, prop = .8, strata = host_superhost)</code></pre>
+<ol start="3" style="list-style-type: decimal">
+<li>From the initial split object, creat a training and a test set, and
+save them as <code>airbnb_train</code> and
+<code>airbnb_test</code>.</li>
+</ol>
+<pre class="r"><code>XX &lt;- XX(XX)
+XX &lt;- XX(XX)</code></pre>
+<pre class="r"><code>airbnb_train &lt;- training(airbnb_split)
+airbnb_test &lt;- testing(airbnb_split)</code></pre>
+</div>
+<div id="f---fitting" class="section level3">
+<h3>F - Fitting</h3>
+<div id="regression-1" class="section level4">
+<h4>Regression</h4>
+<ol style="list-style-type: decimal">
+<li>Specify the recipe for a logistic regression. Specifically…</li>
+</ol>
+<ul>
+<li>set the formula to <code>host_superhost ~ .</code>, to use all
+possible features</li>
+<li>use the <code>airbnb_train</code> data</li>
+<li>add <code>step_dummy(all_nominal_predictors())</code> to pre-process
+nominal features</li>
+<li>call the new object <code>logistic_recipe</code></li>
+</ul>
+<pre class="r"><code># create new recipe
+XX &lt;- 
+  XX(XX, data = XX) %&gt;% 
+  XX(XX())</code></pre>
+<pre class="r"><code># create new recipe
+logistic_recipe &lt;- 
+  recipe(host_superhost ~ ., data = airbnb_train) %&gt;% 
+  step_dummy(all_nominal_predictors())</code></pre>
+<ol start="2" style="list-style-type: decimal">
+<li>Print the new recipe.</li>
+</ol>
+<pre class="r"><code>logistic_recipe</code></pre>
+<pre><code>Recipe
+
+Inputs:
+
+      role #variables
+   outcome          1
+ predictor         22
+
+Operations:
+
+Dummy variables from all_nominal_predictors()</code></pre>
+<ol start="3" style="list-style-type: decimal">
+<li>Create a new model called <code>logistic_model</code>, with the
+model type <code>logistic_reg</code>, the engine <code>"glm"</code>, and
+mode <code>"classification"</code>.</li>
+</ol>
+<pre class="r"><code># create a logistic regression model 
+XX_model &lt;-
+  XX() %&gt;% 
+  set_XX(XX) %&gt;% 
+  set_XX(XX)</code></pre>
+<pre class="r"><code># create a logistic regression model 
+logistic_model &lt;-
+  logistic_reg() %&gt;% 
+  set_engine(&quot;glm&quot;) %&gt;% 
+  set_mode(&quot;classification&quot;)</code></pre>
+<ol start="4" style="list-style-type: decimal">
+<li>Create a new workflow called <code>logistic_workflow</code>, where
+you add the <code>logistic_model</code> and the
+<code>logistic_recipe</code> together.</li>
+</ol>
+<pre class="r"><code># create logistic_workflow 
+logistic_workflow &lt;- 
+  workflow() %&gt;% 
+  add_recipe(logistic_recipe) %&gt;% 
+  add_model(logistic_model)</code></pre>
+<ol start="6" style="list-style-type: decimal">
+<li>Fit the model on the training data (<code>airbnb_train</code>) using
+<code>fit()</code>. Save the result as <code>superhost_glm</code>.</li>
+</ol>
+<pre class="r"><code># Fit the logistic regression model
+superhost_glm &lt;-
+  logistic_workflow %&gt;% 
+  fit(airbnb_train)</code></pre>
+<ol start="7" style="list-style-type: decimal">
+<li>Evaluate the training performance with the <code>metrics()</code>
+function to do so. First, we again create a dataset containing the
+predicted and true values. This time, we call the <code>predict()</code>
+function twice: once to obtain the predicted classes, and once to obtain
+the probabilities, with which the classes are predicted.</li>
+</ol>
+<pre class="r"><code># Get fitted values from the Private_glm object
+logistic_pred &lt;- 
+  predict(superhost_glm, airbnb_train, type = &quot;prob&quot;) %&gt;% 
+  bind_cols(predict(superhost_glm, airbnb_train)) %&gt;% 
+  bind_cols(airbnb_train %&gt;% select(host_superhost))</code></pre>
+<ol start="8" style="list-style-type: decimal">
+<li>Let’s look at different performance metrics. Use the
+<code>metrics()</code> function and pass it the
+<code>host_superhost</code> variable as <code>truth</code>, the
+<code>.pred_class</code> variable as <code>estimate</code>, and
+<code>.pred_TRUE</code> as last argument.</li>
+</ol>
+<pre class="r"><code>XX(logistic_pred, truth = XX, estimate = XX, XX)</code></pre>
+<pre class="r"><code>metrics(logistic_pred, truth = host_superhost, estimate = .pred_class, .pred_TRUE)</code></pre>
+<pre><code># A tibble: 4 × 3
+  .metric     .estimator .estimate
+  &lt;chr&gt;       &lt;chr&gt;          &lt;dbl&gt;
+1 accuracy    binary         0.754
+2 kap         binary         0.492
+3 mn_log_loss binary         0.480
+4 roc_auc     binary         0.841</code></pre>
+<ol start="9" style="list-style-type: decimal">
+<li>Plot the ROC-curve using the <code>roc_curve()</code> function, to
+create sensitivity and specificity values of different cut-offs, and
+pass this into the <code>autoplot()</code> function, to plot the curve.
+Add the <code>host_superhost</code> column as <code>truth</code>, and
+the <code>.pred_TRUE</code> column as third, unnamed argument, to the
+<code>roc_curve()</code> function and plot the curve.</li>
+</ol>
+<pre class="r"><code>XX(logistic_pred, truth = XX, XX) %&gt;% 
+  autoplot()</code></pre>
+<pre class="r"><code>roc_curve(logistic_pred, truth = host_superhost, .pred_TRUE) %&gt;% 
+  autoplot()</code></pre>
+<p><img src="Prediction_practical_files/figure-html/unnamed-chunk-79-1.png" width="576" style="display: block; margin: auto;" /></p>
+</div>
+<div id="decision-tree" class="section level4">
+<h4>Decision Tree</h4>
+<ol start="10" style="list-style-type: decimal">
+<li>Create a new recipe called <code>tree_recipe</code> that uses all
+available predictors to predict <code>host_superhost</code>. In
+addition, again use the pre-processing step
+<code>step_other(all_nominal_predictors(), threshold = 0.005)</code>.</li>
+</ol>
+<pre class="r"><code>tree_recipe &lt;-
+  recipe(host_superhost ~ ., data = airbnb_train) %&gt;% 
+  step_other(all_nominal_predictors(), threshold = 0.005)</code></pre>
+<ol start="11" style="list-style-type: decimal">
+<li>Set up a decision tree model. Use the <code>decision_tree()</code>
+function to specify the model, and set the engine to <code>rpart</code>.
+Set the mode to <code>"classification"</code>. Call the output
+<code>dt_model</code>.</li>
+</ol>
+<pre class="r"><code># set up the decision tree model
+dt_model &lt;- 
+  decision_tree() %&gt;% 
+  set_engine(&quot;rpart&quot;) %&gt;% 
+  set_mode(&quot;classification&quot;)</code></pre>
+<ol start="12" style="list-style-type: decimal">
+<li>Create a new workflow <code>dt_workflow</code>, where you add the
+newly created <code>tree_recipe</code> and the
+<code>dt_model</code>.</li>
+</ol>
+<pre class="r"><code># decision tree workflow  
+dt_workflow &lt;- 
+  workflow() %&gt;% 
+  add_recipe(tree_recipe) %&gt;% 
+  add_model(dt_model)</code></pre>
+<ol start="13" style="list-style-type: decimal">
+<li>Print the workflow.</li>
+</ol>
+<pre class="r"><code>dt_workflow</code></pre>
+<pre><code>══ Workflow ════════════════════════════════════════════════════════════════════
+Preprocessor: Recipe
+Model: decision_tree()
+
+── Preprocessor ────────────────────────────────────────────────────────────────
+1 Recipe Step
+
+• step_other()
+
+── Model ───────────────────────────────────────────────────────────────────────
+Decision Tree Model Specification (classification)
+
+Computational engine: rpart </code></pre>
+<ol start="14" style="list-style-type: decimal">
+<li>Fit the model on the training data by passing the
+<code>dt_workflow</code> and the <code>aribnb_train</code> data to the
+<code>fit()</code> function and save the output as
+<code>superhost_dt</code>.</li>
+</ol>
+<pre class="r"><code># Fit the decision tree
+superhost_dt &lt;-
+  dt_workflow %&gt;% 
+  fit(airbnb_train)</code></pre>
+<ol start="15" style="list-style-type: decimal">
+<li>Evaluate the training performance with the <code>metrics()</code>
+function to do so. Use the code from the logistic regression above as
+template. Save the output as <code>dt_pred</code>.</li>
+</ol>
+<pre class="r"><code>dt_pred &lt;- 
+  predict(superhost_dt, airbnb_train, type = &quot;prob&quot;) %&gt;% 
+  bind_cols(predict(superhost_dt, airbnb_train)) %&gt;% 
+  bind_cols(airbnb_train %&gt;% select(host_superhost))</code></pre>
+<ol start="16" style="list-style-type: decimal">
+<li>Let’s look at different performance metrics. Use the
+<code>metrics()</code> function and pass it the
+<code>host_superhost</code> variable as <code>truth</code>, the
+<code>.pred_class</code> variable as <code>estimate</code>, and
+<code>.pred_TRUE</code> as last argument.</li>
+</ol>
+<pre class="r"><code>metrics(dt_pred, truth = host_superhost, estimate = .pred_class, .pred_TRUE)</code></pre>
+<pre><code># A tibble: 4 × 3
+  .metric     .estimator .estimate
+  &lt;chr&gt;       &lt;chr&gt;          &lt;dbl&gt;
+1 accuracy    binary         0.756
+2 kap         binary         0.495
+3 mn_log_loss binary         0.544
+4 roc_auc     binary         0.763</code></pre>
+<ol start="17" style="list-style-type: decimal">
+<li>Plot the ROC-curve using the <code>roc_curve()</code> function, to
+create sensitivity and specificity values of different cut-offs, and
+pass this into the <code>autoplot()</code> function, to plot the curve.
+Add the <code>host_superhost</code> column as <code>truth</code>, and
+the <code>.pred_TRUE</code> column as third, unnamed argument, to the
+<code>roc_curve()</code> function and plot the curve.</li>
+</ol>
+<pre class="r"><code>roc_curve(dt_pred, truth = host_superhost, .pred_TRUE) %&gt;% 
+  autoplot()</code></pre>
+<p><img src="Prediction_practical_files/figure-html/unnamed-chunk-87-1.png" width="576" style="display: block; margin: auto;" /></p>
+</div>
+<div id="random-forest" class="section level4">
+<h4>Random Forest</h4>
+<ol start="18" style="list-style-type: decimal">
+<li>Set up a random forest classification model. Use the
+<code>rand_forest()</code> function to specify the model, and set the
+engine to <code>ranger</code>. Set the mode to
+<code>"classification"</code>. Call the output
+<code>rf_model</code>.</li>
+</ol>
+<pre class="r"><code># set up the random forest model
+rf_model &lt;- 
+  rand_forest() %&gt;% 
+  set_engine(&quot;ranger&quot;) %&gt;% 
+  set_mode(&quot;classification&quot;)</code></pre>
+<ol start="19" style="list-style-type: decimal">
+<li>Create a new workflow <code>rf_workflow</code>, where you add the
+previously created <code>tree_recipe</code> and the new
+<code>rf_model</code>.</li>
+</ol>
+<pre class="r"><code># random forest workflow  
+rf_workflow &lt;- 
+  workflow() %&gt;% 
+  add_recipe(tree_recipe) %&gt;% 
+  add_model(rf_model)</code></pre>
+<ol start="20" style="list-style-type: decimal">
+<li>Print the workflow.</li>
+</ol>
+<pre class="r"><code>rf_workflow</code></pre>
+<pre><code>══ Workflow ════════════════════════════════════════════════════════════════════
+Preprocessor: Recipe
+Model: rand_forest()
+
+── Preprocessor ────────────────────────────────────────────────────────────────
+1 Recipe Step
+
+• step_other()
+
+── Model ───────────────────────────────────────────────────────────────────────
+Random Forest Model Specification (classification)
+
+Computational engine: ranger </code></pre>
+<ol start="21" style="list-style-type: decimal">
+<li>Fit the model on the training data by passing the
+<code>rf_workflow</code> and the <code>aribnb_train</code> data to the
+<code>fit()</code> function and save the output as
+<code>superhost_rf</code>.</li>
+</ol>
+<pre class="r"><code># Fit the random forest
+superhost_rf &lt;-
+  rf_workflow %&gt;% 
+  fit(airbnb_train)</code></pre>
+<ol start="22" style="list-style-type: decimal">
+<li>Evaluate the training performance with the <code>metrics()</code>
+function to do so and save the output as <code>rf_pred</code>.</li>
+</ol>
+<pre class="r"><code>rf_pred &lt;- 
+  predict(superhost_rf, airbnb_train, type = &quot;prob&quot;) %&gt;% 
+  bind_cols(predict(superhost_rf, airbnb_train)) %&gt;% 
+  bind_cols(airbnb_train %&gt;% select(host_superhost))</code></pre>
+<ol start="23" style="list-style-type: decimal">
+<li>Let’s look at different performance metrics. Use the
+<code>metrics()</code> function and pass it the
+<code>host_superhost</code> variable as <code>truth</code>, the
+<code>.pred_class</code> variable as <code>estimate</code>, and
+<code>.pred_TRUE</code> as last argument.</li>
+</ol>
+<pre class="r"><code>metrics(rf_pred, truth = host_superhost, estimate = .pred_class, .pred_TRUE)</code></pre>
+<pre><code># A tibble: 4 × 3
+  .metric     .estimator .estimate
+  &lt;chr&gt;       &lt;chr&gt;          &lt;dbl&gt;
+1 accuracy    binary         0.959
+2 kap         binary         0.915
+3 mn_log_loss binary         0.278
+4 roc_auc     binary         0.995</code></pre>
+<ol start="24" style="list-style-type: decimal">
+<li>Plot the ROC-curve using the <code>roc_curve()</code> function, to
+create sensitivity and specificity values of different cut-offs, and
+pass this into the <code>autoplot()</code> function, to plot the
+curve.</li>
+</ol>
+<pre class="r"><code>roc_curve(rf_pred, truth = host_superhost, .pred_TRUE) %&gt;% 
+  autoplot()</code></pre>
+<p><img src="Prediction_practical_files/figure-html/unnamed-chunk-94-1.png" width="576" style="display: block; margin: auto;" /></p>
+</div>
+</div>
+<div id="g---prediction" class="section level3">
+<h3>G - Prediction</h3>
+<ol style="list-style-type: decimal">
+<li>Before we compared the training performances. Now, let’s compare the
+out-of-sample performances on the test-set. First the logistic
+regression. Using the <code>predict()</code> function twice to extract
+the model predictions from <code>superhost_glm</code> (as done with the
+training data), but this time based on <code>airbnb_test</code> and bind
+them together with the true values from <code>airbnb_test</code> using
+<code>bind_cols()</code>. Save the output as
+<code>glm_pred_test</code></li>
+</ol>
+<pre class="r"><code># get predicted values from test data
+glm_pred_test &lt;-
+  superhost_glm %&gt;% 
+  predict(airbnb_test, type = &quot;prob&quot;) %&gt;% 
+  bind_cols(predict(superhost_glm, airbnb_test)) %&gt;% 
+  bind_cols(airbnb_test %&gt;% select(host_superhost))</code></pre>
+<ol start="2" style="list-style-type: decimal">
+<li>Repeat the step above with the decision tree and random forest fits,
+to create <code>dt_pred_test</code> and <code>rf_pred_test</code>.</li>
+</ol>
+<pre class="r"><code># decision tree
+dt_pred_test &lt;-
+  superhost_dt %&gt;% 
+  predict(airbnb_test, type = &quot;prob&quot;) %&gt;% 
+  bind_cols(predict(superhost_dt, airbnb_test)) %&gt;% 
+  bind_cols(airbnb_test %&gt;% select(host_superhost))
+
+# random forest
+rf_pred_test &lt;-
+  superhost_rf %&gt;% 
+  predict(airbnb_test, type = &quot;prob&quot;) %&gt;% 
+  bind_cols(predict(superhost_rf, airbnb_test)) %&gt;% 
+  bind_cols(airbnb_test %&gt;% select(host_superhost))</code></pre>
+<ol start="3" style="list-style-type: decimal">
+<li>Using the <code>metrics()</code> function, evaluate the models’
+out-of-sample performances. Pass it the <code>price</code> variable as
+<code>truth</code> and the <code>.pred</code> variable as
+<code>estimate</code>.</li>
+</ol>
+<pre class="r"><code># evaluate performance
+metrics(glm_pred_test, truth = host_superhost, estimate = .pred_class, .pred_TRUE)</code></pre>
+<pre><code># A tibble: 4 × 3
+  .metric     .estimator .estimate
+  &lt;chr&gt;       &lt;chr&gt;          &lt;dbl&gt;
+1 accuracy    binary         0.732
+2 kap         binary         0.443
+3 mn_log_loss binary         0.517
+4 roc_auc     binary         0.815</code></pre>
+<pre class="r"><code>metrics(dt_pred_test, truth = host_superhost, estimate = .pred_class, .pred_TRUE)</code></pre>
+<pre><code># A tibble: 4 × 3
+  .metric     .estimator .estimate
+  &lt;chr&gt;       &lt;chr&gt;          &lt;dbl&gt;
+1 accuracy    binary         0.732
+2 kap         binary         0.447
+3 mn_log_loss binary         0.581
+4 roc_auc     binary         0.716</code></pre>
+<pre class="r"><code>metrics(rf_pred_test, truth = host_superhost, estimate = .pred_class, .pred_TRUE)</code></pre>
+<pre><code># A tibble: 4 × 3
+  .metric     .estimator .estimate
+  &lt;chr&gt;       &lt;chr&gt;          &lt;dbl&gt;
+1 accuracy    binary         0.762
+2 kap         binary         0.503
+3 mn_log_loss binary         0.508
+4 roc_auc     binary         0.824</code></pre>
+<ol start="4" style="list-style-type: decimal">
+<li>Which model performs the best based on the test data?</li>
+</ol>
+<pre class="r"><code># The random forest predictions are still the most accurate.</code></pre>
+<ol start="5" style="list-style-type: decimal">
+<li>Plot the ROC-curves of the test performances.</li>
+</ol>
+<pre class="r"><code>roc_curve(glm_pred_test, truth = host_superhost, .pred_TRUE) %&gt;% 
+  autoplot()</code></pre>
+<p><img src="Prediction_practical_files/figure-html/unnamed-chunk-99-1.png" width="576" style="display: block; margin: auto;" /></p>
+<pre class="r"><code>roc_curve(dt_pred_test, truth = host_superhost, .pred_TRUE) %&gt;% 
+  autoplot()</code></pre>
+<p><img src="Prediction_practical_files/figure-html/unnamed-chunk-99-2.png" width="576" style="display: block; margin: auto;" /></p>
+<pre class="r"><code>roc_curve(rf_pred_test, truth = host_superhost, .pred_TRUE) %&gt;% 
+  autoplot()</code></pre>
+<p><img src="Prediction_practical_files/figure-html/unnamed-chunk-99-3.png" width="576" style="display: block; margin: auto;" /></p>
+</div>
+</div>
+<div id="examples" class="section level2">
+<h2>Examples</h2>
+<pre class="r"><code># Fitting and evaluating a regression model ------------------------------------
+
+# Step 0: Load packages---------------------------------------------------------
+library(tidyverse)    # Load tidyverse for dplyr and tidyr
+library(tidymodels)   # For ML mastery 
+tidymodels_prefer()   # To resolve common conflicts
+
+# Step 1: Load and Clean, and Explore Training data ----------------------------
+
+# I&#39;ll use the mpg dataset from the dplyr package 
+# Explore training data
+mpg        # Print the dataset
+View(mpg)  # Open in a new spreadsheet-like window 
+dim(mpg)   # Print dimensions
+names(mpg) # Print the names
+
+# Step 2: Split the data--------------------------------------------------------
+
+mpg_split &lt;- initial_split(mpg)
+data_train &lt;- training(mpg_split)
+data_test &lt;- testing(mpg_split)
+
+# Step 3: Define recipe --------------------------------------------------------
+
+# The recipe defines what to predict with what, and how to pre-process the data
+lm_recipe &lt;- 
+  recipe(hwy ~ year + cyl + displ + trans,  # Specify formula
+         data = data_train) %&gt;%             # Specify the data
+  step_dummy(all_nominal_predictors())      # Dummy code all categorical predictors
+
+
+# Step 4: Define model ---------------------------------------------------------
+
+# The model definition defines what kind of model we want to use and how to
+# fit it
+lm_model &lt;- 
+  linear_reg() %&gt;%        # Specify model type
+  set_engine(&quot;lm&quot;) %&gt;%    # Specify engine (often package name) to use
+  set_mode(&quot;regression&quot;)  # Specify whether it&#39;s a regressio or classification
+                          #  problem.
+
+# Step 5: Define workflow ------------------------------------------------------
+
+# The workflow combines model and recipe, so that we can fit the model
+lm_workflow &lt;- 
+  workflow() %&gt;%             # Initialize workflow
+  add_model(lm_model) %&gt;%    # Add the model to the workflow
+  add_recipe(lm_recipe)      # Add the recipe to the workflow
+
+# Step 6: Fit the model --------------------------------------------------------
+
+hwy_lm &lt;- 
+  lm_workflow %&gt;%   # Use the specified workflow
+  fit(data_train)   # Fit the model on the specified data
+
+tidy(hwy_lm)        # Look at summary information
+
+# Step 7: Assess fit -----------------------------------------------------------
+
+# Save model predictions and observed values
+lm_fitted &lt;- 
+  hwy_lm %&gt;%               # Model from which to extract predictions
+  predict(data_train) %&gt;%  # Obtain predictions, based on entered data (in this
+                           #  case, these predictions are not out-of-sample)
+  bind_cols(data_train %&gt;% select(hwy))  # Extract observed/true values
+
+# Obtain performance metrics
+metrics(lm_fitted, truth = hwy, estimate = .pred)
+
+# Step 8: Assess prediction performance ----------------------------------------
+# Save model predictions and observed values
+lm_pred &lt;- 
+  hwy_lm %&gt;%               # Model from which to extract predictions
+  predict(data_test) %&gt;%   # Obtain predictions, based on entered data (in this
+                           #  case, these predictions ARE out-of-sample)
+  bind_cols(data_test %&gt;% select(hwy))  # Extract observed/true values
+
+# Obtain performance metrics
+metrics(lm_pred, truth = hwy, estimate = .pred)</code></pre>
+</div>
+<div id="datasets" class="section level2">
+<h2>Datasets</h2>
+<p>The dataset contains data of the 1191 apartments that were added on
+Airbnb for the Berlin area in the year 2018.</p>
+<table>
+<colgroup>
+<col width="27%" />
+<col width="33%" />
+<col width="38%" />
+</colgroup>
+<thead>
+<tr class="header">
+<th align="left">File</th>
+<th align="left">Rows</th>
+<th align="left">Columns</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td align="left"><a
+href="https://raw.githubusercontent.com/therbootcamp/ML_2019Oct/master/1_Data/college_train.csv?token=AGKBX5SLEV3PLWUVQ4NCUB2427V36">airbnb.csv</a></td>
+<td align="left">1191</td>
+<td align="left">23</td>
+</tr>
+</tbody>
+</table>
+<div id="variable-description-of-airbnb" class="section level4">
+<h4>Variable description of <code>airbnb</code></h4>
+<table>
+<colgroup>
+<col width="26%" />
+<col width="73%" />
+</colgroup>
+<thead>
+<tr class="header">
+<th align="left">Name</th>
+<th align="left">Description</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td align="left">price</td>
+<td align="left">Price per night (in $s)</td>
+</tr>
+<tr class="even">
+<td align="left">accommodates</td>
+<td align="left">Number of people the airbnb accommodates</td>
+</tr>
+<tr class="odd">
+<td align="left">bedrooms</td>
+<td align="left">Number of bedrooms</td>
+</tr>
+<tr class="even">
+<td align="left">bathrooms</td>
+<td align="left">Number of bathrooms</td>
+</tr>
+<tr class="odd">
+<td align="left">cleaning_fee</td>
+<td align="left">Amount of cleaning fee (in $s)</td>
+</tr>
+<tr class="even">
+<td align="left">availability_90_days</td>
+<td align="left">How many of the following 90 days the airbnb is
+available</td>
+</tr>
+<tr class="odd">
+<td align="left">district</td>
+<td align="left">The district the Airbnb is located in</td>
+</tr>
+<tr class="even">
+<td align="left">host_respons_time</td>
+<td align="left">Host average response time</td>
+</tr>
+<tr class="odd">
+<td align="left">host_response_rate</td>
+<td align="left">Host response rate</td>
+</tr>
+<tr class="even">
+<td align="left">host_superhost</td>
+<td align="left">Whether host is a superhost TRUE/FALSE</td>
+</tr>
+<tr class="odd">
+<td align="left">host_listings_count</td>
+<td align="left">Number of listings the host has</td>
+</tr>
+<tr class="even">
+<td align="left">review_scores_accuracy</td>
+<td align="left">Accuracy of information rating [0, 10]</td>
+</tr>
+<tr class="odd">
+<td align="left">review_scores_cleanliness</td>
+<td align="left">Cleanliness rating [0, 10]</td>
+</tr>
+<tr class="even">
+<td align="left">review_scores_checkin</td>
+<td align="left">Check in rating [0, 10]</td>
+</tr>
+<tr class="odd">
+<td align="left">review_scores_communication</td>
+<td align="left">Communication rating [0, 10]</td>
+</tr>
+<tr class="even">
+<td align="left">review_scores_location</td>
+<td align="left">Location rating [0, 10]</td>
+</tr>
+<tr class="odd">
+<td align="left">review_scores_value</td>
+<td align="left">Value rating [0, 10]</td>
+</tr>
+<tr class="even">
+<td align="left">kitchen</td>
+<td align="left">Kitchen available TRUE/FALSE</td>
+</tr>
+<tr class="odd">
+<td align="left">tv</td>
+<td align="left">TV available TRUE/FALSE</td>
+</tr>
+<tr class="even">
+<td align="left">coffe_machine</td>
+<td align="left">Coffee machine available TRUE/FALSE</td>
+</tr>
+<tr class="odd">
+<td align="left">dishwasher</td>
+<td align="left">Dishwasher available TRUE/FALSE</td>
+</tr>
+<tr class="even">
+<td align="left">terrace</td>
+<td align="left">Terrace/balcony available TRUE/FALSE</td>
+</tr>
+<tr class="odd">
+<td align="left">bathtub</td>
+<td align="left">Bathtub available TRUE/FALSE</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+<div id="functions" class="section level2">
+<h2>Functions</h2>
+<div id="packages" class="section level3">
+<h3>Packages</h3>
+<table>
+<thead>
+<tr class="header">
+<th align="left">Package</th>
+<th align="left">Installation</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td align="left"><code>tidyverse</code></td>
+<td align="left"><code>install.packages("tidyverse")</code></td>
+</tr>
+<tr class="even">
+<td align="left"><code>tidymodels</code></td>
+<td align="left"><code>install.packages("tidymodels")</code></td>
+</tr>
+<tr class="odd">
+<td align="left"><code>rpart.plot</code></td>
+<td align="left"><code>install.packages("rpart.plot")</code></td>
+</tr>
+</tbody>
+</table>
+</div>
+<div id="functions-1" class="section level3">
+<h3>Functions</h3>
+<table>
+<colgroup>
+<col width="7%" />
+<col width="12%" />
+<col width="80%" />
+</colgroup>
+<thead>
+<tr class="header">
+<th align="left">Function</th>
+<th align="left">Package</th>
+<th align="left">Description</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td align="left"><code>read_csv()</code></td>
+<td align="left"><code>tidyverse</code></td>
+<td align="left">Read in data</td>
+</tr>
+<tr class="even">
+<td align="left"><code>mutate()</code></td>
+<td align="left"><code>tidyverse</code></td>
+<td align="left">Manipulate or create columns</td>
+</tr>
+<tr class="odd">
+<td align="left"><code>bind_cols()</code></td>
+<td align="left"><code>tidyverse</code></td>
+<td align="left">Bind columns together and return a tibble</td>
+</tr>
+<tr class="even">
+<td align="left"><code>pluck()</code></td>
+<td align="left"><code>tidyverse</code></td>
+<td align="left">Extract element from list</td>
+</tr>
+<tr class="odd">
+<td align="left"><code>initial_split()</code></td>
+<td align="left"><code>tidymodels</code></td>
+<td align="left">Initialize splitting dataset into training and test
+data</td>
+</tr>
+<tr class="even">
+<td align="left"><code>training()</code></td>
+<td align="left"><code>tidymodels</code></td>
+<td align="left">Create training data from <code>initial_split</code>
+output</td>
+</tr>
+<tr class="odd">
+<td align="left"><code>testing()</code></td>
+<td align="left"><code>tidymodels</code></td>
+<td align="left">Create training data from <code>initial_split</code>
+output</td>
+</tr>
+<tr class="even">
+<td
+align="left"><code>linear_reg()</code>/<code>logistic_reg()</code></td>
+<td align="left"><code>tidymodels</code></td>
+<td align="left">Initialize linear/logistic regression model</td>
+</tr>
+<tr class="odd">
+<td align="left"><code>set_engine()</code></td>
+<td align="left"><code>tidymodels</code></td>
+<td align="left">Specify which engine to use for the modeling (e.g.,
+“lm” to use <code>stats::lm()</code>, or “stan” to use
+<code>rstanarm::stan_lm()</code>)</td>
+</tr>
+<tr class="even">
+<td align="left"><code>set_mode()</code></td>
+<td align="left"><code>tidymodels</code></td>
+<td align="left">Specify whether it’s a regression or classification
+problem</td>
+</tr>
+<tr class="odd">
+<td align="left"><code>recipe()</code></td>
+<td align="left"><code>tidymodels</code></td>
+<td align="left">Initialize recipe</td>
+</tr>
+<tr class="even">
+<td align="left"><code>step_dummy()</code></td>
+<td align="left"><code>tidymodels</code></td>
+<td align="left">pre-process data into dummy variables</td>
+</tr>
+<tr class="odd">
+<td align="left"><code>workflow()</code></td>
+<td align="left"><code>tidymodels</code></td>
+<td align="left">Initialize workflow</td>
+</tr>
+<tr class="even">
+<td align="left"><code>add_recipe()</code></td>
+<td align="left"><code>tidymodels</code></td>
+<td align="left">Add recipe to workflow</td>
+</tr>
+<tr class="odd">
+<td align="left"><code>update_recipe()</code></td>
+<td align="left"><code>tidymodels</code></td>
+<td align="left">Update workflow with a new recipe</td>
+</tr>
+<tr class="even">
+<td align="left"><code>add_model()</code></td>
+<td align="left"><code>tidymodels</code></td>
+<td align="left">Add model to workflow</td>
+</tr>
+<tr class="odd">
+<td align="left"><code>fit()</code></td>
+<td align="left"><code>tidymodels</code></td>
+<td align="left">Fit model</td>
+</tr>
+<tr class="even">
+<td align="left"><code>tidy()</code></td>
+<td align="left"><code>tidymodels</code></td>
+<td align="left">Show model parameters</td>
+</tr>
+<tr class="odd">
+<td align="left"><code>predict()</code></td>
+<td align="left"><code>tidymodels</code></td>
+<td align="left">Create model predictions based on specified data</td>
+</tr>
+<tr class="even">
+<td align="left"><code>metrics()</code></td>
+<td align="left"><code>tidymodels</code></td>
+<td align="left">Evaluate model performance</td>
+</tr>
+<tr class="odd">
+<td align="left"><code>conf_mat()</code></td>
+<td align="left"><code>tidymodels</code></td>
+<td align="left">Create confusion matrix</td>
+</tr>
+<tr class="even">
+<td align="left"><code>roc_curve()</code></td>
+<td align="left"><code>tidymodels</code></td>
+<td align="left">Calculate sensitivity and specificity with different
+thresholds for ROC-curve</td>
+</tr>
+<tr class="odd">
+<td align="left"><code>autoplot()</code></td>
+<td align="left"><code>tidymodels</code></td>
+<td align="left">Plot methods for different objects such as those
+created from <code>roc_curve()</code> to plot the ROC-curve</td>
+</tr>
+<tr class="even">
+<td align="left"><code>rpart.plot()</code></td>
+<td align="left"><code>rpart.plot</code></td>
+<td align="left">Plot a decision tree from an <code>rpart</code> fit
+object</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+<div id="resources" class="section level2">
+<h2>Resources</h2>
+<ul>
+<li><a href="https://www.tidymodels.org/"><strong>tidymodels
+webpage</strong></a>: Can be used as cheat sheet. Also has some
+tutorials.</li>
+<li>The, not yet completed, book <a
+href="https://www.tmwr.org"><strong>Tidymodeling with R</strong></a>:
+More detailed introduction into the <code>tidymodels</code>
+framework.</li>
+</ul>
+</div>
+</div>
+
+
+
+
+</div>
+
+<script>
+
+// add bootstrap table styles to pandoc tables
+function bootstrapStylePandocTables() {
+  $('tr.odd').parent('tbody').parent('table').addClass('table table-condensed');
+}
+$(document).ready(function () {
+  bootstrapStylePandocTables();
+});
+
+
+</script>
+
+<!-- tabsets -->
+
+<script>
+$(document).ready(function () {
+  window.buildTabsets("TOC");
+});
+
+$(document).ready(function () {
+  $('.tabset-dropdown > .nav-tabs > li').click(function () {
+    $(this).parent().toggleClass('nav-tabs-open');
+  });
+});
+</script>
+
+<!-- code folding -->
+
+
+<!-- dynamically load mathjax for compatibility with self-contained -->
+<script>
+  (function () {
+    var script = document.createElement("script");
+    script.type = "text/javascript";
+    script.src  = "https://mathjax.rstudio.com/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML";
+    document.getElementsByTagName("head")[0].appendChild(script);
+  })();
+</script>
+
+</body>
+</html>

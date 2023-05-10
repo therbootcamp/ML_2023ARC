@@ -1,0 +1,1577 @@
+<!DOCTYPE html>
+
+<html>
+
+<head>
+
+<meta charset="utf-8" />
+<meta name="generator" content="pandoc" />
+<meta http-equiv="X-UA-Compatible" content="IE=EDGE" />
+
+
+
+
+<title>Fitting</title>
+
+<script src="Fitting_practical_files/header-attrs-2.16/header-attrs.js"></script>
+<script src="Fitting_practical_files/jquery-3.6.0/jquery-3.6.0.min.js"></script>
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<link href="Fitting_practical_files/bootstrap-3.3.5/css/bootstrap.min.css" rel="stylesheet" />
+<script src="Fitting_practical_files/bootstrap-3.3.5/js/bootstrap.min.js"></script>
+<script src="Fitting_practical_files/bootstrap-3.3.5/shim/html5shiv.min.js"></script>
+<script src="Fitting_practical_files/bootstrap-3.3.5/shim/respond.min.js"></script>
+<style>h1 {font-size: 34px;}
+       h1.title {font-size: 38px;}
+       h2 {font-size: 30px;}
+       h3 {font-size: 24px;}
+       h4 {font-size: 18px;}
+       h5 {font-size: 16px;}
+       h6 {font-size: 12px;}
+       code {color: inherit; background-color: rgba(0, 0, 0, 0.04);}
+       pre:not([class]) { background-color: white }</style>
+<script src="Fitting_practical_files/navigation-1.1/tabsets.js"></script>
+<link href="Fitting_practical_files/highlightjs-9.12.0/default.css" rel="stylesheet" />
+<script src="Fitting_practical_files/highlightjs-9.12.0/highlight.js"></script>
+
+<style type="text/css">
+  code{white-space: pre-wrap;}
+  span.smallcaps{font-variant: small-caps;}
+  span.underline{text-decoration: underline;}
+  div.column{display: inline-block; vertical-align: top; width: 50%;}
+  div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+  ul.task-list{list-style: none;}
+    </style>
+
+<style type="text/css">code{white-space: pre;}</style>
+<script type="text/javascript">
+if (window.hljs) {
+  hljs.configure({languages: []});
+  hljs.initHighlightingOnLoad();
+  if (document.readyState && document.readyState === "complete") {
+    window.setTimeout(function() { hljs.initHighlighting(); }, 0);
+  }
+}
+</script>
+
+
+
+
+
+
+<link rel="stylesheet" href="practical.css" type="text/css" />
+
+
+
+<style type = "text/css">
+.main-container {
+  max-width: 940px;
+  margin-left: auto;
+  margin-right: auto;
+}
+img {
+  max-width:100%;
+}
+.tabbed-pane {
+  padding-top: 12px;
+}
+.html-widget {
+  margin-bottom: 20px;
+}
+button.code-folding-btn:focus {
+  outline: none;
+}
+summary {
+  display: list-item;
+}
+details > summary > p:only-child {
+  display: inline;
+}
+pre code {
+  padding: 0;
+}
+</style>
+
+
+
+<!-- tabsets -->
+
+<style type="text/css">
+.tabset-dropdown > .nav-tabs {
+  display: inline-table;
+  max-height: 500px;
+  min-height: 44px;
+  overflow-y: auto;
+  border: 1px solid #ddd;
+  border-radius: 4px;
+}
+
+.tabset-dropdown > .nav-tabs > li.active:before {
+  content: "";
+  font-family: 'Glyphicons Halflings';
+  display: inline-block;
+  padding: 10px;
+  border-right: 1px solid #ddd;
+}
+
+.tabset-dropdown > .nav-tabs.nav-tabs-open > li.active:before {
+  content: "&#xe258;";
+  border: none;
+}
+
+.tabset-dropdown > .nav-tabs.nav-tabs-open:before {
+  content: "";
+  font-family: 'Glyphicons Halflings';
+  display: inline-block;
+  padding: 10px;
+  border-right: 1px solid #ddd;
+}
+
+.tabset-dropdown > .nav-tabs > li.active {
+  display: block;
+}
+
+.tabset-dropdown > .nav-tabs > li > a,
+.tabset-dropdown > .nav-tabs > li > a:focus,
+.tabset-dropdown > .nav-tabs > li > a:hover {
+  border: none;
+  display: inline-block;
+  border-radius: 4px;
+  background-color: transparent;
+}
+
+.tabset-dropdown > .nav-tabs.nav-tabs-open > li {
+  display: block;
+  float: none;
+}
+
+.tabset-dropdown > .nav-tabs > li {
+  display: none;
+}
+</style>
+
+<!-- code folding -->
+
+
+
+
+</head>
+
+<body>
+
+
+<div class="container-fluid main-container">
+
+
+
+
+<div id="header">
+
+
+
+<h1 class="title toc-ignore">Fitting</h1>
+<h4 class="author"><table style='table-layout:fixed;width:100%;border:0;padding:0;margin:0'>
+<col width='10%'>
+<col width='10%'>
+<tr style="border:none">
+<td style="display:block;width:100%;text-align:left;vertical-align:bottom;padding:0;margin:0;border:none" nowrap>
+<font style='font-style:normal'>Machine Learning with R</font><br>
+<a href='https://therbootcamp.github.io/ML_2022DHLab/'>
+<i class='fas fa-clock' style='font-size:.9em;' ></i> </a>
+<a href='https://therbootcamp.github.io'>
+<i class='fas fa-home' style='font-size:.9em;'></i> </a>
+<a href='mailto:therbootcamp@gmail.com'>
+<i class='fas fa-envelope' style='font-size: .9em;'></i> </a>
+<a href='https://www.linkedin.com/company/basel-r-bootcamp/'>
+<i class='fab fa-linkedin' style='font-size: .9em;'></i> </a>
+<a href='https://therbootcamp.github.io'>
+<font style='font-style:normal'>The R Bootcamp @ DHLab</font> </a>
+</td>
+<td style="width:100%;vertical-align:bottom;text-align:right;padding:0;margin:0;border:none">
+<img src='https://raw.githubusercontent.com/therbootcamp/therbootcamp.github.io/master/_sessions/_image/by-sa.png' style='height:15px;width:80px'/>
+</td>
+</tr>
+</table></h4>
+
+</div>
+
+
+<p align="center">
+<img width="100%" src="image/fitting_dirk.001.png" margin=0><br>
+<font style="font-size:10px">adapted from <a
+href="https://xkcd.com/">xkcd.com</a></font>
+</p>
+<div id="section" class="section level1 tabset">
+<h1 class="tabset"></h1>
+<div id="overview" class="section level2">
+<h2>Overview</h2>
+<p>In this practical, you’ll practice the basics of fitting and
+exploring regression models in R using the <code>tidymodels</code>
+package.</p>
+<p>By the end of this practical you will know how to:</p>
+<ol style="list-style-type: decimal">
+<li>Fit a regression model to training data.</li>
+<li>Explore your fit object with generic functions.</li>
+<li>Evaluate the model’s fitting performance using accuracy measures
+such as RMSE and MAE.</li>
+<li>Explore the effects of adding additional features.</li>
+</ol>
+</div>
+<div id="tasks" class="section level2">
+<h2>Tasks</h2>
+<div id="a---setup" class="section level3">
+<h3>A - Setup</h3>
+<ol style="list-style-type: decimal">
+<li>Open your <code>TheRBootcamp</code> R project. It should already
+have the folders <code>1_Data</code> and <code>2_Code</code>. Make sure
+that the data file(s) listed in the <code>Datasets</code> section are in
+your <code>1_Data</code> folder</li>
+</ol>
+<pre class="r"><code># Done!</code></pre>
+<ol start="2" style="list-style-type: decimal">
+<li>Open a new R script and save it as a new file called
+<code>Fitting_practical.R</code> in the <code>2_Code</code> folder.</li>
+</ol>
+<pre class="r"><code># Done!</code></pre>
+<ol start="3" style="list-style-type: decimal">
+<li>Using <code>library()</code> load the set of packages for this
+practical listed in the packages section above.</li>
+</ol>
+<pre class="r"><code># Load packages necessary for this script
+library(tidyverse)
+library(tidymodels)
+tidymodels_prefer() # to resolve common conflicts</code></pre>
+<ol start="4" style="list-style-type: decimal">
+<li>For this practical, we’ll use a dataset of apartments that were
+added to Airbnb in 2018 and are located in Berlin. The data is stored in
+<code>airbnb.csv</code>. Using the following template, load the dataset
+into R as <code>airbnb</code>:</li>
+</ol>
+<pre class="r"><code># Load in airbnb.csv data as airbnb
+airbnb &lt;- read_csv(file = &quot;1_Data/airbnb.csv&quot;)</code></pre>
+<ol start="5" style="list-style-type: decimal">
+<li>Take a look at the first few rows of the dataset by printing it to
+the console.</li>
+</ol>
+<pre class="r"><code>airbnb</code></pre>
+<pre><code># A tibble: 1,191 × 23
+   price accom…¹ bedro…² bathr…³ clean…⁴ avail…⁵ distr…⁶ host_…⁷ host_…⁸ host_…⁹
+   &lt;dbl&gt;   &lt;dbl&gt;   &lt;dbl&gt;   &lt;dbl&gt;   &lt;dbl&gt;   &lt;dbl&gt; &lt;chr&gt;   &lt;chr&gt;     &lt;dbl&gt; &lt;lgl&gt;  
+ 1    99       3       1     2        30       3 Pankow  within…     100 TRUE   
+ 2    61       4       1     1        35       0 Mitte   within…     100 TRUE   
+ 3    50       2       2     0.5       0       0 Mitte   within…     100 FALSE  
+ 4    30       2       1     1.5      25      31 Mitte   within…      63 FALSE  
+ 5    60       2       1     1        40      87 Tempel… within…     100 FALSE  
+ 6    45       2       1     1.5      10       0 Friedr… within…      83 FALSE  
+ 7    32       2       0     1         0      14 Lichte… within…     100 FALSE  
+ 8    62       6       2     1        30      76 Pankow  within…     100 TRUE   
+ 9    50       2       1     1         0      53 Charlo… within…     100 TRUE   
+10    60       2       1     1         0      16 Charlo… within…     100 FALSE  
+# … with 1,181 more rows, 13 more variables: host_listings_count &lt;dbl&gt;,
+#   review_scores_accuracy &lt;dbl&gt;, review_scores_cleanliness &lt;dbl&gt;,
+#   review_scores_checkin &lt;dbl&gt;, review_scores_communication &lt;dbl&gt;,
+#   review_scores_location &lt;dbl&gt;, review_scores_value &lt;dbl&gt;, kitchen &lt;chr&gt;,
+#   tv &lt;chr&gt;, coffe_machine &lt;chr&gt;, dishwasher &lt;chr&gt;, terrace &lt;chr&gt;,
+#   bathtub &lt;chr&gt;, and abbreviated variable names ¹​accommodates, ²​bedrooms,
+#   ³​bathrooms, ⁴​cleaning_fee, ⁵​availability_90_days, ⁶​district, …</code></pre>
+<ol start="6" style="list-style-type: decimal">
+<li>Print the numbers of rows and columns using the <code>dim()</code>
+function.</li>
+</ol>
+<pre class="r"><code># Print number of rows and columns of airbnb
+dim(XX)</code></pre>
+<pre class="r"><code># Print number of rows and columns of airbnb
+dim(airbnb)</code></pre>
+<pre><code>[1] 1191   23</code></pre>
+<ol start="7" style="list-style-type: decimal">
+<li>Open the dataset in a new window using <code>View()</code>. How does
+it look?</li>
+</ol>
+<pre class="r"><code>View(XX)</code></pre>
+<ol start="8" style="list-style-type: decimal">
+<li>Familiarize yourself with the names of the dataset by looking at the
+feature names using <code>names()</code>.</li>
+</ol>
+<pre class="r"><code># Print column names of airbnb
+names(XX)</code></pre>
+<pre class="r"><code># Print column names of airbnb
+names(airbnb)</code></pre>
+<pre><code> [1] &quot;price&quot;                       &quot;accommodates&quot;               
+ [3] &quot;bedrooms&quot;                    &quot;bathrooms&quot;                  
+ [5] &quot;cleaning_fee&quot;                &quot;availability_90_days&quot;       
+ [7] &quot;district&quot;                    &quot;host_respons_time&quot;          
+ [9] &quot;host_response_rate&quot;          &quot;host_superhost&quot;             
+[11] &quot;host_listings_count&quot;         &quot;review_scores_accuracy&quot;     
+[13] &quot;review_scores_cleanliness&quot;   &quot;review_scores_checkin&quot;      
+[15] &quot;review_scores_communication&quot; &quot;review_scores_location&quot;     
+[17] &quot;review_scores_value&quot;         &quot;kitchen&quot;                    
+[19] &quot;tv&quot;                          &quot;coffe_machine&quot;              
+[21] &quot;dishwasher&quot;                  &quot;terrace&quot;                    
+[23] &quot;bathtub&quot;                    </code></pre>
+</div>
+<div id="b---set-up-the-recipe" class="section level3">
+<h3>B - Set up the recipe</h3>
+<ol style="list-style-type: decimal">
+<li>By specifying a <code>recipe</code>, we specify (a) what to predict,
+(b) how to predict it (the features), (c) how to prepare our data.
+Create your first recipe called <code>airbnb_recipe</code>, by adding a
+formula to specify that we want to predict <code>price</code> with the
+number of people it can accommodate (<code>accommodates</code>):</li>
+</ol>
+<ul>
+<li>set the formula to <code>price ~ accommodates</code></li>
+<li>set the data to <code>airbnb</code></li>
+</ul>
+<pre class="r"><code># create basic recipe
+airbnb_recipe &lt;- recipe(XX ~ XX, data = XX)</code></pre>
+<pre class="r"><code># create basic recipe
+airbnb_recipe &lt;- recipe(price ~ accommodates, data = airbnb)</code></pre>
+<ol start="2" style="list-style-type: decimal">
+<li>Print the created recipe.</li>
+</ol>
+<pre class="r"><code>airbnb_recipe</code></pre>
+<pre><code>Recipe
+
+Inputs:
+
+      role #variables
+   outcome          1
+ predictor          1</code></pre>
+</div>
+<div id="c---set-up-the-model" class="section level3">
+<h3>C - Set up the model</h3>
+<ol style="list-style-type: decimal">
+<li>In this practical we will use a linear regression to predict the
+price of airbnbs. To be able to do so in <code>tidymodels</code>, we
+first have to set up our model. We do this by specifying (a) the model
+type, (b) the enginge we want to use, and (c) whether we are working on
+a regression or a classification problem. We will do this step-by-step.
+To perform step (a), call the <code>linear_reg()</code> function and
+assign it the name <code>lm_model</code>.</li>
+</ol>
+<pre class="r"><code># set up our model
+lm_model &lt;- 
+  XX()</code></pre>
+<pre class="r"><code># set up our model
+lm_model &lt;- 
+  linear_reg()</code></pre>
+<ol start="2" style="list-style-type: decimal">
+<li>Next, we have to specify which engine to use. Here we will use the
+<code>stats</code> package’s engine. To do so, add a pipe
+(<code>%&gt;%</code>) to the code you specified above, and add the
+<code>set_engine(XX)</code> function, with the engine
+<code>"lm"</code>.</li>
+</ol>
+<pre class="r"><code># set up the engine
+lm_model &lt;- 
+  linear_reg() %&gt;% 
+  XX(XX)</code></pre>
+<pre class="r"><code># set up the engine
+lm_model &lt;- 
+  linear_reg() %&gt;% 
+  set_engine(&quot;lm&quot;)</code></pre>
+<ol start="3" style="list-style-type: decimal">
+<li>To see which engines are available for a given model type, use
+<code>show_engines("MODEL_TYPE")</code>. Check which other engines would
+be available with the model type <code>linear_reg</code>.</li>
+</ol>
+<pre class="r"><code>show_engines(&quot;linear_reg&quot;)</code></pre>
+<pre><code># A tibble: 7 × 2
+  engine mode      
+  &lt;chr&gt;  &lt;chr&gt;     
+1 lm     regression
+2 glm    regression
+3 glmnet regression
+4 stan   regression
+5 spark  regression
+6 keras  regression
+7 brulee regression</code></pre>
+<ol start="4" style="list-style-type: decimal">
+<li>The third and last step is to specify the problem type, which in
+<code>tidymodels</code> is referred to as the problem <code>mode</code>.
+To do so, add yet another pipe to the definition of
+<code>lm_model</code> and call the <code>set_mode()</code> function.
+Pass <code>"regression"</code> as argument to this function.</li>
+</ol>
+<pre class="r"><code># set up the problem mode
+lm_model &lt;- 
+  linear_reg() %&gt;% 
+  set_engine(&quot;lm&quot;) %&gt;% 
+  XX(XX)</code></pre>
+<pre class="r"><code># set up the problem mode
+lm_model &lt;- 
+  linear_reg() %&gt;% 
+  set_engine(&quot;lm&quot;) %&gt;% 
+  set_mode(&quot;regression&quot;)</code></pre>
+<ol start="5" style="list-style-type: decimal">
+<li>Take a look at your model by printing <code>lm_model</code>.</li>
+</ol>
+<pre class="r"><code># print lm_model
+lm_model</code></pre>
+<pre><code>Linear Regression Model Specification (regression)
+
+Computational engine: lm </code></pre>
+<ol start="6" style="list-style-type: decimal">
+<li>Using <code>translate()</code> we can view the function that will be
+called to fit our model. Arguments not yet specified (and thus, at this
+point, unknown), will be shown as <code>missing_arg()</code>. Use
+<code>translate()</code> and pass <code>lm_model</code> as
+argument.</li>
+</ol>
+<pre class="r"><code># view the underlying function used to fit the model
+translate(lm_model)</code></pre>
+<pre><code>Linear Regression Model Specification (regression)
+
+Computational engine: lm 
+
+Model fit template:
+stats::lm(formula = missing_arg(), data = missing_arg(), weights = missing_arg())</code></pre>
+</div>
+<div id="d---fit-a-regression-model" class="section level3">
+<h3>D - Fit a regression model</h3>
+<ol style="list-style-type: decimal">
+<li>Now we can finally specify our model <code>workflow</code> in which
+we bring the model specification and recipe together, to then fit our
+model. To do so</li>
+</ol>
+<ul>
+<li>create an object called <code>lm_workflow</code>.</li>
+<li>call the <code>workflow()</code> function, to initiate the
+workflow.</li>
+<li>add the <code>airbnb_recipe</code> using the
+<code>add_recipe()</code> function.</li>
+<li>add the <code>lm_model</code> model specification using the
+<code>add_model()</code> function.</li>
+</ul>
+<pre class="r"><code># lm workflow 
+lm_workflow &lt;- 
+  XX() %&gt;% 
+  XX(XX) %&gt;% 
+  XX(XX)</code></pre>
+<pre class="r"><code># lm workflow 
+lm_workflow &lt;- 
+  workflow() %&gt;% 
+  add_recipe(airbnb_recipe) %&gt;% 
+  add_model(lm_model)</code></pre>
+<ol start="2" style="list-style-type: decimal">
+<li>Print the <code>lm_workflow</code> object to view a summary of how
+the modeling will be done.</li>
+</ol>
+<pre class="r"><code>lm_workflow</code></pre>
+<pre><code>══ Workflow ════════════════════════════════════════════════════════════════════
+Preprocessor: Recipe
+Model: linear_reg()
+
+── Preprocessor ────────────────────────────────────────────────────────────────
+0 Recipe Steps
+
+── Model ───────────────────────────────────────────────────────────────────────
+Linear Regression Model Specification (regression)
+
+Computational engine: lm </code></pre>
+<ol start="3" style="list-style-type: decimal">
+<li>Now it’s time to actually fit the model with the <code>fit()</code>
+function. Pass the <code>lm_workflow</code> into the fit function and
+save it as <code>price_lm</code>. Also we have to provide the data to
+the fit function, by specifying the <code>data</code> argument. Set
+<code>data = airbnb</code>.</li>
+</ol>
+<pre class="r"><code># Fit the regression model
+price_lm &lt;-
+  XX %&gt;% 
+  XX(XX = XX)</code></pre>
+<pre class="r"><code># Fit the regression model
+price_lm &lt;-
+  lm_workflow %&gt;% 
+  fit(airbnb)</code></pre>
+<ol start="4" style="list-style-type: decimal">
+<li>Print the <code>price_lm</code> object.</li>
+</ol>
+<pre class="r"><code>price_lm</code></pre>
+<pre><code>══ Workflow [trained] ══════════════════════════════════════════════════════════
+Preprocessor: Recipe
+Model: linear_reg()
+
+── Preprocessor ────────────────────────────────────────────────────────────────
+0 Recipe Steps
+
+── Model ───────────────────────────────────────────────────────────────────────
+
+Call:
+stats::lm(formula = ..y ~ ., data = data)
+
+Coefficients:
+ (Intercept)  accommodates  
+       -13.5          27.6  </code></pre>
+<ol start="5" style="list-style-type: decimal">
+<li>While this showed us the two parameters, the output is not very
+informative. To obtain a more detailed output, you can use the
+<code>tidy()</code> function on the <code>price_lm</code> object.</li>
+</ol>
+<pre class="r"><code># Fit the regression model
+tidy(price_lm)</code></pre>
+<pre><code># A tibble: 2 × 5
+  term         estimate std.error statistic   p.value
+  &lt;chr&gt;           &lt;dbl&gt;     &lt;dbl&gt;     &lt;dbl&gt;     &lt;dbl&gt;
+1 (Intercept)     -13.5      4.04     -3.34 8.60e-  4
+2 accommodates     27.6      1.12     24.6  1.15e-108</code></pre>
+<ol start="6" style="list-style-type: decimal">
+<li>Take a look at the parameter values. How do you interpret these
+values?</li>
+</ol>
+<pre class="r"><code># For every additional person a flat accommodates, the price of an airbnb is
+# predicted to rise by 27.6$s.</code></pre>
+</div>
+<div id="e---evaluate-accuracy" class="section level3">
+<h3>E - Evaluate accuracy</h3>
+<ol style="list-style-type: decimal">
+<li>Now it’s time to evaluate the model’s fitted values! Use the
+<code>predict()</code> function to extract the model predictions. This
+returns them as a column named <code>.pred</code>. Then, using
+<code>bind_cols()</code> add the true values.</li>
+</ol>
+<pre class="r"><code># generate predictions
+lm_pred &lt;-
+  XX %&gt;% 
+  predict(new_data = airbnb) %&gt;% 
+  bind_cols(airbnb %&gt;% select(price))</code></pre>
+<pre class="r"><code># generate predictions
+lm_pred &lt;-
+  price_lm %&gt;% 
+  predict(new_data = airbnb) %&gt;% 
+  bind_cols(airbnb %&gt;% select(price))</code></pre>
+<ol start="2" style="list-style-type: decimal">
+<li>Take a look at the <code>lm_pred</code> object and make sure you
+understand the meaning of these variables. What is contained in the
+<code>.pred</code> variable and what in the <code>price</code> variable?
+Which part of the code in the previous task generated the
+<code>.pred</code> and which the <code>price</code> variable? (<a
+href="https://www.tmwr.org/models.html#parsnip-predictions">This page
+here</a> also provides an overview of the naming convention introduced
+by the <code>tidymodels</code> predict methods.)</li>
+</ol>
+<pre class="r"><code># The first variable, .pred,  was created in the call to the predict() function. 
+# It contains the predicted prices. The second variable, price, contains the 
+# actual prices from our dataset.</code></pre>
+<ol start="3" style="list-style-type: decimal">
+<li>Using the following code, plot the fitted against the true value, to
+judge how well our model performed. What do you think, is this
+performance good or bad?</li>
+</ol>
+<pre class="r"><code># use the lm_pred object to generate the plot
+ggplot(lm_pred, aes(x = .pred, y = price)) + 
+  # Create a diagonal line:
+  geom_abline(lty = 2) + 
+  # Add data points:
+  geom_point(alpha = 0.5) + 
+  labs(title = &quot;Regression: One Feature&quot;,
+       subtitle = &quot;Line indicates perfect performance&quot;,
+       x = &quot;Predicted Airbnb Prices in $&quot;,
+       y = &quot;True Airbnb Prices in $&quot;) +
+  # Scale and size the x- and y-axis uniformly:
+  coord_obs_pred()</code></pre>
+<p><img src="Fitting_practical_files/figure-html/unnamed-chunk-36-1.png" width="576" style="display: block; margin: auto;" /></p>
+<pre class="r"><code># The points do not fall on the line, which indicates that the model fit
+# is not great. Also there are two outliers that cannot be captured by the
+# model.</code></pre>
+<ol start="4" style="list-style-type: decimal">
+<li>Let’s quantify our model’s fitting results. In a regression-problem
+setting, the <code>metrics()</code> function returns the MAE, RMSE, and
+the <span class="math inline">\(R^2\)</span> of a model. Compute these
+indices by passing the <code>price</code> variable as <code>truth</code>
+and the <code>.pred</code> variable as <code>estimate</code> to the
+<code>metrics()</code> function.</li>
+</ol>
+<pre class="r"><code># evaluate performance
+XX(lm_pred, truth = XX, estimate = XX)</code></pre>
+<pre class="r"><code># evaluate performance
+metrics(lm_pred, truth = price, estimate = .pred)</code></pre>
+<pre><code># A tibble: 3 × 3
+  .metric .estimator .estimate
+  &lt;chr&gt;   &lt;chr&gt;          &lt;dbl&gt;
+1 rmse    standard      73.7  
+2 rsq     standard       0.338
+3 mae     standard      29.5  </code></pre>
+<ol start="5" style="list-style-type: decimal">
+<li>How do you interpret these values?</li>
+</ol>
+<pre class="r"><code># On average, the model commits a prediction error of 29.5 when predicting the 
+# price of an airbnb. The large difference between the MAE and the RMSE indicates
+# That the prediction errors vary very strongly. This is also apparent in the 
+# plot we created before.
+# The R^2 value is 0.338, that is, about 34% of the variation in the data
+# can be captured by our model.</code></pre>
+</div>
+<div id="f---add-more-features" class="section level3">
+<h3>F - Add more features</h3>
+<p>So far we have only used one feature (<code>accommodates</code>), to
+predict <code>price</code>. Let’s try again, but now we’ll use a total
+of four features:</p>
+<ul>
+<li><code>accommodates</code> - the number of people the airbnb
+accommodates.</li>
+<li><code>bedrooms</code> - number of bedrooms.</li>
+<li><code>bathrooms</code> - number of bathrooms.</li>
+<li><code>district</code> - location of the airbnb.</li>
+</ul>
+<ol style="list-style-type: decimal">
+<li>To do this, we will have to update our <code>lm_recipe</code>.
+Specifically, we want to add the three new features to the formula.
+Update the recipe from B1, by extending the formula.</li>
+</ol>
+<pre class="r"><code># updated recipe
+airbnb_recipe &lt;- 
+  recipe(XX ~ XX +  XX + XX + XX, data = XX)</code></pre>
+<pre class="r"><code># updated recipe
+airbnb_recipe &lt;- 
+  recipe(price ~ accommodates + bedrooms + bathrooms + district,
+                        data = airbnb)</code></pre>
+<ol start="2" style="list-style-type: decimal">
+<li>Because we now have a categorical predictor (<code>district</code>),
+we also have to update the recipe by adding a pre-processing step that
+ensures that categorical predictors are dummy-coded. Add a pipe
+(<code>%&gt;%</code>) to the recipe definition of the previous task and
+call <code>step_dummy(all_nominal_predictors())</code> to define this
+pre-processing step.</li>
+</ol>
+<pre class="r"><code># updated recipe
+airbnb_recipe &lt;- 
+  recipe(price ~ accommodates + bedrooms + bathrooms + district,
+                        data = airbnb) %&gt;% 
+  XX(XX())</code></pre>
+<pre class="r"><code># updated recipe
+airbnb_recipe &lt;- 
+  recipe(price ~ accommodates + bedrooms + bathrooms + district,
+                        data = airbnb) %&gt;% 
+  step_dummy(all_nominal_predictors())</code></pre>
+<ol start="3" style="list-style-type: decimal">
+<li>Update the recipe in the workflow using the
+<code>update_recipe()</code> function. Pass the new
+<code>airbnb_recipe</code> to <code>update_recipe()</code>.</li>
+</ol>
+<pre class="r"><code># update lm workflow with new recipe
+lm_workflow &lt;- 
+  lm_workflow %&gt;%
+  XX(XX)  </code></pre>
+<pre class="r"><code># update lm workflow with new recipe
+lm_workflow &lt;- 
+  lm_workflow %&gt;% 
+  update_recipe(airbnb_recipe)</code></pre>
+<ol start="4" style="list-style-type: decimal">
+<li>Print the <code>lm_workflow</code> object to view a summary of how
+the modeling will be done. The recipe should now be updated, which you
+can see by the new section <em>Preprocessor</em>.</li>
+</ol>
+<pre class="r"><code>lm_workflow</code></pre>
+<pre><code>══ Workflow ════════════════════════════════════════════════════════════════════
+Preprocessor: Recipe
+Model: linear_reg()
+
+── Preprocessor ────────────────────────────────────────────────────────────────
+1 Recipe Step
+
+• step_dummy()
+
+── Model ───────────────────────────────────────────────────────────────────────
+Linear Regression Model Specification (regression)
+
+Computational engine: lm </code></pre>
+<ol start="5" style="list-style-type: decimal">
+<li>Refit the model as you have done above, and call it
+<code>price_lm</code>.</li>
+</ol>
+<pre class="r"><code># Fit the regression model
+price_lm &lt;-
+  lm_workflow %&gt;% 
+  fit(airbnb)</code></pre>
+<ol start="6" style="list-style-type: decimal">
+<li>Using the <code>tidy()</code> function on the <code>price_lm</code>
+object, take a look at the parameter estimates.</li>
+</ol>
+<pre class="r"><code># Fit the regression model
+tidy(price_lm)</code></pre>
+<pre><code># A tibble: 15 × 5
+   term                              estimate std.error statistic  p.value
+   &lt;chr&gt;                                &lt;dbl&gt;     &lt;dbl&gt;     &lt;dbl&gt;    &lt;dbl&gt;
+ 1 (Intercept)                       -46.2        10.8   -4.27    2.15e- 5
+ 2 accommodates                       22.3         1.57  14.2     3.22e-42
+ 3 bedrooms                           13.7         4.39   3.12    1.86e- 3
+ 4 bathrooms                          23.5         7.23   3.26    1.16e- 3
+ 5 district_Friedrichshain.Kreuzberg   3.42        9.13   0.374   7.08e- 1
+ 6 district_Lichtenberg               -6.44       14.7   -0.438   6.61e- 1
+ 7 district_Marzahn...Hellersdorf    -19.8        30.8   -0.641   5.22e- 1
+ 8 district_Mitte                     22.6         9.26   2.44    1.48e- 2
+ 9 district_Neukölln                   0.0925     10.0    0.00923 9.93e- 1
+10 district_Pankow                     7.52        9.44   0.797   4.26e- 1
+11 district_Reinickendorf            -17.9        18.5   -0.965   3.35e- 1
+12 district_Spandau                  -29.6        24.4   -1.22    2.24e- 1
+13 district_Steglitz...Zehlendorf     -0.446      16.4   -0.0272  9.78e- 1
+14 district_Tempelhof...Schöneberg     8.90       10.9    0.814   4.16e- 1
+15 district_Treptow...Köpenick       -11.1        16.9   -0.658   5.11e- 1</code></pre>
+<ol start="7" style="list-style-type: decimal">
+<li>Using the <code>predict()</code> function, to extract the model
+predictions and bind them together with the true values using
+<code>bind_cols()</code>.</li>
+</ol>
+<pre class="r"><code># generate predictions
+lm_pred &lt;-
+  XX %&gt;% 
+  XX(XX) %&gt;% 
+  XX(airbnb %&gt;% select(price))</code></pre>
+<pre class="r"><code># generate predictions
+lm_pred &lt;-
+  price_lm %&gt;% 
+  predict(new_data = airbnb) %&gt;% 
+  bind_cols(airbnb %&gt;% select(price))</code></pre>
+<ol start="8" style="list-style-type: decimal">
+<li>Using the following code, plot the fitted against the true value, to
+judge how well our model performed. What do you think, is this
+performance good or bad? And how does it compare to the model with only
+one feature we fitted before?</li>
+</ol>
+<pre class="r"><code># use the lm_pred object to generate the plot
+ggplot(lm_pred, aes(x = .pred, y = price)) + 
+  # Create a diagonal line:
+  geom_abline(lty = 2) + 
+  # Add data points:
+  geom_point(alpha = 0.5) + 
+  labs(title = &quot;Regression: Four Features&quot;,
+       subtitle = &quot;Line indicates perfect performance&quot;,
+       x = &quot;Predicted Airbnb Prices in $&quot;,
+       y = &quot;True Airbnb Prices in $&quot;) +
+  # Scale and size the x- and y-axis uniformly:
+  coord_obs_pred()</code></pre>
+<p><img src="Fitting_practical_files/figure-html/unnamed-chunk-52-1.png" width="576" style="display: block; margin: auto;" /></p>
+<pre class="r"><code># The model seems to do a little better than before, but the points still do not
+# really fall on the line. Also, the model still cannot account for the two
+# price outliers.</code></pre>
+<ol start="9" style="list-style-type: decimal">
+<li>Using the <code>metrics()</code> function, evaluate the model
+performance. Pass it the <code>price</code> variable as
+<code>truth</code> and the <code>.pred</code> variable as
+<code>estimate</code>.</li>
+</ol>
+<pre class="r"><code># evaluate performance
+XX(lm_pred, truth = XX, estimate = XX)</code></pre>
+<pre class="r"><code># evaluate performance
+metrics(lm_pred, truth = price, estimate = .pred)</code></pre>
+<pre><code># A tibble: 3 × 3
+  .metric .estimator .estimate
+  &lt;chr&gt;   &lt;chr&gt;          &lt;dbl&gt;
+1 rmse    standard      72.2  
+2 rsq     standard       0.365
+3 mae     standard      28.7  </code></pre>
+<ol start="10" style="list-style-type: decimal">
+<li>How do you interpret these values? How do they compare to the ones
+you obtained previously?</li>
+</ol>
+<pre class="r"><code># On average, the model commits a prediction error of 28.7 when predicting the 
+# price of an airbnb. This is even larger than with only the one predictor.
+# The large difference between the MAE and the RMSE indicates
+# that the prediction errors vary very strongly. This is also apparent in the 
+# plot we created before.
+# The R^2 value is 0.365, that is, about 37% of the variation in the data
+# can be captured by our model, which is more than twice of what the model with
+# only one feature explained.</code></pre>
+</div>
+<div id="g---use-all-features" class="section level3">
+<h3>G - Use all features</h3>
+<p>Alright, now it’s time to use all features available!</p>
+<ol style="list-style-type: decimal">
+<li>Update the formula of the <code>lm_recipe</code> and set it to
+<code>price ~ .</code> The <code>.</code> indicates that all available
+variables that are not outcomes should be used as features.</li>
+</ol>
+<pre class="r"><code># updated recipe
+airbnb_recipe &lt;- 
+  recipe(XX ~ XX, data = XX) %&gt;% 
+  step_dummy(all_nominal_predictors())</code></pre>
+<pre class="r"><code># updated recipe
+airbnb_recipe &lt;- 
+  recipe(price ~ ., data = airbnb) %&gt;% 
+  step_dummy(all_nominal_predictors())</code></pre>
+<ol start="2" style="list-style-type: decimal">
+<li>Update the recipe in the workflow using the
+<code>update_recipe()</code> function. Pass the new
+<code>airbnb_recipe</code> to <code>update_recipe()</code>.</li>
+</ol>
+<pre class="r"><code># update lm workflow with new recipe
+lm_workflow &lt;- 
+  lm_workflow %&gt;%
+  XX(XX)  </code></pre>
+<pre class="r"><code># update lm workflow with new recipe
+lm_workflow &lt;- 
+  lm_workflow %&gt;% 
+  update_recipe(airbnb_recipe)</code></pre>
+<ol start="3" style="list-style-type: decimal">
+<li>Refit the model as you have done above, and call it
+<code>price_lm</code>.</li>
+</ol>
+<pre class="r"><code># Fit the regression model
+price_lm &lt;-
+  lm_workflow %&gt;% 
+  fit(airbnb)</code></pre>
+<ol start="4" style="list-style-type: decimal">
+<li>Using the <code>tidy()</code> function on the <code>price_lm</code>
+object, take a look at the parameter estimates.</li>
+</ol>
+<pre class="r"><code># Fit the regression model
+tidy(price_lm)</code></pre>
+<pre><code># A tibble: 35 × 5
+   term                    estimate std.error statistic  p.value
+   &lt;chr&gt;                      &lt;dbl&gt;     &lt;dbl&gt;     &lt;dbl&gt;    &lt;dbl&gt;
+ 1 (Intercept)            -149.       68.1       -2.19  2.86e- 2
+ 2 accommodates             23.3       1.78      13.1   9.41e-37
+ 3 bedrooms                 13.0       4.55       2.86  4.34e- 3
+ 4 bathrooms                24.0       7.36       3.26  1.15e- 3
+ 5 cleaning_fee             -0.241     0.0915    -2.64  8.46e- 3
+ 6 availability_90_days     -0.0400    0.0741    -0.540 5.89e- 1
+ 7 host_response_rate       -0.160     0.261     -0.613 5.40e- 1
+ 8 host_superhostTRUE       10.7       4.95       2.17  3.05e- 2
+ 9 host_listings_count       0.276     0.551      0.501 6.16e- 1
+10 review_scores_accuracy    8.43      5.82       1.45  1.48e- 1
+# … with 25 more rows</code></pre>
+<ol start="5" style="list-style-type: decimal">
+<li>Using the <code>predict()</code> function, to extract the model
+predictions and bind them together with the true values using
+<code>bind_cols()</code>.</li>
+</ol>
+<pre class="r"><code># generate predictions
+lm_pred &lt;-
+  XX %&gt;% 
+  XX(XX) %&gt;% 
+  XX(airbnb %&gt;% select(price))</code></pre>
+<pre class="r"><code># generate predictions
+lm_pred &lt;-
+  price_lm %&gt;% 
+  predict(new_data = airbnb) %&gt;% 
+  bind_cols(airbnb %&gt;% select(price))</code></pre>
+<ol start="6" style="list-style-type: decimal">
+<li>Using the following code, plot the fitted against the true value, to
+judge how well our model performed. What do you think, is this
+performance good or bad? And how does it compare to the model with only
+one feature we fitted before?</li>
+</ol>
+<pre class="r"><code># use the lm_pred object to generate the plot
+ggplot(lm_pred, aes(x = .pred, y = price)) + 
+  # Create a diagonal line:
+  geom_abline(lty = 2) + 
+  # Add data points:
+  geom_point(alpha = 0.5) + 
+  labs(title = &quot;Regression: All Features&quot;,
+       subtitle = &quot;Line indicates perfect performance&quot;,
+       x = &quot;Predicted Airbnb Prices in $&quot;,
+       y = &quot;True Airbnb Prices in $&quot;) +
+  # Scale and size the x- and y-axis uniformly:
+  coord_obs_pred()</code></pre>
+<p><img src="Fitting_practical_files/figure-html/unnamed-chunk-65-1.png" width="576" style="display: block; margin: auto;" /></p>
+<pre class="r"><code># Even with all predictors, the model seems to have some issues.</code></pre>
+<ol start="7" style="list-style-type: decimal">
+<li>Using the <code>metrics</code> function, evaluate the model
+performance. Pass it the <code>price</code> variable as
+<code>truth</code> and the <code>.pred</code> variable as
+<code>estimate</code>.</li>
+</ol>
+<pre class="r"><code># evaluate performance
+XX(lm_pred, truth = XX, estimate = XX)</code></pre>
+<pre class="r"><code># evaluate performance
+metrics(lm_pred, truth = price, estimate = .pred)</code></pre>
+<pre><code># A tibble: 3 × 3
+  .metric .estimator .estimate
+  &lt;chr&gt;   &lt;chr&gt;          &lt;dbl&gt;
+1 rmse    standard      71.1  
+2 rsq     standard       0.385
+3 mae     standard      29.7  </code></pre>
+<ol start="8" style="list-style-type: decimal">
+<li>How do you interpret these values? How do they compare to the ones
+you obtained previously?</li>
+</ol>
+<pre class="r"><code># On average, the model commits a prediction error of 29.7 when predicting the 
+# price of an airbnb. This is again larger than with only the one predictor.
+# The large difference between the MAE and the RMSE indicates
+# that the prediction errors vary very strongly. This is also apparent in the 
+# plot we created before.
+# The R^2 value is 0.38, that is, about 38% of the variation in the data
+# can be captured by our model.</code></pre>
+</div>
+<div id="classification" class="section level3">
+<h3>Classification</h3>
+</div>
+<div id="h---make-sure-your-criterion-is-a-factor"
+class="section level3">
+<h3>H - Make sure your criterion is a factor!</h3>
+<p>Now it’s time to do a classification task! Recall that in a
+classification task, we are predicting a category, not a continuous
+number. In this task, we’ll predict whether or not a host is a superhost
+(these are experienced hosts that meet a <a
+href="https://www.airbnb.com/help/article/829/how-do-i-become-a-superhost?_set_bev_on_new_domain=1629269796_MjI5MzcwYTI5MDVm&amp;locale=en">set
+of criteria</a>). Whether or not a host is a superhost is stored in the
+variable <code>host_superhost</code>.</p>
+<ol style="list-style-type: decimal">
+<li>In order to do classification training, we have to ensure that the
+criterion is coded as a <code>factor</code>. To test whether it is coded
+as a factor, you can look at its <code>class</code> as follows.</li>
+</ol>
+<pre class="r"><code># Look at the class of the variable host_superhost, should be a factor!
+class(airbnb$host_superhost)</code></pre>
+<pre><code>[1] &quot;logical&quot;</code></pre>
+<ol start="2" style="list-style-type: decimal">
+<li>The <code>host_superhost</code> variable is of class
+<code>logical</code>. Therefore, we have to change it to
+<code>factor</code>. <strong>Important note</strong>: In binary
+classification tasks, the <strong>first</strong> factor level will be
+chosen as positive. We therefore explicitly specify, that
+<code>TRUE</code> be the first level.</li>
+</ol>
+<pre class="r"><code># Recode host_superhost to be a factor with TRUE as first level
+airbnb &lt;-
+  airbnb %&gt;% 
+  mutate(host_superhost = factor(host_superhost, levels = c(TRUE, FALSE)))</code></pre>
+<ol start="3" style="list-style-type: decimal">
+<li>Check again, whether <code>host_superhost</code> is now a factor,
+and check whether the order of the levels is as intended using
+<code>levels()</code> (the order should be
+<code>"TRUE", "FALSE"</code>).</li>
+</ol>
+<pre class="r"><code>XX(airbnb$host_superhost)
+XX(airbnb$host_superhost)</code></pre>
+<pre class="r"><code>class(airbnb$host_superhost)</code></pre>
+<pre><code>[1] &quot;factor&quot;</code></pre>
+<pre class="r"><code>levels(airbnb$host_superhost)</code></pre>
+<pre><code>[1] &quot;TRUE&quot;  &quot;FALSE&quot;</code></pre>
+</div>
+<div id="i---fit-a-classification-model" class="section level3">
+<h3>I - Fit a classification model</h3>
+<ol style="list-style-type: decimal">
+<li>Given that we now want to predict a new variable
+(<code>host_superhost</code>) with a new model (a logistic regression),
+we need to update both our model and our recipe. Specify the new recipe.
+Specifically…</li>
+</ol>
+<ul>
+<li>set the formula to <code>host_superhost ~ .</code>, to use all
+possible features</li>
+<li>add <code>step_dummy(all_nominal_predictors())</code> to pre-process
+nominal features</li>
+<li>call the new object <code>logistic_recipe</code></li>
+</ul>
+<pre class="r"><code># create new recipe
+XX &lt;- 
+  XX(XX, data = XX) %&gt;% 
+  XX(XX())</code></pre>
+<pre class="r"><code># create new recipe
+logistic_recipe &lt;- 
+  recipe(host_superhost ~ ., data = airbnb) %&gt;% 
+  step_dummy(all_nominal_predictors())</code></pre>
+<ol start="2" style="list-style-type: decimal">
+<li>Print the new recipe.</li>
+</ol>
+<pre class="r"><code>logistic_recipe</code></pre>
+<pre><code>Recipe
+
+Inputs:
+
+      role #variables
+   outcome          1
+ predictor         22
+
+Operations:
+
+Dummy variables from all_nominal_predictors()</code></pre>
+<ol start="3" style="list-style-type: decimal">
+<li>Create a new model called <code>logistic_model</code>, with the
+model type <code>logistic_reg</code>, the engine <code>"glm"</code>, and
+mode <code>"classification"</code>.</li>
+</ol>
+<pre class="r"><code># create a logistic regression model 
+XX_model &lt;-
+  XX() %&gt;% 
+  set_XX(XX) %&gt;% 
+  set_XX(XX)</code></pre>
+<pre class="r"><code># create a logistic regression model 
+logistic_model &lt;-
+  logistic_reg() %&gt;% 
+  set_engine(&quot;glm&quot;) %&gt;% 
+  set_mode(&quot;classification&quot;)</code></pre>
+<ol start="4" style="list-style-type: decimal">
+<li>Print the <code>logistic_model</code> object. Using
+<code>translate()</code>, check out the underlying function that will be
+used to fit the model.</li>
+</ol>
+<pre class="r"><code>logistic_model</code></pre>
+<pre><code>Logistic Regression Model Specification (classification)
+
+Computational engine: glm </code></pre>
+<pre class="r"><code>translate(logistic_model)</code></pre>
+<pre><code>Logistic Regression Model Specification (classification)
+
+Computational engine: glm 
+
+Model fit template:
+stats::glm(formula = missing_arg(), data = missing_arg(), weights = missing_arg(), 
+    family = stats::binomial)</code></pre>
+<ol start="5" style="list-style-type: decimal">
+<li>Create a new workflow called <code>logistic_workflow</code>, where
+you add the <code>logistic_model</code> and the
+<code>logistic_recipe</code> together.</li>
+</ol>
+<pre class="r"><code># create logistic_workflow 
+logistic_workflow &lt;- 
+  workflow() %&gt;% 
+  add_recipe(logistic_recipe) %&gt;% 
+  add_model(logistic_model)</code></pre>
+<ol start="6" style="list-style-type: decimal">
+<li>Print and check out the new workflow.</li>
+</ol>
+<pre class="r"><code>logistic_workflow</code></pre>
+<pre><code>══ Workflow ════════════════════════════════════════════════════════════════════
+Preprocessor: Recipe
+Model: logistic_reg()
+
+── Preprocessor ────────────────────────────────────────────────────────────────
+1 Recipe Step
+
+• step_dummy()
+
+── Model ───────────────────────────────────────────────────────────────────────
+Logistic Regression Model Specification (classification)
+
+Computational engine: glm </code></pre>
+<ol start="7" style="list-style-type: decimal">
+<li>Fit the model using <code>fit()</code>. Save the result as</li>
+</ol>
+<pre class="r"><code># Fit the logistic regression model
+superhost_glm &lt;-
+  logistic_workflow %&gt;% 
+  fit(airbnb)</code></pre>
+</div>
+<div id="j---assess-model-performance" class="section level3">
+<h3>J - Assess model performance</h3>
+<ol style="list-style-type: decimal">
+<li>Now it’s time to evaluate the classification models’ performance. We
+can again use the <code>metrics()</code> function to do so. First, we
+again create a dataset containing the predicted and true values. This
+time, we call the <code>predict()</code> function twice: once to obtain
+the predicted classes, and once to obtain the probabilities, with which
+the classes are predicted.</li>
+</ol>
+<pre class="r"><code># Get fitted values from the Private_glm object
+logistic_pred &lt;- 
+  predict(superhost_glm, airbnb, type = &quot;prob&quot;) %&gt;% 
+  bind_cols(predict(superhost_glm, airbnb)) %&gt;% 
+  bind_cols(airbnb %&gt;% select(host_superhost))</code></pre>
+<ol start="2" style="list-style-type: decimal">
+<li>Take a look at the <code>logistic_pred</code> object and make sure
+you understand what the variables mean.</li>
+</ol>
+<pre class="r"><code># The first two variables contain the predicted class probabilities and were
+# created from the first call to predict(), where type = &quot;prob&quot; was used.
+# The third variable, .pred_class, contains the predicted class. If the .pred_TRUE
+# variable in a given row was &gt;=.5, this will be TRUE, otherwise it will be FALSE.
+# Finally, the last variable, host_superhost, contains the true values.</code></pre>
+<ol start="3" style="list-style-type: decimal">
+<li>Now, get the confusion matrix using the <code>conf_mat()</code>
+function and passing it the <code>host_superhost</code> variable as
+<code>truth</code>, and th <code>.pred_class</code> variable as
+<code>estimate</code>. Just by looking at the confusion matrix, do you
+think the model is doing well?</li>
+</ol>
+<pre class="r"><code>XX(logistic_pred, truth = XX, estimate = XX)</code></pre>
+<pre class="r"><code>conf_mat(logistic_pred, truth = host_superhost, estimate = .pred_class)</code></pre>
+<pre><code>          Truth
+Prediction TRUE FALSE
+     TRUE   337   152
+     FALSE  143   559</code></pre>
+<ol start="4" style="list-style-type: decimal">
+<li>Let’s look at different performance metrics. Use the
+<code>metrics()</code> function, with exactly the same arguments as you
+used in the call to <code>conf_mat()</code> before, to obtain the
+accuracy and the kappa statistic (a chance-corrected measure of
+agreement between model prediction and true value).</li>
+</ol>
+<pre class="r"><code>metrics(logistic_pred, truth = host_superhost, estimate = .pred_class)</code></pre>
+<pre><code># A tibble: 2 × 3
+  .metric  .estimator .estimate
+  &lt;chr&gt;    &lt;chr&gt;          &lt;dbl&gt;
+1 accuracy binary         0.752
+2 kap      binary         0.487</code></pre>
+<ol start="5" style="list-style-type: decimal">
+<li>How do you interpret these values? Do you think the model performs
+well?</li>
+</ol>
+<pre class="r"><code>logistic_pred %&gt;% 
+  pull(host_superhost) %&gt;% 
+  table() %&gt;% 
+  prop.table() %&gt;% 
+  round(2)</code></pre>
+<pre><code>.
+ TRUE FALSE 
+  0.4   0.6 </code></pre>
+<pre class="r"><code># Just by predicting always FALSE, the model could reach an accuracy of 60%.
+# By using all the features available, the model can do about 15 percentage points
+# better than that. According to some, completely arbitrary, guidelines, the 
+# kappa value of .49 can be considered moderate or fair to good.
+# Whether such values are acceptable depends on the use case.</code></pre>
+<ol start="6" style="list-style-type: decimal">
+<li>The metrics we just looked at are based on the class predictions. We
+can also obtain additional metrics based on the predicted probabilities
+of class membership. Use the same code as in the last task, but add the
+name of the column containing the predictied <em>positive</em> class
+probability (<code>.pred_TRUE</code>) as an unnamed, fourth
+argument:</li>
+</ol>
+<pre class="r"><code>XX(logistic_pred, truth = XX, estimate = XX, XX)</code></pre>
+<pre class="r"><code>metrics(logistic_pred, truth = host_superhost, estimate = .pred_class, .pred_TRUE)</code></pre>
+<pre><code># A tibble: 4 × 3
+  .metric     .estimator .estimate
+  &lt;chr&gt;       &lt;chr&gt;          &lt;dbl&gt;
+1 accuracy    binary         0.752
+2 kap         binary         0.487
+3 mn_log_loss binary         0.485
+4 roc_auc     binary         0.837</code></pre>
+<ol start="7" style="list-style-type: decimal">
+<li>What does the <code>roc_auc</code> value indicate?</li>
+</ol>
+<pre class="r"><code># It indicates the area under the curve (AUC) of the receiver operator
+# characteristic (ROC) curve. A value of 1 would be perfect, indicating that both 
+# sensitivity and specificity simultaneously take perfect values.</code></pre>
+<ol start="8" style="list-style-type: decimal">
+<li>To plot the ROC curve, we can use the <code>roc_curve()</code>
+function, to create sensitivity and specificity values of different
+cut-offs, and pass this into the <code>autoplot()</code> function, to
+plot the curve. Add the <code>host_superhost</code> column as
+<code>truth</code>, and the <code>.pred_TRUE</code> column as third,
+unnamed argument, to the <code>roc_curve()</code> function and plot the
+curve.</li>
+</ol>
+<pre class="r"><code>XX(logistic_pred, truth = XX, XX) %&gt;% 
+  autoplot()</code></pre>
+<pre class="r"><code>roc_curve(logistic_pred, truth = host_superhost, .pred_TRUE) %&gt;% 
+  autoplot()</code></pre>
+<p><img src="Fitting_practical_files/figure-html/unnamed-chunk-93-1.png" width="576" style="display: block; margin: auto;" /></p>
+</div>
+</div>
+<div id="examples" class="section level2">
+<h2>Examples</h2>
+<pre class="r"><code># Fitting and evaluating a regression model ------------------------------------
+
+# Step 0: Load packages---------------------------------------------------------
+library(tidyverse)    # Load tidyverse for dplyr and tidyr
+library(tidymodels)   # For ML mastery 
+tidymodels_prefer()   # To resolve common conflicts
+
+# Step 1: Load and Clean, and Explore Training data ----------------------------
+
+# I&#39;ll use the mpg dataset from the dplyr package in this example
+data_train &lt;- read_csv(&quot;1_Data/mpg_train.csv&quot;)
+
+# Explore training data
+data_train        # Print the dataset
+View(data_train)  # Open in a new spreadsheet-like window 
+dim(data_train)   # Print dimensions
+names(data_train) # Print the names
+
+# Step 2: Define recipe --------------------------------------------------------
+
+# The recipe defines what to predict with what, and how to pre-process the data
+lm_recipe &lt;- 
+  recipe(hwy ~ year + cyl + displ + trans,  # Specify formula
+         data = data_train) %&gt;%             # Specify the data
+  step_dummy(all_nominal_predictors())      # Dummy code all categorical predictors
+
+
+# Step 3: Define model ---------------------------------------------------------
+
+# The model definition defines what kind of model we want to use and how to
+# fit it
+lm_model &lt;- 
+  linear_reg() %&gt;%        # Specify model type
+  set_engine(&quot;lm&quot;) %&gt;%    # Specify engine (often package name) to use
+  set_mode(&quot;regression&quot;)  # Specify whether it&#39;s a regressio or classification
+                          #  problem.
+
+# Step 4: Define workflow ------------------------------------------------------
+
+# The workflow combines model and recipe, so that we can fit the model
+lm_workflow &lt;- 
+  workflow() %&gt;%             # Initialize workflow
+  add_model(lm_model) %&gt;%    # Add the model to the workflow
+  add_recipe(lm_recipe)      # Add the recipe to the workflow
+
+# Step 5: Fit the model --------------------------------------------------------
+
+hwy_lm &lt;- 
+  lm_workflow %&gt;%   # Use the specified workflow
+  fit(data_train)   # Fit the model on the specified data
+
+tidy(hwy_lm)        # Look at summary information
+
+# Step 6: Assess fit -----------------------------------------------------------
+
+# Save model predictions and observed values
+lm_fitted &lt;- 
+  hwy_lm %&gt;%               # Model from which to extract predictions
+  predict(data_train) %&gt;%  # Obtain predictions, based on entered data (in this
+                           #  case, these predictions are not out-of-sample)
+  bind_cols(data_train %&gt;% select(hwy))  # Extract observed/true values
+
+# Obtain performance metrics
+metrics(lm_fitted, truth = hwy, estimate = .pred)
+
+
+# Step 7: Visualize Accuracy ---------------------------------------------------
+
+# use the lm_fitted object to generate the plot
+ggplot(lm_fitted, aes(x = .pred, y = hwy)) + 
+  # Create a diagonal line:
+  geom_abline(lty = 2) + 
+  # Add data points:
+  geom_point(alpha = 0.5) + 
+  labs(title = &quot;Regression: Four Features&quot;,
+       subtitle = &quot;Line indicates perfect performance&quot;,
+       x = &quot;Predicted hwy&quot;,
+       y = &quot;True hwy&quot;) +
+  # Scale and size the x- and y-axis uniformly:
+  coord_obs_pred()</code></pre>
+</div>
+<div id="datasets" class="section level2">
+<h2>Datasets</h2>
+<p>The dataset contains data of the 1191 apartments that were added on
+Airbnb for the Berlin area in the year 2018.</p>
+<table>
+<colgroup>
+<col width="27%" />
+<col width="33%" />
+<col width="38%" />
+</colgroup>
+<thead>
+<tr class="header">
+<th align="left">File</th>
+<th align="left">Rows</th>
+<th align="left">Columns</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td align="left"><a
+href="https://raw.githubusercontent.com/therbootcamp/ML_2019Oct/master/1_Data/college_train.csv?token=AGKBX5SLEV3PLWUVQ4NCUB2427V36">airbnb.csv</a></td>
+<td align="left">1191</td>
+<td align="left">23</td>
+</tr>
+</tbody>
+</table>
+<div id="variable-description-of-airbnb" class="section level4">
+<h4>Variable description of <code>airbnb</code></h4>
+<table>
+<colgroup>
+<col width="26%" />
+<col width="73%" />
+</colgroup>
+<thead>
+<tr class="header">
+<th align="left">Name</th>
+<th align="left">Description</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td align="left">price</td>
+<td align="left">Price per night (in $s)</td>
+</tr>
+<tr class="even">
+<td align="left">accommodates</td>
+<td align="left">Number of people the airbnb accommodates</td>
+</tr>
+<tr class="odd">
+<td align="left">bedrooms</td>
+<td align="left">Number of bedrooms</td>
+</tr>
+<tr class="even">
+<td align="left">bathrooms</td>
+<td align="left">Number of bathrooms</td>
+</tr>
+<tr class="odd">
+<td align="left">cleaning_fee</td>
+<td align="left">Amount of cleaning fee (in $s)</td>
+</tr>
+<tr class="even">
+<td align="left">availability_90_days</td>
+<td align="left">How many of the following 90 days the airbnb is
+available</td>
+</tr>
+<tr class="odd">
+<td align="left">district</td>
+<td align="left">The district the Airbnb is located in</td>
+</tr>
+<tr class="even">
+<td align="left">host_respons_time</td>
+<td align="left">Host average response time</td>
+</tr>
+<tr class="odd">
+<td align="left">host_response_rate</td>
+<td align="left">Host response rate</td>
+</tr>
+<tr class="even">
+<td align="left">host_superhost</td>
+<td align="left">Whether host is a superhost TRUE/FALSE</td>
+</tr>
+<tr class="odd">
+<td align="left">host_listings_count</td>
+<td align="left">Number of listings the host has</td>
+</tr>
+<tr class="even">
+<td align="left">review_scores_accuracy</td>
+<td align="left">Accuracy of information rating [0, 10]</td>
+</tr>
+<tr class="odd">
+<td align="left">review_scores_cleanliness</td>
+<td align="left">Cleanliness rating [0, 10]</td>
+</tr>
+<tr class="even">
+<td align="left">review_scores_checkin</td>
+<td align="left">Check in rating [0, 10]</td>
+</tr>
+<tr class="odd">
+<td align="left">review_scores_communication</td>
+<td align="left">Communication rating [0, 10]</td>
+</tr>
+<tr class="even">
+<td align="left">review_scores_location</td>
+<td align="left">Location rating [0, 10]</td>
+</tr>
+<tr class="odd">
+<td align="left">review_scores_value</td>
+<td align="left">Value rating [0, 10]</td>
+</tr>
+<tr class="even">
+<td align="left">kitchen</td>
+<td align="left">Kitchen available TRUE/FALSE</td>
+</tr>
+<tr class="odd">
+<td align="left">tv</td>
+<td align="left">TV available TRUE/FALSE</td>
+</tr>
+<tr class="even">
+<td align="left">coffe_machine</td>
+<td align="left">Coffee machine available TRUE/FALSE</td>
+</tr>
+<tr class="odd">
+<td align="left">dishwasher</td>
+<td align="left">Dishwasher available TRUE/FALSE</td>
+</tr>
+<tr class="even">
+<td align="left">terrace</td>
+<td align="left">Terrace/balcony available TRUE/FALSE</td>
+</tr>
+<tr class="odd">
+<td align="left">bathtub</td>
+<td align="left">Bathtub available TRUE/FALSE</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+<div id="functions" class="section level2">
+<h2>Functions</h2>
+<div id="packages" class="section level3">
+<h3>Packages</h3>
+<table>
+<thead>
+<tr class="header">
+<th align="left">Package</th>
+<th align="left">Installation</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td align="left"><code>tidyverse</code></td>
+<td align="left"><code>install.packages("tidyverse")</code></td>
+</tr>
+<tr class="even">
+<td align="left"><code>tidymodels</code></td>
+<td align="left"><code>install.packages("tidymodels")</code></td>
+</tr>
+</tbody>
+</table>
+</div>
+<div id="functions-1" class="section level3">
+<h3>Functions</h3>
+<table>
+<colgroup>
+<col width="7%" />
+<col width="12%" />
+<col width="80%" />
+</colgroup>
+<thead>
+<tr class="header">
+<th align="left">Function</th>
+<th align="left">Package</th>
+<th align="left">Description</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td align="left"><code>read_csv()</code></td>
+<td align="left"><code>tidyverse</code></td>
+<td align="left">Read in data</td>
+</tr>
+<tr class="even">
+<td align="left"><code>mutate()</code></td>
+<td align="left"><code>tidyverse</code></td>
+<td align="left">Manipulate or create columns</td>
+</tr>
+<tr class="odd">
+<td align="left"><code>bind_cols()</code></td>
+<td align="left"><code>tidyverse</code></td>
+<td align="left">Bind columns together and return a tibble</td>
+</tr>
+<tr class="even">
+<td
+align="left"><code>linear_reg()</code>/<code>logistic_reg()</code></td>
+<td align="left"><code>tidymodels</code></td>
+<td align="left">Initialize linear/logistic regression model</td>
+</tr>
+<tr class="odd">
+<td align="left"><code>set_engine()</code></td>
+<td align="left"><code>tidymodels</code></td>
+<td align="left">Specify which engine to use for the modeling (e.g.,
+“lm” to use <code>stats::lm()</code>, or “stan” to use
+<code>rstanarm::stan_lm()</code>)</td>
+</tr>
+<tr class="even">
+<td align="left"><code>set_mode()</code></td>
+<td align="left"><code>tidymodels</code></td>
+<td align="left">Specify whether it’s a regression or classification
+problem</td>
+</tr>
+<tr class="odd">
+<td align="left"><code>recipe()</code></td>
+<td align="left"><code>tidymodels</code></td>
+<td align="left">Initialize recipe</td>
+</tr>
+<tr class="even">
+<td align="left"><code>step_dummy()</code></td>
+<td align="left"><code>tidymodels</code></td>
+<td align="left">pre-process data into dummy variables</td>
+</tr>
+<tr class="odd">
+<td align="left"><code>workflow()</code></td>
+<td align="left"><code>tidymodels</code></td>
+<td align="left">Initialize workflow</td>
+</tr>
+<tr class="even">
+<td align="left"><code>add_recipe()</code></td>
+<td align="left"><code>tidymodels</code></td>
+<td align="left">Add recipe to workflow</td>
+</tr>
+<tr class="odd">
+<td align="left"><code>update_recipe()</code></td>
+<td align="left"><code>tidymodels</code></td>
+<td align="left">Update workflow with a new recipe</td>
+</tr>
+<tr class="even">
+<td align="left"><code>add_model()</code></td>
+<td align="left"><code>tidymodels</code></td>
+<td align="left">Add model to workflow</td>
+</tr>
+<tr class="odd">
+<td align="left"><code>fit()</code></td>
+<td align="left"><code>tidymodels</code></td>
+<td align="left">Fit model</td>
+</tr>
+<tr class="even">
+<td align="left"><code>tidy()</code></td>
+<td align="left"><code>tidymodels</code></td>
+<td align="left">Show model parameters</td>
+</tr>
+<tr class="odd">
+<td align="left"><code>predict()</code></td>
+<td align="left"><code>tidymodels</code></td>
+<td align="left">Create model predictions based on specified data</td>
+</tr>
+<tr class="even">
+<td align="left"><code>metrics()</code></td>
+<td align="left"><code>tidymodels</code></td>
+<td align="left">Evaluate model performance</td>
+</tr>
+<tr class="odd">
+<td align="left"><code>conf_mat()</code></td>
+<td align="left"><code>tidymodels</code></td>
+<td align="left">Create confusion matrix</td>
+</tr>
+<tr class="even">
+<td align="left"><code>roc_curve()</code></td>
+<td align="left"><code>tidymodels</code></td>
+<td align="left">Calculate sensitivity and specificity with different
+thresholds for ROC-curve</td>
+</tr>
+<tr class="odd">
+<td align="left"><code>autoplot()</code></td>
+<td align="left"><code>tidymodels</code></td>
+<td align="left">Plot methods for different objects such as those
+created from <code>roc_curve()</code> to plot the ROC-curve</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+<div id="resources" class="section level2">
+<h2>Resources</h2>
+<ul>
+<li><a href="https://www.tidymodels.org/"><strong>tidymodels
+webpage</strong></a>: Can be used as cheat sheet. Also has some
+tutorials.</li>
+<li>The, not yet completed, book <a
+href="https://www.tmwr.org"><strong>Tidymodeling with R</strong></a>:
+More detailed introduction into the <code>tidymodels</code>
+framework.</li>
+</ul>
+</div>
+</div>
+
+
+
+
+</div>
+
+<script>
+
+// add bootstrap table styles to pandoc tables
+function bootstrapStylePandocTables() {
+  $('tr.odd').parent('tbody').parent('table').addClass('table table-condensed');
+}
+$(document).ready(function () {
+  bootstrapStylePandocTables();
+});
+
+
+</script>
+
+<!-- tabsets -->
+
+<script>
+$(document).ready(function () {
+  window.buildTabsets("TOC");
+});
+
+$(document).ready(function () {
+  $('.tabset-dropdown > .nav-tabs > li').click(function () {
+    $(this).parent().toggleClass('nav-tabs-open');
+  });
+});
+</script>
+
+<!-- code folding -->
+
+
+<!-- dynamically load mathjax for compatibility with self-contained -->
+<script>
+  (function () {
+    var script = document.createElement("script");
+    script.type = "text/javascript";
+    script.src  = "https://mathjax.rstudio.com/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML";
+    document.getElementsByTagName("head")[0].appendChild(script);
+  })();
+</script>
+
+</body>
+</html>

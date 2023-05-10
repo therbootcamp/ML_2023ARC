@@ -1,0 +1,1027 @@
+---
+title: "Fitting"
+author: "<table style='table-layout:fixed;width:100%;border:0;padding:0;margin:0'><col width='10%'><col width='10%'>
+  <tr style='border:none'>
+    <td style='display:block;width:100%;text-align:left;vertical-align:bottom;padding:0;margin:0;border:none' nowrap>
+      <font style='font-style:normal'>Machine Learning with R</font><br>
+      <a href='https://therbootcamp.github.io/ML_2022DHLab/'>
+        <i class='fas fa-clock' style='font-size:.9em;' ></i>
+      </a>
+      <a href='https://therbootcamp.github.io'>
+        <i class='fas fa-home' style='font-size:.9em;'></i>
+      </a>
+      <a href='mailto:therbootcamp@gmail.com'>
+        <i class='fas fa-envelope' style='font-size: .9em;'></i>
+      </a>
+      <a href='https://www.linkedin.com/company/basel-r-bootcamp/'>
+        <i class='fab fa-linkedin' style='font-size: .9em;'></i>
+      </a>
+      <a href='https://therbootcamp.github.io'>
+        <font style='font-style:normal'>The R Bootcamp @ DHLab</font>
+      </a>
+    </td>
+    <td style='width:100%;vertical-align:bottom;text-align:right;padding:0;margin:0;border:none'>
+      <img src='https://raw.githubusercontent.com/therbootcamp/therbootcamp.github.io/master/_sessions/_image/by-sa.png' style='height:15px;width:80px'/>
+    </td>
+  </tr></table>"
+output:
+  html_document:
+    css: practical.css
+    self_contained: no
+---
+
+```{r setup, echo = FALSE}
+knitr::opts_chunk$set(comment = NA, 
+                      fig.width = 6, 
+                      fig.height = 6,
+                      fig.align = 'center',
+                      echo = TRUE, 
+                      eval = TRUE, 
+                      warning = FALSE,
+                      message = FALSE)
+
+options(digits = 3)
+```
+
+<p align="center">
+<img width="100%" src="image/fitting_dirk.001.png" margin=0><br>
+<font style="font-size:10px">adapted from [xkcd.com](https://xkcd.com/)</font>
+</p>
+
+# {.tabset}
+
+## Overview
+
+In this practical, you'll practice the basics of fitting and exploring regression models in R using the `tidymodels` package.
+
+By the end of this practical you will know how to:
+
+1. Fit a regression model to training data.
+2. Explore your fit object with generic functions.
+3. Evaluate the model's fitting performance using accuracy measures such as RMSE and MAE.
+4. Explore the effects of adding additional features.
+
+
+## Tasks
+
+### A - Setup
+
+1. Open your `TheRBootcamp` R project. It should already have the folders `1_Data` and `2_Code`. Make sure that the data file(s) listed in the `Datasets` section are in your `1_Data` folder
+
+```{r}
+# Done!
+```
+
+2. Open a new R script and save it as a new file called `Fitting_practical.R` in the `2_Code` folder.  
+
+```{r}
+# Done!
+```
+
+3. Using `library()` load the set of packages for this practical listed in the packages section above.
+
+```{r, echo = TRUE, message = FALSE}
+# Load packages necessary for this script
+library(tidyverse)
+library(tidymodels)
+tidymodels_prefer() # to resolve common conflicts
+```
+
+```{r, message = FALSE, warning = FALSE, echo = FALSE, eval = TRUE}
+# Load packages necessary for this practical
+library(tidyverse)
+library(tidymodels)
+tidymodels_prefer() # to resolve common conflicts
+```
+
+4. For this practical, we'll use a dataset of apartments that were added to Airbnb in 2018 and are located in Berlin. The data is stored in `airbnb.csv`. Using the following template, load the dataset into R as `airbnb`:
+
+```{r, echo = TRUE, eval = FALSE, message = FALSE, warning = FALSE}
+# Load in airbnb.csv data as airbnb
+airbnb <- read_csv(file = "1_Data/airbnb.csv")
+```
+
+```{r, eval = TRUE, echo = FALSE}
+airbnb <- read_csv(file = "1_Data/airbnb.csv")
+```
+
+5. Take a look at the first few rows of the dataset by printing it to the console.
+
+```{r}
+airbnb
+```
+
+6. Print the numbers of rows and columns using the `dim()` function.
+
+```{r, echo = TRUE, eval = FALSE}
+# Print number of rows and columns of airbnb
+dim(XX)
+```
+
+```{r}
+# Print number of rows and columns of airbnb
+dim(airbnb)
+```
+
+7. Open the dataset in a new window using `View()`. How does it look?
+
+```{r, echo = TRUE, eval = FALSE}
+View(XX)
+```
+
+8. Familiarize yourself with the names of the dataset by looking at the feature names using `names()`.
+
+```{r, echo = TRUE, eval = FALSE}
+# Print column names of airbnb
+names(XX)
+```
+
+```{r}
+# Print column names of airbnb
+names(airbnb)
+```
+
+### B - Set up the recipe
+
+1. By specifying a `recipe`, we specify (a) what to predict, (b) how to predict it (the features), (c) how to prepare our data. Create your first recipe called `airbnb_recipe`, by adding a formula to specify that we want to predict `price` with the number of people it can accommodate (`accommodates`):
+
+- set the formula to `price ~ accommodates`
+- set the data to `airbnb`
+
+```{r, echo = TRUE, eval = FALSE}
+# create basic recipe
+airbnb_recipe <- recipe(XX ~ XX, data = XX)
+```
+
+```{r}
+# create basic recipe
+airbnb_recipe <- recipe(price ~ accommodates, data = airbnb)
+```
+
+2. Print the created recipe.
+
+```{r}
+airbnb_recipe
+```
+
+
+### C - Set up the model
+
+1. In this practical we will use a linear regression to predict the price of airbnbs. To be able to do so in `tidymodels`, we first have to set up our model. We do this by specifying (a) the model type, (b) the enginge we want to use, and (c) whether we are working on a regression or a classification problem. We will do this step-by-step. To perform step (a), call the `linear_reg()` function and assign it the name `lm_model`.
+
+```{r, echo = TRUE, eval = FALSE}
+# set up our model
+lm_model <- 
+  XX()
+```
+
+```{r}
+# set up our model
+lm_model <- 
+  linear_reg()
+```
+
+2. Next, we have to specify which engine to use. Here we will use the `stats` package's engine. To do so, add a pipe (`%>%`) to the code you specified above, and add the `set_engine(XX)` function, with the engine `"lm"`.
+
+```{r, echo = TRUE, eval = FALSE}
+# set up the engine
+lm_model <- 
+  linear_reg() %>% 
+  XX(XX)
+```
+
+```{r}
+# set up the engine
+lm_model <- 
+  linear_reg() %>% 
+  set_engine("lm")
+```
+
+3. To see which engines are available for a given model type, use `show_engines("MODEL_TYPE")`. Check which other engines would be available with the model type `linear_reg`.
+
+```{r}
+show_engines("linear_reg")
+```
+
+
+4. The third and last step is to specify the problem type, which in `tidymodels` is referred to as the problem `mode`. To do so, add yet another pipe to the definition of `lm_model` and call the `set_mode()` function. Pass `"regression"` as argument to this function.
+
+```{r, echo = TRUE, eval = FALSE}
+# set up the problem mode
+lm_model <- 
+  linear_reg() %>% 
+  set_engine("lm") %>% 
+  XX(XX)
+```
+
+```{r}
+# set up the problem mode
+lm_model <- 
+  linear_reg() %>% 
+  set_engine("lm") %>% 
+  set_mode("regression")
+```
+
+5. Take a look at your model by printing `lm_model`.
+
+```{r}
+# print lm_model
+lm_model
+```
+
+6. Using `translate()` we can view the function that will be called to fit our model. Arguments not yet specified (and thus, at this point, unknown), will be shown as `missing_arg()`. Use `translate()` and pass `lm_model` as argument.
+
+```{r}
+# view the underlying function used to fit the model
+translate(lm_model)
+```
+
+
+
+### D - Fit a regression model
+
+1. Now we can finally specify our model `workflow` in which we bring the model specification and recipe together, to then fit our model. To do so
+
+- create an object called `lm_workflow`.
+- call the `workflow()` function, to initiate the workflow.
+- add the `airbnb_recipe` using the `add_recipe()` function.
+- add the `lm_model` model specification using the `add_model()` function.
+
+```{r, echo = TRUE, eval = FALSE}
+# lm workflow 
+lm_workflow <- 
+  XX() %>% 
+  XX(XX) %>% 
+  XX(XX)
+```
+
+```{r}
+# lm workflow 
+lm_workflow <- 
+  workflow() %>% 
+  add_recipe(airbnb_recipe) %>% 
+  add_model(lm_model)
+```
+
+2. Print the `lm_workflow` object to view a summary of how the modeling will be done.
+
+```{r}
+lm_workflow
+```
+
+3. Now it's time to actually fit the model with the `fit()` function. Pass the `lm_workflow` into the fit function and save it as `price_lm`. Also we have to provide the data to the fit function, by specifying the `data` argument. Set `data = airbnb`.
+
+```{r, echo = TRUE, eval = FALSE}
+# Fit the regression model
+price_lm <-
+  XX %>% 
+  XX(XX = XX)
+```
+
+```{r}
+# Fit the regression model
+price_lm <-
+  lm_workflow %>% 
+  fit(airbnb)
+```
+
+4. Print the `price_lm` object.
+
+```{r}
+price_lm
+```
+
+5. While this showed us the two parameters, the output is not very informative. To obtain a more detailed output, you can use the `tidy()` function on the `price_lm` object.
+
+
+```{r}
+# Fit the regression model
+tidy(price_lm)
+```
+
+6. Take a look at the parameter values. How do you interpret these values?
+
+```{r}
+# For every additional person a flat accommodates, the price of an airbnb is
+# predicted to rise by 27.6$s.
+```
+
+
+
+### E - Evaluate accuracy
+
+1. Now it's time to evaluate the model's fitted values! Use the `predict()` function to extract the model predictions. This returns them as a column named `.pred`. Then, using `bind_cols()` add the true values. 
+
+```{r, echo = TRUE, eval = FALSE}
+# generate predictions
+lm_pred <-
+  XX %>% 
+  predict(new_data = airbnb) %>% 
+  bind_cols(airbnb %>% select(price))
+```
+
+```{r}
+# generate predictions
+lm_pred <-
+  price_lm %>% 
+  predict(new_data = airbnb) %>% 
+  bind_cols(airbnb %>% select(price))
+```
+
+2. Take a look at the `lm_pred` object and make sure you understand the meaning of these variables. What is contained in the `.pred` variable and what in the `price` variable? Which part of the code in the previous task generated the `.pred` and which the `price` variable? ([This page here](https://www.tmwr.org/models.html#parsnip-predictions) also provides an overview of the naming convention introduced by the `tidymodels` predict methods.)
+
+```{r}
+# The first variable, .pred,  was created in the call to the predict() function. 
+# It contains the predicted prices. The second variable, price, contains the 
+# actual prices from our dataset.
+```
+
+
+3. Using the following code, plot the fitted against the true value, to judge how well our model performed. What do you think, is this performance good or bad?
+
+```{r, echo = TRUE}
+# use the lm_pred object to generate the plot
+ggplot(lm_pred, aes(x = .pred, y = price)) + 
+  # Create a diagonal line:
+  geom_abline(lty = 2) + 
+  # Add data points:
+  geom_point(alpha = 0.5) + 
+  labs(title = "Regression: One Feature",
+       subtitle = "Line indicates perfect performance",
+       x = "Predicted Airbnb Prices in $",
+       y = "True Airbnb Prices in $") +
+  # Scale and size the x- and y-axis uniformly:
+  coord_obs_pred()
+```
+
+```{r}
+# The points do not fall on the line, which indicates that the model fit
+# is not great. Also there are two outliers that cannot be captured by the
+# model.
+```
+
+4. Let's quantify our model's fitting results. In a regression-problem setting, the `metrics()` function returns the MAE, RMSE, and the $R^2$ of a model. Compute these indices by passing the `price` variable as `truth` and the `.pred` variable as `estimate` to the `metrics()` function.
+
+```{r, echo = TRUE, eval = FALSE}
+# evaluate performance
+XX(lm_pred, truth = XX, estimate = XX)
+```
+
+```{r}
+# evaluate performance
+metrics(lm_pred, truth = price, estimate = .pred)
+```
+
+5. How do you interpret these values?
+
+```{r}
+# On average, the model commits a prediction error of 29.5 when predicting the 
+# price of an airbnb. The large difference between the MAE and the RMSE indicates
+# That the prediction errors vary very strongly. This is also apparent in the 
+# plot we created before.
+# The R^2 value is 0.338, that is, about 34% of the variation in the data
+# can be captured by our model.
+```
+
+### F - Add more features
+
+So far we have only used one feature (`accommodates`), to predict `price`. Let's try again, but now we'll use a total of four features: 
+
+- `accommodates` - the number of people the airbnb accommodates.
+- `bedrooms` - number of bedrooms.
+- `bathrooms` - number of bathrooms.
+- `district` - location of the airbnb.
+
+1. To do this, we will have to update our `lm_recipe`. Specifically, we want to add the three new features to the formula. Update the recipe from B1, by extending the formula.
+
+```{r, echo = TRUE, eval = FALSE}
+# updated recipe
+airbnb_recipe <- 
+  recipe(XX ~ XX +  XX + XX + XX, data = XX)
+```
+
+```{r}
+# updated recipe
+airbnb_recipe <- 
+  recipe(price ~ accommodates + bedrooms + bathrooms + district,
+                        data = airbnb)
+```
+
+
+2. Because we now have a categorical predictor (`district`), we also have to update the recipe by adding a pre-processing step that ensures that categorical predictors are dummy-coded. Add a pipe (`%>%`) to the recipe definition of the previous task and call `step_dummy(all_nominal_predictors())` to define this pre-processing step.
+
+```{r, echo = TRUE, eval = FALSE}
+# updated recipe
+airbnb_recipe <- 
+  recipe(price ~ accommodates + bedrooms + bathrooms + district,
+                        data = airbnb) %>% 
+  XX(XX())
+```
+
+```{r}
+# updated recipe
+airbnb_recipe <- 
+  recipe(price ~ accommodates + bedrooms + bathrooms + district,
+                        data = airbnb) %>% 
+  step_dummy(all_nominal_predictors())
+```
+
+
+3. Update the recipe in the workflow using the `update_recipe()` function. Pass the new `airbnb_recipe` to `update_recipe()`.
+
+```{r, echo = TRUE, eval = FALSE}
+# update lm workflow with new recipe
+lm_workflow <- 
+  lm_workflow %>%
+  XX(XX)  
+```
+
+```{r}
+# update lm workflow with new recipe
+lm_workflow <- 
+  lm_workflow %>% 
+  update_recipe(airbnb_recipe)
+```
+
+4. Print the `lm_workflow` object to view a summary of how the modeling will be done. The recipe should now be updated, which you can see by the new section *Preprocessor*.
+
+```{r}
+lm_workflow
+```
+
+5. Refit the model as you have done above, and call it `price_lm`.
+
+```{r}
+# Fit the regression model
+price_lm <-
+  lm_workflow %>% 
+  fit(airbnb)
+```
+
+6. Using the `tidy()` function on the `price_lm` object, take a look at the parameter estimates.
+
+
+```{r}
+# Fit the regression model
+tidy(price_lm)
+```
+
+7. Using the `predict()` function, to extract the model predictions and bind them together with the true values using `bind_cols()`.
+
+```{r, echo = TRUE, eval = FALSE}
+# generate predictions
+lm_pred <-
+  XX %>% 
+  XX(XX) %>% 
+  XX(airbnb %>% select(price))
+```
+
+```{r}
+# generate predictions
+lm_pred <-
+  price_lm %>% 
+  predict(new_data = airbnb) %>% 
+  bind_cols(airbnb %>% select(price))
+```
+
+
+8. Using the following code, plot the fitted against the true value, to judge how well our model performed. What do you think, is this performance good or bad? And how does it compare to the model with only one feature we fitted before?
+
+```{r, echo = TRUE}
+# use the lm_pred object to generate the plot
+ggplot(lm_pred, aes(x = .pred, y = price)) + 
+  # Create a diagonal line:
+  geom_abline(lty = 2) + 
+  # Add data points:
+  geom_point(alpha = 0.5) + 
+  labs(title = "Regression: Four Features",
+       subtitle = "Line indicates perfect performance",
+       x = "Predicted Airbnb Prices in $",
+       y = "True Airbnb Prices in $") +
+  # Scale and size the x- and y-axis uniformly:
+  coord_obs_pred()
+```
+
+```{r}
+# The model seems to do a little better than before, but the points still do not
+# really fall on the line. Also, the model still cannot account for the two
+# price outliers.
+```
+
+9. Using the `metrics()` function, evaluate the model performance. Pass it the `price` variable as `truth` and the `.pred` variable as `estimate`.
+
+```{r, echo = TRUE, eval = FALSE}
+# evaluate performance
+XX(lm_pred, truth = XX, estimate = XX)
+```
+
+```{r}
+# evaluate performance
+metrics(lm_pred, truth = price, estimate = .pred)
+
+```
+
+10. How do you interpret these values? How do they compare to the ones you obtained previously?
+
+```{r}
+# On average, the model commits a prediction error of 28.7 when predicting the 
+# price of an airbnb. This is even larger than with only the one predictor.
+# The large difference between the MAE and the RMSE indicates
+# that the prediction errors vary very strongly. This is also apparent in the 
+# plot we created before.
+# The R^2 value is 0.365, that is, about 37% of the variation in the data
+# can be captured by our model, which is more than twice of what the model with
+# only one feature explained.
+```
+
+
+
+### G - Use all features
+
+Alright, now it's time to use all features available!
+
+1. Update the formula of the `lm_recipe` and set it to `price ~ .` The `.` indicates that all available variables that are not outcomes should be used as features.
+
+```{r, echo = TRUE, eval = FALSE}
+# updated recipe
+airbnb_recipe <- 
+  recipe(XX ~ XX, data = XX) %>% 
+  step_dummy(all_nominal_predictors())
+```
+
+```{r}
+# updated recipe
+airbnb_recipe <- 
+  recipe(price ~ ., data = airbnb) %>% 
+  step_dummy(all_nominal_predictors())
+```
+
+
+2. Update the recipe in the workflow using the `update_recipe()` function. Pass the new `airbnb_recipe` to `update_recipe()`.
+
+```{r, echo = TRUE, eval = FALSE}
+# update lm workflow with new recipe
+lm_workflow <- 
+  lm_workflow %>%
+  XX(XX)  
+```
+
+```{r}
+# update lm workflow with new recipe
+lm_workflow <- 
+  lm_workflow %>% 
+  update_recipe(airbnb_recipe)
+```
+
+3. Refit the model as you have done above, and call it `price_lm`.
+
+```{r}
+# Fit the regression model
+price_lm <-
+  lm_workflow %>% 
+  fit(airbnb)
+```
+
+4. Using the `tidy()` function on the `price_lm` object, take a look at the parameter estimates.
+
+
+```{r}
+# Fit the regression model
+tidy(price_lm)
+```
+
+5. Using the `predict()` function, to extract the model predictions and bind them together with the true values using `bind_cols()`.
+
+```{r, echo = TRUE, eval = FALSE}
+# generate predictions
+lm_pred <-
+  XX %>% 
+  XX(XX) %>% 
+  XX(airbnb %>% select(price))
+```
+
+```{r}
+# generate predictions
+lm_pred <-
+  price_lm %>% 
+  predict(new_data = airbnb) %>% 
+  bind_cols(airbnb %>% select(price))
+```
+
+
+6. Using the following code, plot the fitted against the true value, to judge how well our model performed. What do you think, is this performance good or bad? And how does it compare to the model with only one feature we fitted before?
+
+```{r, echo = TRUE}
+# use the lm_pred object to generate the plot
+ggplot(lm_pred, aes(x = .pred, y = price)) + 
+  # Create a diagonal line:
+  geom_abline(lty = 2) + 
+  # Add data points:
+  geom_point(alpha = 0.5) + 
+  labs(title = "Regression: All Features",
+       subtitle = "Line indicates perfect performance",
+       x = "Predicted Airbnb Prices in $",
+       y = "True Airbnb Prices in $") +
+  # Scale and size the x- and y-axis uniformly:
+  coord_obs_pred()
+```
+
+```{r}
+# Even with all predictors, the model seems to have some issues.
+```
+
+7. Using the `metrics` function, evaluate the model performance. Pass it the `price` variable as `truth` and the `.pred` variable as `estimate`.
+
+```{r, echo = TRUE, eval = FALSE}
+# evaluate performance
+XX(lm_pred, truth = XX, estimate = XX)
+```
+
+```{r}
+# evaluate performance
+metrics(lm_pred, truth = price, estimate = .pred)
+
+```
+
+8. How do you interpret these values? How do they compare to the ones you obtained previously?
+
+```{r}
+# On average, the model commits a prediction error of 29.7 when predicting the 
+# price of an airbnb. This is again larger than with only the one predictor.
+# The large difference between the MAE and the RMSE indicates
+# that the prediction errors vary very strongly. This is also apparent in the 
+# plot we created before.
+# The R^2 value is 0.38, that is, about 38% of the variation in the data
+# can be captured by our model.
+```
+
+### Classification
+
+### H - Make sure your criterion is a factor!
+
+Now it's time to do a classification task! Recall that in a classification task, we are predicting a category, not a continuous number. In this task, we'll predict whether or not a host is a superhost (these are experienced hosts that meet a [set of criteria](https://www.airbnb.com/help/article/829/how-do-i-become-a-superhost?_set_bev_on_new_domain=1629269796_MjI5MzcwYTI5MDVm&locale=en)). Whether or not a host is a superhost is stored in the variable `host_superhost`.
+
+1. In order to do classification training, we have to ensure that the criterion is coded as a `factor`. To test whether it is coded as a factor, you can look at its `class` as follows.
+
+```{r, echo = TRUE}
+# Look at the class of the variable host_superhost, should be a factor!
+class(airbnb$host_superhost)
+```
+
+2. The `host_superhost` variable is of class `logical`. Therefore, we have to change it to `factor`. **Important note**: In binary classification tasks, the **first** factor level will be chosen as positive. We therefore explicitly specify, that `TRUE` be the first level.
+
+```{r, echo = TRUE}
+# Recode host_superhost to be a factor with TRUE as first level
+airbnb <-
+  airbnb %>% 
+  mutate(host_superhost = factor(host_superhost, levels = c(TRUE, FALSE)))
+```
+
+3. Check again, whether `host_superhost` is now a factor, and check whether the order of the levels is as intended using `levels()` (the order should be `"TRUE", "FALSE"`).
+
+```{r, echo = TRUE, eval = FALSE}
+XX(airbnb$host_superhost)
+XX(airbnb$host_superhost)
+```
+
+```{r}
+class(airbnb$host_superhost)
+levels(airbnb$host_superhost)
+
+```
+
+### I - Fit a classification model
+
+1. Given that we now want to predict a new variable (`host_superhost`) with a new model (a logistic regression), we need to update both our model and our recipe. Specify the new recipe. Specifically...
+
+- set the formula to `host_superhost ~ .`, to use all possible features
+- add `step_dummy(all_nominal_predictors())` to pre-process nominal features
+- call the new object `logistic_recipe`
+
+
+```{r, echo = TRUE, eval = FALSE}
+# create new recipe
+XX <- 
+  XX(XX, data = XX) %>% 
+  XX(XX())
+```
+
+```{r}
+# create new recipe
+logistic_recipe <- 
+  recipe(host_superhost ~ ., data = airbnb) %>% 
+  step_dummy(all_nominal_predictors())
+```
+
+2. Print the new recipe.
+
+```{r}
+logistic_recipe
+```
+
+
+3. Create a new model called `logistic_model`, with the model type `logistic_reg`, the engine `"glm"`, and mode `"classification"`.
+
+```{r, echo = TRUE, eval = FALSE}
+# create a logistic regression model 
+XX_model <-
+  XX() %>% 
+  set_XX(XX) %>% 
+  set_XX(XX)
+```
+
+
+```{r}
+# create a logistic regression model 
+logistic_model <-
+  logistic_reg() %>% 
+  set_engine("glm") %>% 
+  set_mode("classification")
+```
+
+4. Print the `logistic_model` object. Using `translate()`, check out the underlying function that will be used to fit the model.
+
+```{r}
+logistic_model
+translate(logistic_model)
+```
+
+
+5. Create a new workflow called `logistic_workflow`, where you add the `logistic_model` and the `logistic_recipe` together.
+
+```{r}
+# create logistic_workflow 
+logistic_workflow <- 
+  workflow() %>% 
+  add_recipe(logistic_recipe) %>% 
+  add_model(logistic_model)
+```
+
+6. Print and check out the new workflow.
+
+```{r}
+logistic_workflow
+```
+
+7. Fit the model using `fit()`. Save the result as 
+
+```{r}
+# Fit the logistic regression model
+superhost_glm <-
+  logistic_workflow %>% 
+  fit(airbnb)
+```
+
+
+### J - Assess model performance
+
+1. Now it's time to evaluate the classification models' performance. We can again use the `metrics()` function to do so. First, we again create a dataset containing the predicted and true values. This time, we call the `predict()` function twice: once to obtain the predicted classes, and once to obtain the probabilities, with which the classes are predicted.
+
+```{r, echo = TRUE}
+# Get fitted values from the Private_glm object
+logistic_pred <- 
+  predict(superhost_glm, airbnb, type = "prob") %>% 
+  bind_cols(predict(superhost_glm, airbnb)) %>% 
+  bind_cols(airbnb %>% select(host_superhost))
+```
+
+2. Take a look at the `logistic_pred` object and make sure you understand what the variables mean.
+
+```{r}
+# The first two variables contain the predicted class probabilities and were
+# created from the first call to predict(), where type = "prob" was used.
+# The third variable, .pred_class, contains the predicted class. If the .pred_TRUE
+# variable in a given row was >=.5, this will be TRUE, otherwise it will be FALSE.
+# Finally, the last variable, host_superhost, contains the true values.
+```
+
+
+3. Now, get the confusion matrix using the `conf_mat()` function and passing it the `host_superhost` variable as `truth`, and th `.pred_class` variable as `estimate`. Just by looking at the confusion matrix, do you think the model is doing well?
+
+```{r, echo = TRUE, eval = FALSE}
+XX(logistic_pred, truth = XX, estimate = XX)
+```
+
+```{r}
+conf_mat(logistic_pred, truth = host_superhost, estimate = .pred_class)
+```
+
+4. Let's look at different performance metrics. Use the `metrics()` function, with exactly the same arguments as you used in the call to `conf_mat()` before, to obtain the accuracy and the kappa statistic (a chance-corrected measure of agreement between model prediction and true value).
+
+```{r}
+metrics(logistic_pred, truth = host_superhost, estimate = .pred_class)
+```
+
+5. How do you interpret these values? Do you think the model performs well?
+
+```{r}
+logistic_pred %>% 
+  pull(host_superhost) %>% 
+  table() %>% 
+  prop.table() %>% 
+  round(2)
+# Just by predicting always FALSE, the model could reach an accuracy of 60%.
+# By using all the features available, the model can do about 15 percentage points
+# better than that. According to some, completely arbitrary, guidelines, the 
+# kappa value of .49 can be considered moderate or fair to good.
+# Whether such values are acceptable depends on the use case.
+```
+
+6. The metrics we just looked at are based on the class predictions. We can also obtain additional metrics based on the predicted probabilities of class membership. Use the same code as in the last task, but add the name of the column containing the predictied *positive* class probability (`.pred_TRUE`) as an unnamed, fourth argument:
+
+```{r, echo = TRUE, eval = FALSE}
+XX(logistic_pred, truth = XX, estimate = XX, XX)
+```
+
+```{r}
+metrics(logistic_pred, truth = host_superhost, estimate = .pred_class, .pred_TRUE)
+```
+
+7. What does the `roc_auc` value indicate?
+
+```{r}
+# It indicates the area under the curve (AUC) of the receiver operator
+# characteristic (ROC) curve. A value of 1 would be perfect, indicating that both 
+# sensitivity and specificity simultaneously take perfect values.
+```
+
+8. To plot the ROC curve, we can use the `roc_curve()` function, to create sensitivity and specificity values of different cut-offs, and pass this into the `autoplot()` function, to plot the curve. Add the `host_superhost` column as `truth`, and the `.pred_TRUE` column as third, unnamed argument, to the `roc_curve()` function and plot the curve.
+
+```{r, echo = TRUE, eval = FALSE}
+XX(logistic_pred, truth = XX, XX) %>% 
+  autoplot()
+```
+
+```{r}
+roc_curve(logistic_pred, truth = host_superhost, .pred_TRUE) %>% 
+  autoplot()
+```
+
+## Examples
+
+```{r, eval = FALSE, echo = TRUE}
+# Fitting and evaluating a regression model ------------------------------------
+
+# Step 0: Load packages---------------------------------------------------------
+library(tidyverse)    # Load tidyverse for dplyr and tidyr
+library(tidymodels)   # For ML mastery 
+tidymodels_prefer()   # To resolve common conflicts
+
+# Step 1: Load and Clean, and Explore Training data ----------------------------
+
+# I'll use the mpg dataset from the dplyr package in this example
+data_train <- read_csv("1_Data/mpg_train.csv")
+
+# Explore training data
+data_train        # Print the dataset
+View(data_train)  # Open in a new spreadsheet-like window 
+dim(data_train)   # Print dimensions
+names(data_train) # Print the names
+
+# Step 2: Define recipe --------------------------------------------------------
+
+# The recipe defines what to predict with what, and how to pre-process the data
+lm_recipe <- 
+  recipe(hwy ~ year + cyl + displ + trans,  # Specify formula
+         data = data_train) %>%             # Specify the data
+  step_dummy(all_nominal_predictors())      # Dummy code all categorical predictors
+
+
+# Step 3: Define model ---------------------------------------------------------
+
+# The model definition defines what kind of model we want to use and how to
+# fit it
+lm_model <- 
+  linear_reg() %>%        # Specify model type
+  set_engine("lm") %>%    # Specify engine (often package name) to use
+  set_mode("regression")  # Specify whether it's a regressio or classification
+                          #  problem.
+
+# Step 4: Define workflow ------------------------------------------------------
+
+# The workflow combines model and recipe, so that we can fit the model
+lm_workflow <- 
+  workflow() %>%             # Initialize workflow
+  add_model(lm_model) %>%    # Add the model to the workflow
+  add_recipe(lm_recipe)      # Add the recipe to the workflow
+
+# Step 5: Fit the model --------------------------------------------------------
+
+hwy_lm <- 
+  lm_workflow %>%   # Use the specified workflow
+  fit(data_train)   # Fit the model on the specified data
+
+tidy(hwy_lm)        # Look at summary information
+
+# Step 6: Assess fit -----------------------------------------------------------
+
+# Save model predictions and observed values
+lm_fitted <- 
+  hwy_lm %>%               # Model from which to extract predictions
+  predict(data_train) %>%  # Obtain predictions, based on entered data (in this
+                           #  case, these predictions are not out-of-sample)
+  bind_cols(data_train %>% select(hwy))  # Extract observed/true values
+
+# Obtain performance metrics
+metrics(lm_fitted, truth = hwy, estimate = .pred)
+
+
+# Step 7: Visualize Accuracy ---------------------------------------------------
+
+# use the lm_fitted object to generate the plot
+ggplot(lm_fitted, aes(x = .pred, y = hwy)) + 
+  # Create a diagonal line:
+  geom_abline(lty = 2) + 
+  # Add data points:
+  geom_point(alpha = 0.5) + 
+  labs(title = "Regression: Four Features",
+       subtitle = "Line indicates perfect performance",
+       x = "Predicted hwy",
+       y = "True hwy") +
+  # Scale and size the x- and y-axis uniformly:
+  coord_obs_pred()
+```
+
+
+## Datasets
+
+```{r, eval = TRUE, message = FALSE, echo = FALSE}
+library(tidyverse)
+library(tidymodels)
+```
+
+The dataset contains data of the 1191 apartments that were added on Airbnb for the Berlin area in the year 2018.
+
+|File  |Rows | Columns |
+|:----|:-----|:------|
+|[airbnb.csv](https://raw.githubusercontent.com/therbootcamp/ML_2019Oct/master/1_Data/college_train.csv?token=AGKBX5SLEV3PLWUVQ4NCUB2427V36)| 1191 | 23|
+
+
+#### Variable description of `airbnb`
+
+| Name | Description |
+|:-------------|:-------------------------------------|
+|price| Price per night (in \$s)|
+|accommodates| Number of people the airbnb accommodates |
+|bedrooms| Number of bedrooms |
+|bathrooms| Number of bathrooms |
+|cleaning_fee| Amount of cleaning fee (in \$s) |
+|availability_90_days| How many of the following 90 days the airbnb is available |
+|district| The district the Airbnb is located in |
+|host_respons_time| Host average response time|
+|host_response_rate| Host response rate |
+|host_superhost| Whether host is a superhost TRUE/FALSE |
+|host_listings_count| Number of listings the host has |
+|review_scores_accuracy| Accuracy of information rating [0, 10] |
+|review_scores_cleanliness| Cleanliness rating  [0, 10]|
+|review_scores_checkin| Check in rating [0, 10] |
+|review_scores_communication| Communication rating [0, 10] |
+|review_scores_location| Location rating [0, 10] |
+|review_scores_value| Value rating [0, 10] |
+|kitchen| Kitchen available TRUE/FALSE |
+|tv| TV available TRUE/FALSE |
+|coffe_machine| Coffee machine available TRUE/FALSE|
+|dishwasher| Dishwasher available TRUE/FALSE|
+|terrace| Terrace/balcony available TRUE/FALSE|
+|bathtub| Bathtub available TRUE/FALSE|
+
+
+## Functions
+
+### Packages
+
+|Package| Installation|
+|:------|:------|
+|`tidyverse`|`install.packages("tidyverse")`|
+|`tidymodels`|`install.packages("tidymodels")`|
+
+### Functions
+
+| Function| Package | Description |
+|:---|:------|:---------------------------------------------|
+| `read_csv()`|`tidyverse`|    Read in data| 
+| `mutate()`|`tidyverse`|    Manipulate or create columns| 
+| `bind_cols()`|`tidyverse`|    Bind columns together and return a tibble| 
+| `linear_reg()`/`logistic_reg()`|`tidymodels`|    Initialize linear/logistic regression model| 
+| `set_engine()`|`tidymodels`|    Specify which engine to use for the modeling (e.g., "lm" to use `stats::lm()`, or "stan" to use `rstanarm::stan_lm()`)| 
+| `set_mode()`|`tidymodels`|    Specify whether it's a regression or classification problem| 
+| `recipe()`|`tidymodels`|    Initialize recipe| 
+| `step_dummy()`|`tidymodels`|    pre-process data into dummy variables| 
+| `workflow()`|`tidymodels`|   Initialize workflow| 
+| `add_recipe()`|`tidymodels`|   Add recipe to workflow|
+| `update_recipe()`|`tidymodels`|   Update workflow with a new recipe|
+| `add_model()`|`tidymodels`|   Add model to workflow| 
+| `fit()`|`tidymodels`|   Fit model| 
+| `tidy()`|`tidymodels`|   Show model parameters| 
+| `predict()`|`tidymodels`|   Create model predictions based on specified data| 
+| `metrics()`|`tidymodels`|   Evaluate model performance| 
+| `conf_mat()`|`tidymodels`|   Create confusion matrix| 
+| `roc_curve()`|`tidymodels`|   Calculate sensitivity and specificity with different thresholds for ROC-curve| 
+| `autoplot()`|`tidymodels`|   Plot methods for different objects such as those created from `roc_curve()` to plot the ROC-curve| 
+
+
+
+## Resources
+
+- [**tidymodels webpage**](https://www.tidymodels.org/): Can be used as cheat sheet. Also has some tutorials.
+- The, not yet completed, book [**Tidymodeling with R**](https://www.tmwr.org): More detailed introduction into the `tidymodels` framework.

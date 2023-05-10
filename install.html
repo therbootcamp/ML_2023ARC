@@ -1,0 +1,89 @@
+<html>
+  <head>
+    <!-- Bootstrap core CSS -->
+    <link rel="stylesheet" href="index.css">
+  </head>
+
+  <body>
+
+    <div align="center">
+      <div id="header" align=left style="display:inline-block">
+        <h1>Machine Learning with R</h1>
+        <span style="white-space: nowrap">
+          <a href='http://therbootcamp.github.io/'><i class='fas fa-home'></i></a>
+          <a href='http://therbootcamp.github.io/ML_2022DHLab'><i class='fas fa-clock'></i></a>
+          <a href='mailto:therbootcamp@gmail.com'><i class='fas fa-envelope'></i></a>
+          <a href='https://www.linkedin.com/company/27090302'><i class='fab fa-linkedin'></i></a>
+          <a href='http://therbootcamp.github.io/'>
+            <font style='font-style:normal;font-size:20px;padding-left:5px'>The R Bootcamp @ DHLab</font>
+          </a>
+        </span>
+        <br>
+        <span style="white-space: nowrap">
+          <img src='https://raw.githubusercontent.com/therbootcamp/therbootcamp.github.io/master/_sessions/_image/by-sa.png' style= 'height:2rem; vertical-align:baseline'/>
+          <font style='font-size:2rem;font-style:normal;padding-left:8px'>September 2022</font>
+        <span>
+    </div>
+
+    <br><br>
+
+    <style>
+    .my_div {
+      padding: 30px 22% 70px 22%;
+      margin-left: calc(-50vw + 50%);
+      margin-right: calc(-50vw + 50%);
+      font-family: 'Montserrat';
+      }
+    </style>
+
+    <div align="left" class="my_div" style="max-width:940px;font-size:14px">
+
+      <h2>1 Install latest Base-R und RStudio versions on your computer</h2>
+      Please install Base-R and RStudio prior to the course.<br><br>
+
+      <b>Step 1: Install Base-R</b><br>
+
+      <a href="https://cloud.r-project.org/bin/windows/base/R-4.2.1-win.exe">Windows</a>, <a href="https://cran.r-project.org/bin/macosx/base/R-4.2.1.pkg">Mac</a>, <a href="https://cran.r-project.org/bin/macosx/big-sur-arm64/base/R-4.2.1-arm64.pkg">Mac (M1)</a><br><br>
+
+      <b>Step 2: Install RStudio</b><br>
+
+      <a href="https://download1.rstudio.org/desktop/windows/RStudio-2022.07.1-554.exe">Windows</a>, <a href="https://download1.rstudio.org/desktop/macos/RStudio-2022.07.1-554.dmg">Mac</a>
+
+      <h2>2 Install packages</h2>
+
+      You will be using several R “packages” in this course that you need to install in your R session. To make sure that there aren’t any installation issues, please run the following line of code in R — If you don’t know how to run code in R yet, ask a friend, a member of your IT staff, or me :)<br><b>Note:</b> If you R asks you whether to install from source and don't understand what this means, just choose “no”; this will avoid potential problems.<br><br>
+
+      <font style="font-family: Monospace;color: black">install.packages(c("tidyverse", "tidymodels", "rpart", "rpart.plot","doParallel", "ranger", "randomForest", "glmnet", "keras"), dependencies = TRUE)</font><br><br>
+
+      This may take a bit of time! You may receive some warnings (which is fine in most cases) or errors when running the code. If so, please see next point on optional software!
+
+      <h3>Optional: Install additional Software</h2>
+      If you run into problems with the package installation, try installing these Software and then rerun package installation. <br><br>
+      <b>Windows</b>: <a href="https://cran.r-project.org/bin/windows/Rtools/rtools40-x86_64.exe">Rtools</a> plus <a href="https://cran.r-project.org/bin/windows/Rtools/">installation guide</a><br>
+      <b>Mac</b>: <a href="https://cran.r-project.org/bin/macosx/tools/gfortran-6.1.pkg">gfortran</a>, <a href="https://cran.r-project.org/bin/macosx/tools/clang-8.0.0.pkg">clang-7.0.0</a>
+
+      <h2>3 Install tensorflow</h2>
+
+      You will be using tensorflow, in this course, which is a Python-based library for neural networks. One after the other, run the following commands in the R console. If the final command returns an error, reporting that the “tf” Python is already in use, restart R using the menu item “Session/Restart R” and try again. Note that installation may fail for Mac M1 users, when not using the arm64 distribution.   
+
+      <br><br><font style="font-family: Monospace;color: black">reticulate::conda_create("tf")</br>keras::install_keras(envname = "tf")</br>reticulate::use_condaenv("tf")</font>
+
+      <h2>4 Project</h2>
+
+      Please download this <a href="https://www.dropbox.com/s/0rglm44ju1hjdzb/TheRBootcamp.zip?dl=1">R project</a>, unpack its contents, and move it to some suitable location on your local harddrive.
+
+      <h2>5 Zoom</h2>
+
+      The workshop will be held over Zoom. If you do not have an account yet, please register <a href="https://zoom.us/de-de/freesignup.html">here</a>, download and install the <a href="https://zoom.us/download#client_4meeting">client</a>.<br><br>
+
+      The course will start at 9.00am sharp. Please be there 5-10min prior to the beginning of the course so that we can rule out any technical difficulties and start on time.
+
+      During the workshop, please be so kind to have your video on. Feel free to use a custom background. Also please keep your microphone off, unless you want to comment or ask a question. Feel free to unmute yourself at any time.
+
+      <br><br><br><br><br>
+        <a href="https://therbootcamp.github.io/ML_2022DHLab/" style="color:#626870;border:2px solid #626870;padding:8px;border-radius:10px;background:white;font-weight:500;font-size:16px">
+          return to course page
+        </a>
+    </div>
+  </body>
+</html>

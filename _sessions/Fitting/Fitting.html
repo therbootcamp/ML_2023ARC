@@ -1,0 +1,1120 @@
+<!DOCTYPE html>
+<html lang="" xml:lang="">
+  <head>
+    <title>Fitting</title>
+    <meta charset="utf-8" />
+    <meta name="author" content="Machine Learning with R   The R Bootcamp @ DHLab                  " />
+    <script src="libs/header-attrs/header-attrs.js"></script>
+    <link href="libs/remark-css/default.css" rel="stylesheet" />
+    <link rel="stylesheet" href="baselrbootcamp.css" type="text/css" />
+  </head>
+  <body>
+    <textarea id="source">
+class: center, middle, inverse, title-slide
+
+.title[
+# Fitting
+]
+.author[
+### Machine Learning with R<br> <a href='https://therbootcamp.github.io'> The R Bootcamp @ DHLab </a> <br> <a href='https://therbootcamp.github.io/AML_2022DHLab/'> <i class='fas fa-clock' style='font-size:.9em;'></i> </a>  <a href='https://therbootcamp.github.io'> <i class='fas fa-home' style='font-size:.9em;' ></i> </a>  <a href='mailto:therbootcamp@gmail.com'> <i class='fas fa-envelope' style='font-size: .9em;'></i> </a>  <a href='https://www.linkedin.com/company/basel-r-bootcamp/'> <i class='fab fa-linkedin' style='font-size: .9em;'></i> </a>
+]
+.date[
+### September 2022
+]
+
+---
+
+
+layout: true
+
+&lt;div class="my-footer"&gt;
+  &lt;span style="text-align:center"&gt;
+    &lt;span&gt; 
+      &lt;img src="https://raw.githubusercontent.com/therbootcamp/therbootcamp.github.io/master/_sessions/_image/by-sa.png" height=14 style="vertical-align: middle"/&gt;
+    &lt;/span&gt;
+    &lt;a href="https://therbootcamp.github.io/"&gt;
+      &lt;span style="padding-left:82px"&gt; 
+        &lt;font color="#7E7E7E"&gt;
+          www.therbootcamp.com
+        &lt;/font&gt;
+      &lt;/span&gt;
+    &lt;/a&gt;
+    &lt;a href="https://therbootcamp.github.io/"&gt;
+      &lt;font color="#7E7E7E"&gt;
+      Machine Learning with R @ DHLab  | September 2022
+      &lt;/font&gt;
+    &lt;/a&gt;
+    &lt;/span&gt;
+  &lt;/div&gt; 
+
+---
+
+
+
+
+
+
+
+
+
+.pull-left45[
+
+# Fitting
+
+&lt;p style="padding-top:1px"&gt;&lt;/p&gt;
+
+&lt;ul&gt;
+  &lt;li class="m1"&gt;&lt;span&gt;Models are actually &lt;high&gt;families of models&lt;/high&gt;, with every parameter combination specifying a different model.&lt;/span&gt;&lt;/li&gt;
+  &lt;li class="m2"&gt;&lt;span&gt;To fit a model means to &lt;high&gt;identify&lt;/high&gt; from the family of models &lt;high&gt;the specific model that fits the data best&lt;/high&gt;.&lt;/span&gt;&lt;/li&gt;
+&lt;/ul&gt;
+
+ 
+]
+
+.pull-right45[
+
+&lt;br&gt;&lt;br&gt;
+
+&lt;p align = "center"&gt;
+&lt;img src="image/curvefits.png" height=480px&gt;&lt;br&gt;
+&lt;font style="font-size:10px"&gt;adapted from &lt;a href="https://www.explainxkcd.com/wiki/index.php/2048:_Curve-Fitting"&gt;explainxkcd.com&lt;/a&gt;&lt;/font&gt;
+&lt;/p&gt;
+
+]
+
+---
+
+# Loss function
+
+.pull-left45[
+
+&lt;ul&gt;
+  &lt;li class="m1"&gt;&lt;span&gt;Possible &lt;high&gt;the most important concept&lt;/high&gt; in statistics and machine learning.&lt;/span&gt;&lt;/li&gt;
+  &lt;li class="m2"&gt;&lt;span&gt;The loss function defines some &lt;high&gt;summary of the errors committed by the model&lt;/high&gt;.&lt;/span&gt;&lt;/li&gt;
+&lt;/ul&gt;
+
+
+&lt;p style="padding-top:7px"&gt;
+
+`$$\Large Loss = f(Error)$$`
+
+&lt;p style="padding-top:7px"&gt;
+
+&lt;table style="cellspacing:0; cellpadding:0; border:none;"&gt;
+&lt;tr&gt;
+  &lt;td&gt;
+    &lt;b&gt;Purpose&lt;/b&gt;
+  &lt;/td&gt;
+  &lt;td&gt;
+    &lt;b&gt;Description&lt;/b&gt;
+  &lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+  &lt;td bgcolor="white"&gt;
+    Fitting
+  &lt;/td&gt;
+  &lt;td bgcolor="white"&gt;
+    Find parameters that minimize loss function.
+  &lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+  &lt;td&gt;
+    Evaluation
+  &lt;/td&gt;
+  &lt;td&gt;
+    Calculate loss function for fitted model.
+  &lt;/td&gt;
+&lt;/tr&gt;
+&lt;/table&gt;
+
+]
+
+
+.pull-right45[
+
+&lt;img src="Fitting_files/figure-html/unnamed-chunk-2-1.png" width="90%" style="display: block; margin: auto;" /&gt;
+
+
+]
+
+
+---
+
+# Loss function
+
+.pull-left45[
+
+&lt;ul&gt;
+  &lt;li class="m1"&gt;&lt;span&gt;Possible &lt;high&gt;the most important concept&lt;/high&gt; in statistics and machine learning.&lt;/span&gt;&lt;/li&gt;
+  &lt;li class="m2"&gt;&lt;span&gt;The loss function defines some &lt;high&gt;summary of the errors committed by the model&lt;/high&gt;.&lt;/span&gt;&lt;/li&gt;
+&lt;/ul&gt;
+
+
+&lt;p style="padding-top:7px"&gt;
+
+`$$\Large Loss = f(Error)$$`
+
+&lt;p style="padding-top:7px"&gt;
+
+&lt;table style="cellspacing:0; cellpadding:0; border:none;"&gt;
+&lt;tr&gt;
+  &lt;td&gt;
+    &lt;b&gt;Purpose&lt;/b&gt;
+  &lt;/td&gt;
+  &lt;td&gt;
+    &lt;b&gt;Description&lt;/b&gt;
+  &lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+  &lt;td bgcolor="white"&gt;
+    Fitting
+  &lt;/td&gt;
+  &lt;td bgcolor="white"&gt;
+    Find parameters that minimize loss function.
+  &lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+  &lt;td&gt;
+    Evaluation
+  &lt;/td&gt;
+  &lt;td&gt;
+    Calculate loss function for fitted model.
+  &lt;/td&gt;
+&lt;/tr&gt;
+&lt;/table&gt;
+
+]
+
+
+.pull-right45[
+
+&lt;img src="Fitting_files/figure-html/unnamed-chunk-3-1.png" width="90%" style="display: block; margin: auto;" /&gt;
+
+
+]
+---
+
+class: center, middle
+
+&lt;high&gt;&lt;h1&gt;Regression&lt;/h1&gt;&lt;/high&gt;
+
+&lt;font color = "gray"&gt;&lt;h1&gt;Decision Trees&lt;/h1&gt;&lt;/font&gt;
+
+&lt;font color = "gray"&gt;&lt;h1&gt;Random Forests&lt;/h1&gt;&lt;/font&gt;
+
+
+
+---
+
+# Regression
+
+.pull-left45[
+
+In [regression](https://en.wikipedia.org/wiki/Regression_analysis), the criterion `\(Y\)` is modeled as the &lt;high&gt;sum&lt;/high&gt; of &lt;high&gt;features&lt;/high&gt; `\(X_1, X_2, ...\)` &lt;high&gt;times weights&lt;/high&gt; `\(\beta_1, \beta_2, ...\)` plus `\(\beta_0\)` the so-called the intercept.
+
+&lt;p style="padding-top:10px"&gt;&lt;/p&gt;
+
+
+`$$\large \hat{Y} =  \beta_{0} + \beta_{1} \times X_1 + \beta_{2} \times X2 + ...$$`
+
+&lt;p style="padding-top:10px"&gt;&lt;/p&gt;
+
+The weight `\(\beta_{i}\)` indiciates the &lt;high&gt;amount of change&lt;/high&gt; in `\(\hat{Y}\)` for a change of 1 in `\(X_{i}\)`.
+
+Ceteris paribus, the &lt;high&gt;more extreme&lt;/high&gt; `\(\beta_{i}\)`, the &lt;high&gt;more important&lt;/high&gt; `\(X_{i}\)` for the prediction of `\(Y\)` &lt;font style="font-size:12px"&gt;(Note: the scale of `\(X_{i}\)` matters too!).&lt;/font&gt;
+
+If `\(\beta_{i} = 0\)`, then `\(X_{i}\)` &lt;high&gt;does not help&lt;/high&gt; predicting `\(Y\)`
+
+
+
+]
+
+.pull-right45[
+
+&lt;img src="Fitting_files/figure-html/unnamed-chunk-4-1.png" width="90%" style="display: block; margin: auto;" /&gt;
+
+
+]
+
+
+---
+
+# Regression loss
+
+.pull-left45[
+
+&lt;p&gt;
+
+&lt;ul style="margin-bottom:-20px"&gt;
+  &lt;li class="m1"&gt;&lt;span&gt;&lt;b&gt;Mean Squared Error (MSE)&lt;/b&gt;
+  &lt;br&gt;&lt;br&gt;
+  &lt;ul class="level"&gt;
+    &lt;li&gt;&lt;span&gt;Average &lt;high&gt;squared distance&lt;/high&gt; between predictions and true values.&lt;/span&gt;&lt;/li&gt;
+  &lt;/ul&gt;
+  &lt;/span&gt;&lt;/li&gt;
+&lt;/ul&gt;
+
+`$$MSE = \frac{1}{n}\sum_{i \in 1,...,n}(Y_{i} - \hat{Y}_{i})^{2}$$`
+
+&lt;ul&gt;
+  &lt;li class="m2"&gt;&lt;span&gt;&lt;b&gt;Mean Absolute Error (MAE)&lt;/b&gt;
+  &lt;br&gt;&lt;br&gt;
+  &lt;ul class="level"&gt;
+    &lt;li&gt;&lt;span&gt;Average &lt;high&gt;absolute distance&lt;/high&gt; between predictions and true values.&lt;/span&gt;&lt;/li&gt;
+  &lt;/ul&gt;
+  &lt;/span&gt;&lt;/li&gt;
+&lt;/ul&gt;
+
+$$ MAE = \frac{1}{n}\sum_{i \in 1,...,n} \lvert Y_{i} - \hat{Y}_{i} \rvert$$
+
+
+&lt;/p&gt;
+
+]
+
+.pull-right45[
+
+&lt;img src="Fitting_files/figure-html/unnamed-chunk-5-1.png" width="90%" style="display: block; margin: auto;" /&gt;
+
+
+]
+
+---
+
+# 2 types of supervised problems
+
+.pull-left45[
+
+&lt;ul style="margin-bottom:-20px"&gt;
+  &lt;li class="m1"&gt;&lt;span&gt;&lt;b&gt;Regression&lt;/b&gt;
+  &lt;br&gt;&lt;br&gt;
+  &lt;ul class="level"&gt;
+    &lt;li&gt;&lt;span&gt;Regression problems involve the &lt;high&gt;prediction of a quantitative feature&lt;/high&gt;.&lt;/span&gt;&lt;/li&gt;
+    &lt;li&gt;&lt;span&gt;E.g., predicting the cholesterol level as a function of age&lt;/high&gt;.&lt;/span&gt;&lt;/li&gt;
+  &lt;/ul&gt;
+  &lt;/span&gt;&lt;/li&gt;&lt;br&gt;
+  &lt;li class="m2"&gt;&lt;span&gt;&lt;b&gt;Classification&lt;/b&gt;
+  &lt;br&gt;&lt;br&gt;
+  &lt;ul class="level"&gt;
+    &lt;li&gt;&lt;span&gt;Classification problems involve the &lt;high&gt;prediction of a categorical feature&lt;/high&gt;.&lt;/span&gt;&lt;/li&gt;
+    &lt;li&gt;&lt;span&gt;E.g., predicting the type of chest pain as a function of age&lt;/high&gt;.&lt;/span&gt;&lt;/li&gt;
+  &lt;/ul&gt;
+  &lt;/span&gt;&lt;/li&gt;
+&lt;/ul&gt;
+
+
+]
+
+.pull-right4[
+
+&lt;p align = "center"&gt;
+&lt;img src="image/twotypes.png" height=440px&gt;&lt;br&gt;
+&lt;/p&gt;
+
+]
+
+---
+
+# Logistic regression
+
+.pull-left45[
+
+&lt;ul style="margin-bottom:-20px"&gt;
+  &lt;li class="m1"&gt;&lt;span&gt;In &lt;a href="https://en.wikipedia.org/wiki/Logistic_regression"&gt;logistic regression&lt;/a&gt;, the class criterion &lt;font style="font-size:22px"&gt;&lt;mono&gt;Y &amp;isin; (0,1)&lt;/mono&gt;&lt;/font&gt; is modeled also as the &lt;high&gt;sum of feature times weights&lt;/high&gt;, but with the prediction being transformed using a &lt;high&gt;logistic link function&lt;/high&gt;.&lt;/span&gt;&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;p style="padding-top:10px"&gt;&lt;/p&gt;
+
+`$$\large \hat{Y} =  Logistic(\beta_{0} + \beta_{1} \times X_1 + ...)$$`
+
+&lt;p style="padding-top:10px"&gt;&lt;/p&gt;
+
+&lt;ul style="margin-bottom:-20px"&gt;
+  &lt;li class="m2"&gt;&lt;span&gt;The logistic function &lt;high&gt;maps predictions to the range of 0 and 1&lt;/high&gt;, the two class values..&lt;/span&gt;&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;p style="padding-top:10px"&gt;&lt;/p&gt;
+
+$$ Logistic(x) = \frac{1}{1+exp(-x)}$$
+
+]
+
+.pull-right45[
+
+&lt;img src="Fitting_files/figure-html/unnamed-chunk-6-1.png" width="90%" style="display: block; margin: auto;" /&gt;
+
+]
+
+---
+
+# Logistic regression
+
+.pull-left45[
+
+&lt;ul style="margin-bottom:-20px"&gt;
+  &lt;li class="m1"&gt;&lt;span&gt;In &lt;a href="https://en.wikipedia.org/wiki/Logistic_regression"&gt;logistic regression&lt;/a&gt;, the class criterion &lt;font style="font-size:22px"&gt;&lt;mono&gt;Y &amp;isin; (0,1)&lt;/mono&gt;&lt;/font&gt; is modeled also as the &lt;high&gt;sum of feature times weights&lt;/high&gt;, but with the prediction being transformed using a &lt;high&gt;logistic link function&lt;/high&gt;.&lt;/span&gt;&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;p style="padding-top:10px"&gt;&lt;/p&gt;
+
+`$$\large \hat{Y} =  Logistic(\beta_{0} + \beta_{1} \times X_1 + ...)$$`
+
+&lt;p style="padding-top:10px"&gt;&lt;/p&gt;
+
+&lt;ul style="margin-bottom:-20px"&gt;
+  &lt;li class="m2"&gt;&lt;span&gt;The logistic function &lt;high&gt;maps predictions to the range of 0 and 1&lt;/high&gt;, the two class values..&lt;/span&gt;&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;p style="padding-top:10px"&gt;&lt;/p&gt;
+
+$$ Logistic(x) = \frac{1}{1+exp(-x)}$$
+
+]
+
+.pull-right45[
+
+&lt;img src="Fitting_files/figure-html/unnamed-chunk-7-1.png" width="90%" style="display: block; margin: auto;" /&gt;
+
+]
+
+---
+
+# Classification loss
+
+.pull-left45[
+
+&lt;ul style="margin-bottom:-20px"&gt;
+  &lt;li class="m1"&gt;&lt;span&gt;&lt;b&gt;Distance&lt;/b&gt;
+  &lt;br&gt;&lt;br&gt;
+  &lt;ul class="level"&gt;
+    &lt;li&gt;&lt;span&gt;Logloss is &lt;high&gt;used to fit the parameters&lt;/high&gt;, alternative distance measures are MSE and MAE.&lt;/span&gt;&lt;/li&gt;
+  &lt;/ul&gt;
+  &lt;/span&gt;&lt;/li&gt;
+&lt;/ul&gt;
+
+`$$\small LogLoss = -\frac{1}{n}\sum_{i}^{n}(log(\hat{y})y+log(1-\hat{y})(1-y))$$`
+
+&lt;ul&gt; 
+  &lt;li class="m2"&gt;&lt;span&gt;&lt;b&gt;Overlap&lt;/b&gt;
+  &lt;br&gt;&lt;br&gt;
+  &lt;ul class="level"&gt;
+    &lt;li&gt;&lt;span&gt;Does the &lt;high&gt;predicted class match the actual class&lt;/high&gt;. Often preferred for &lt;high&gt;ease of interpretation&lt;/high&gt;..&lt;/span&gt;&lt;/li&gt;
+  &lt;/ul&gt;
+  &lt;/span&gt;&lt;/li&gt;
+&lt;/ul&gt;
+
+`$$\small  Loss_{01} = 1-Accuracy = \frac{1}{n}\sum_i^n I(y \neq \lfloor \hat{y} \rceil)$$`
+
+]
+
+.pull-right45[
+
+&lt;img src="Fitting_files/figure-html/unnamed-chunk-8-1.png" width="90%" style="display: block; margin: auto;" /&gt;
+
+]
+
+
+---
+
+class: center,  middle
+
+&lt;p align = "center"&gt;
+&lt;img src="https://www.tidymodels.org/images/tidymodels.png" width=240px&gt;&lt;br&gt;
+&lt;font style="font-size:10px"&gt;from &lt;a href="https://www.tidymodels.org/packages/"&gt;tidymodels.org&lt;/a&gt;&lt;/font&gt;
+&lt;/p&gt;
+
+
+---
+
+.pull-left4[
+
+# tidymodels
+
+&lt;ul&gt;
+  &lt;li class="m1"&gt;&lt;span&gt;&lt;mono&gt;tidymodels&lt;/mono&gt; is a new meta-package for tidy ML in R.&lt;/span&gt;&lt;/li&gt;
+  &lt;li class="m2"&gt;&lt;span&gt;Multiple packages span every important step of ML.&lt;/span&gt;&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;br&gt;
+&lt;p align = "center"&gt;
+&lt;img src="https://www.tidymodels.org/images/tidymodels.png" width=180px&gt;&lt;br&gt;
+&lt;font style="font-size:10px"&gt;from &lt;a href="https://www.tidymodels.org/packages/"&gt;tidymodels.org&lt;/a&gt;&lt;/font&gt;
+&lt;/p&gt;
+
+]
+
+.pull-right5[
+
+&lt;p align = "center"&gt;
+&lt;br&gt;
+&lt;img src="image/tidymodels.png" height=560px&gt;&lt;br&gt;
+&lt;/p&gt;
+
+]
+
+---
+
+.pull-left4[
+
+# Fitting &lt;mono&gt;tidymodels&lt;/mono&gt;
+
+&lt;br&gt;
+&lt;ul&gt;
+  &lt;li class="m1"&gt;&lt;span&gt;Define the &lt;mono&gt;recipe&lt;/mono&gt;.&lt;/span&gt;&lt;/li&gt;&lt;br&gt;
+  &lt;li class="m2"&gt;&lt;span&gt;Define the model.&lt;/span&gt;&lt;/li&gt;&lt;br&gt;
+  &lt;li class="m3"&gt;&lt;span&gt;Define the &lt;mono&gt;workflow&lt;/mono&gt;.&lt;/span&gt;&lt;/li&gt;&lt;br&gt;
+  &lt;li class="m4"&gt;&lt;span&gt;Fit the &lt;mono&gt;workflow&lt;/mono&gt;&lt;/span&gt;&lt;/li&gt;&lt;br&gt;
+  &lt;li class="m5"&gt;&lt;span&gt;Assess model performance.&lt;/span&gt;&lt;/li&gt;
+&lt;/ul&gt;
+
+]
+
+.pull-right5[
+
+&lt;p align = "center"&gt;
+&lt;br&gt;
+&lt;img src="image/tidymodels_fit.png" height=560px&gt;&lt;br&gt;
+&lt;/p&gt;
+
+]
+
+
+---
+
+# Define the &lt;mono&gt;recipe&lt;/mono&gt;
+
+.pull-left45[
+
+&lt;ul&gt;
+  &lt;li class="m1"&gt;&lt;span&gt;The &lt;mono&gt;recipe&lt;/mono&gt; specifies two things:&lt;/span&gt;&lt;/li&gt;&lt;br&gt;
+  &lt;ul class="level"&gt;
+    &lt;li&gt;&lt;span&gt;The criterion and the features, i.e., the &lt;mono&gt;formula&lt;/mono&gt; to use.&lt;/span&gt;&lt;/li&gt;&lt;br&gt;
+    &lt;li&gt;&lt;span&gt;How the features should be pre-processed before the model fitting.&lt;/span&gt;&lt;/li&gt;&lt;br&gt;
+  &lt;/ul&gt;
+  &lt;li class="m2"&gt;&lt;span&gt;To set up a &lt;mono&gt;recipe&lt;/mono&gt;:&lt;/span&gt;&lt;/li&gt;&lt;br&gt;
+  &lt;ul class="level"&gt;
+  &lt;li&gt;&lt;span&gt;Initialize it with &lt;mono&gt;recipe()&lt;/mono&gt;, wherein the formula and data are specified.&lt;/span&gt;&lt;/li&gt;&lt;br&gt;
+  &lt;li&gt;&lt;span&gt;Add pre-processing steps, using &lt;mono&gt;step_*()&lt;/mono&gt; functions and &lt;mono&gt;dplyr&lt;/mono&gt;-like selectors.&lt;/span&gt;&lt;/li&gt;&lt;br&gt;
+  &lt;/ul&gt;
+&lt;/ul&gt;
+
+]
+
+.pull-right45[
+
+
+```r
+# set up recipe for regression model
+lm_recipe &lt;- 
+  recipe(income ~ ., data = baselers) %&gt;% 
+  step_dummy(all_nominal_predictors())
+
+lm_recipe
+```
+
+```
+Recipe
+
+Inputs:
+
+      role #variables
+   outcome          1
+ predictor         19
+
+Operations:
+
+Dummy variables from all_nominal_predictors()
+```
+
+]
+
+---
+
+# Define the &lt;mono&gt;recipe&lt;/mono&gt;
+
+.pull-left45[
+
+&lt;ul&gt;
+  &lt;li class="m1"&gt;&lt;span&gt;The &lt;mono&gt;recipe&lt;/mono&gt; specifies two things:&lt;/span&gt;&lt;/li&gt;&lt;br&gt;
+  &lt;ul class="level"&gt;
+    &lt;li&gt;&lt;span&gt;The criterion and the features, i.e., the &lt;mono&gt;formula&lt;/mono&gt; to use.&lt;/span&gt;&lt;/li&gt;&lt;br&gt;
+    &lt;li&gt;&lt;span&gt;How the features should be pre-processed before the model fitting.&lt;/span&gt;&lt;/li&gt;&lt;br&gt;
+  &lt;/ul&gt;
+  &lt;li class="m2"&gt;&lt;span&gt;To set up a &lt;mono&gt;recipe&lt;/mono&gt;:&lt;/span&gt;&lt;/li&gt;&lt;br&gt;
+  &lt;ul class="level"&gt;
+  &lt;li&gt;&lt;span&gt;Initialize it with &lt;mono&gt;recipe()&lt;/mono&gt;, wherein the formula and data are specified.&lt;/span&gt;&lt;/li&gt;&lt;br&gt;
+  &lt;li&gt;&lt;span&gt;Add pre-processing steps, using &lt;mono&gt;step_*()&lt;/mono&gt; functions and &lt;mono&gt;dplyr&lt;/mono&gt;-like selectors.&lt;/span&gt;&lt;/li&gt;&lt;br&gt;
+  &lt;/ul&gt;
+&lt;/ul&gt;
+
+]
+
+.pull-right45[
+
+
+```r
+# set up recipe for logistic regression
+# model
+logistic_recipe &lt;- 
+  recipe(eyecor ~., data = baselers) %&gt;% 
+  step_dummy(all_nominal_predictors())
+
+logistic_recipe
+```
+
+```
+Recipe
+
+Inputs:
+
+      role #variables
+   outcome          1
+ predictor         19
+
+Operations:
+
+Dummy variables from all_nominal_predictors()
+```
+
+]
+
+
+---
+
+# Define the model
+
+.pull-left45[
+
+
+&lt;ul&gt;
+  &lt;li class="m1"&gt;&lt;span&gt;The model specifies:&lt;/span&gt;&lt;/li&gt;&lt;br&gt;
+  &lt;ul class="level"&gt;
+    &lt;li&gt;&lt;span&gt;Which model (e.g. linear regression) to use.&lt;/span&gt;&lt;/li&gt;&lt;br&gt;
+    &lt;li&gt;&lt;span&gt;Which engine (underlying model-fitting algorithm) to use.&lt;/span&gt;&lt;/li&gt;&lt;br&gt;
+    &lt;li&gt;&lt;span&gt;The problem mode, i.e., &lt;high&gt;regression vs. classification&lt;/high&gt;.&lt;/span&gt;&lt;/li&gt;&lt;br&gt;
+  &lt;/ul&gt;
+  &lt;li class="m2"&gt;&lt;span&gt;To set up a model:&lt;/span&gt;&lt;/li&gt;&lt;br&gt;
+  &lt;ul class="level"&gt;
+  &lt;li&gt;&lt;span&gt;Specify the model, e.g., using &lt;mono&gt;linear_reg()&lt;/mono&gt; or &lt;mono&gt;logistic_reg()&lt;/mono&gt;.&lt;/span&gt;&lt;/li&gt;&lt;br&gt;
+  &lt;li&gt;&lt;span&gt;Specify the engine using &lt;mono&gt;set_engine()&lt;/mono&gt;.&lt;/span&gt;&lt;/li&gt;&lt;br&gt;
+  &lt;li&gt;&lt;span&gt;Specify the problem mode using &lt;mono&gt;set_mode()&lt;/mono&gt;.&lt;/span&gt;&lt;/li&gt;&lt;br&gt;
+  &lt;/ul&gt;
+&lt;/ul&gt;
+
+]
+
+.pull-right45[
+
+
+```r
+# set up model for regression model
+lm_model &lt;- 
+  linear_reg() %&gt;% 
+  set_engine("lm") %&gt;% 
+  set_mode("regression")
+
+lm_model
+```
+
+```
+Linear Regression Model Specification (regression)
+
+Computational engine: lm 
+```
+
+]
+
+---
+
+# Define the model
+
+.pull-left45[
+
+
+&lt;ul&gt;
+  &lt;li class="m1"&gt;&lt;span&gt;The model specifies:&lt;/span&gt;&lt;/li&gt;&lt;br&gt;
+  &lt;ul class="level"&gt;
+    &lt;li&gt;&lt;span&gt;Which model (e.g. linear regression) to use.&lt;/span&gt;&lt;/li&gt;&lt;br&gt;
+    &lt;li&gt;&lt;span&gt;Which engine (underlying model-fitting algorithm) to use.&lt;/span&gt;&lt;/li&gt;&lt;br&gt;
+    &lt;li&gt;&lt;span&gt;The problem mode, i.e., &lt;high&gt;regression vs. classification&lt;/high&gt;.&lt;/span&gt;&lt;/li&gt;&lt;br&gt;
+  &lt;/ul&gt;
+  &lt;li class="m2"&gt;&lt;span&gt;To set up a model:&lt;/span&gt;&lt;/li&gt;&lt;br&gt;
+  &lt;ul class="level"&gt;
+  &lt;li&gt;&lt;span&gt;Specify the model, e.g., using &lt;mono&gt;linear_reg()&lt;/mono&gt; or &lt;mono&gt;logistic_reg()&lt;/mono&gt;.&lt;/span&gt;&lt;/li&gt;&lt;br&gt;
+  &lt;li&gt;&lt;span&gt;Specify the engine using &lt;mono&gt;set_engine()&lt;/mono&gt;.&lt;/span&gt;&lt;/li&gt;&lt;br&gt;
+  &lt;li&gt;&lt;span&gt;Specify the problem mode using &lt;mono&gt;set_mode()&lt;/mono&gt;.&lt;/span&gt;&lt;/li&gt;&lt;br&gt;
+  &lt;/ul&gt;
+&lt;/ul&gt;
+
+]
+
+.pull-right45[
+
+
+```r
+# set up model for logistic regression
+# model
+logistic_model &lt;- 
+  logistic_reg() %&gt;% 
+  set_engine("glm") %&gt;% 
+  set_mode("classification")
+
+logistic_model
+```
+
+```
+Logistic Regression Model Specification (classification)
+
+Computational engine: glm 
+```
+
+]
+
+---
+
+# Define the &lt;mono&gt;workflow&lt;/mono&gt;
+
+.pull-left45[
+
+
+&lt;ul&gt;
+  &lt;li class="m1"&gt;&lt;span&gt;A &lt;mono&gt;workflow&lt;/mono&gt; combines the recipe and model and facilitates fitting the model. 
+To set up a &lt;mono&gt;workflow&lt;/mono&gt;:&lt;/span&gt;&lt;/li&gt;&lt;br&gt;
+  &lt;ul class="level"&gt;
+    &lt;li&gt;&lt;span&gt;Initialize it using the &lt;mono&gt;workflow()&lt;/mono&gt; function.&lt;/span&gt;&lt;/li&gt;&lt;br&gt;
+    &lt;li&gt;&lt;span&gt;Add a recipe using &lt;mono&gt;add_recipe()&lt;/mono&gt;.&lt;/span&gt;&lt;/li&gt;&lt;br&gt;
+    &lt;li&gt;&lt;span&gt;Add a model using &lt;mono&gt;add_model()&lt;/mono&gt;.&lt;/span&gt;&lt;/li&gt;&lt;br&gt;
+  &lt;/ul&gt;
+&lt;/ul&gt;
+
+]
+
+.pull-right45[
+
+
+```r
+# set up workflow for regression model
+lm_workflow &lt;- 
+  workflow() %&gt;% 
+  add_recipe(lm_recipe) %&gt;% 
+  add_model(lm_model)
+
+lm_workflow
+```
+
+```
+══ Workflow ══════════════════════════════════════════════════════════════════════════════════════════════════
+Preprocessor: Recipe
+Model: linear_reg()
+
+── Preprocessor ──────────────────────────────────────────────────────────────────────────────────────────────
+1 Recipe Step
+
+• step_dummy()
+
+── Model ─────────────────────────────────────────────────────────────────────────────────────────────────────
+Linear Regression Model Specification (regression)
+
+Computational engine: lm 
+```
+
+]
+
+---
+
+# Define the &lt;mono&gt;workflow&lt;/mono&gt;
+
+.pull-left45[
+
+
+&lt;ul&gt;
+  &lt;li class="m1"&gt;&lt;span&gt;A &lt;mono&gt;workflow&lt;/mono&gt; combines the recipe and model and facilitates fitting the model. 
+To set up a &lt;mono&gt;workflow&lt;/mono&gt;:&lt;/span&gt;&lt;/li&gt;&lt;br&gt;
+  &lt;ul class="level"&gt;
+    &lt;li&gt;&lt;span&gt;Initialize it using the &lt;mono&gt;workflow()&lt;/mono&gt; function.&lt;/span&gt;&lt;/li&gt;&lt;br&gt;
+    &lt;li&gt;&lt;span&gt;Add a recipe using &lt;mono&gt;add_recipe()&lt;/mono&gt;.&lt;/span&gt;&lt;/li&gt;&lt;br&gt;
+    &lt;li&gt;&lt;span&gt;Add a model using &lt;mono&gt;add_model()&lt;/mono&gt;.&lt;/span&gt;&lt;/li&gt;&lt;br&gt;
+  &lt;/ul&gt;
+&lt;/ul&gt;
+
+]
+
+.pull-right45[
+
+
+```r
+# set up workflow for logistic regression
+# model
+logistic_workflow &lt;- 
+  workflow() %&gt;% 
+  add_recipe(logistic_recipe) %&gt;% 
+  add_model(logistic_model)
+
+logistic_workflow
+```
+
+```
+══ Workflow ══════════════════════════════════════════════════════════════════════════════════════════════════
+Preprocessor: Recipe
+Model: logistic_reg()
+
+── Preprocessor ──────────────────────────────────────────────────────────────────────────────────────────────
+1 Recipe Step
+
+• step_dummy()
+
+── Model ─────────────────────────────────────────────────────────────────────────────────────────────────────
+Logistic Regression Model Specification (classification)
+
+Computational engine: glm 
+```
+
+]
+
+
+---
+
+# Fit the &lt;mono&gt;workflow&lt;/mono&gt;
+
+.pull-left35[
+
+&lt;ul&gt;
+  &lt;li class="m1"&gt;&lt;span&gt;A &lt;mono&gt;workflow&lt;/mono&gt; is fitted using the &lt;mono&gt;fit()&lt;/mono&gt; function.&lt;/span&gt;&lt;/li&gt;&lt;br&gt;
+  &lt;ul class="level"&gt;
+    &lt;li&gt;&lt;span&gt;Applies the recipe with the pre-processing steps.&lt;/span&gt;&lt;/li&gt;&lt;br&gt;
+    &lt;li&gt;&lt;span&gt;Run the specified algorithm (i.e., model).&lt;/span&gt;&lt;/li&gt;&lt;br&gt;
+  &lt;/ul&gt;
+&lt;/ul&gt;
+
+]
+
+.pull-right55[
+
+
+```r
+# fit the workflow
+income_lm &lt;- fit(lm_workflow,
+                 data = baselers)
+
+tidy(income_lm)
+```
+
+```
+# A tibble: 25 × 5
+   term           estimate std.error statistic   p.value
+   &lt;chr&gt;             &lt;dbl&gt;     &lt;dbl&gt;     &lt;dbl&gt;     &lt;dbl&gt;
+ 1 (Intercept) -192.         631.     -0.304   7.61e-  1
+ 2 id             0.000895     0.113   0.00792 9.94e-  1
+ 3 age          115.           2.88   40.1     2.23e-208
+ 4 height         4.95         3.02    1.64    1.02e-  1
+ 5 weight         1.01         3.27    0.307   7.59e-  1
+ 6 children     -48.9         31.9    -1.54    1.25e-  1
+ 7 happiness   -156.          31.1    -5.02    6.00e-  7
+ 8 fitness        6.94        17.9     0.389   6.97e-  1
+ 9 food           2.50         0.142  17.6     2.33e- 60
+10 alcohol       26.1          2.47   10.6     8.05e- 25
+# … with 15 more rows
+```
+
+]
+
+---
+
+# Fit the &lt;mono&gt;workflow&lt;/mono&gt;
+
+.pull-left35[
+
+&lt;ul&gt;
+  &lt;li class="m1"&gt;&lt;span&gt;A &lt;mono&gt;workflow&lt;/mono&gt; is fitted using the &lt;mono&gt;fit()&lt;/mono&gt; function.&lt;/span&gt;&lt;/li&gt;&lt;br&gt;
+  &lt;ul class="level"&gt;
+    &lt;li&gt;&lt;span&gt;Applies the recipe with the pre-processing steps.&lt;/span&gt;&lt;/li&gt;&lt;br&gt;
+    &lt;li&gt;&lt;span&gt;Run the specified algorithm (i.e., model).&lt;/span&gt;&lt;/li&gt;&lt;br&gt;
+  &lt;/ul&gt;
+&lt;/ul&gt;
+
+]
+
+.pull-right55[
+
+
+```r
+# fit the logistic regression workflow
+eyecor_glm &lt;- fit(logistic_workflow,
+                  data = baselers)
+
+tidy(eyecor_glm)
+```
+
+```
+# A tibble: 25 × 5
+   term          estimate std.error statistic p.value
+   &lt;chr&gt;            &lt;dbl&gt;     &lt;dbl&gt;     &lt;dbl&gt;   &lt;dbl&gt;
+ 1 (Intercept) -3.04      1.32         -2.31   0.0211
+ 2 id           0.0000834 0.000236      0.354  0.723 
+ 3 age          0.00734   0.00973       0.755  0.451 
+ 4 height       0.00572   0.00630       0.907  0.364 
+ 5 weight       0.00446   0.00678       0.658  0.510 
+ 6 income      -0.0000395 0.0000666    -0.593  0.553 
+ 7 children     0.0329    0.0665        0.495  0.621 
+ 8 happiness    0.0386    0.0653        0.591  0.554 
+ 9 fitness     -0.0419    0.0372       -1.13   0.261 
+10 food        -0.0000755 0.000339     -0.222  0.824 
+# … with 15 more rows
+```
+
+]
+
+---
+
+# Assess model fit
+
+.pull-left4[
+
+&lt;ul&gt;
+  &lt;li class="m1"&gt;&lt;span&gt;Use &lt;mono&gt;predict()&lt;/mono&gt; to obtain model predictions on specified data.&lt;/span&gt;&lt;/li&gt;&lt;br&gt;
+  &lt;li class="m2"&gt;&lt;span&gt;Use &lt;mono&gt;metrics()&lt;/mono&gt; to obtain performance metrics, suited for the current problem mode.&lt;/span&gt;&lt;/li&gt;
+&lt;/ul&gt;
+]
+
+.pull-right5[
+
+
+```r
+# generate predictions
+lm_pred &lt;-
+  income_lm %&gt;% 
+  predict(baselers) %&gt;% 
+  bind_cols(baselers %&gt;% select(income))
+
+metrics(lm_pred,
+        truth = income,
+        estimate = .pred)
+```
+
+```
+# A tibble: 3 × 3
+  .metric .estimator .estimate
+  &lt;chr&gt;   &lt;chr&gt;          &lt;dbl&gt;
+1 rmse    standard    1008.   
+2 rsq     standard       0.868
+3 mae     standard     792.   
+```
+
+]
+
+---
+
+# Assess model fit
+
+.pull-left4[
+
+&lt;ul&gt;
+  &lt;li class="m1"&gt;&lt;span&gt;Use &lt;mono&gt;predict()&lt;/mono&gt; to obtain model predictions on specified data.&lt;/span&gt;&lt;/li&gt;&lt;br&gt;
+  &lt;li class="m2"&gt;&lt;span&gt;Use &lt;mono&gt;metrics()&lt;/mono&gt; to obtain performance metrics, suited for the current problem mode.&lt;/span&gt;&lt;/li&gt;
+&lt;/ul&gt;
+]
+
+.pull-right5[
+
+
+```r
+# generate predictions logistic regression
+logistic_pred &lt;- 
+  predict(eyecor_glm, baselers,
+          type = "prob") %&gt;% 
+  bind_cols(predict(eyecor_glm, baselers)) %&gt;% 
+  bind_cols(baselers %&gt;% select(eyecor))
+
+metrics(logistic_pred,
+        truth = eyecor,
+        estimate = .pred_class,
+        .pred_yes)
+```
+
+```
+# A tibble: 4 × 3
+  .metric     .estimator .estimate
+  &lt;chr&gt;       &lt;chr&gt;          &lt;dbl&gt;
+1 accuracy    binary        0.647 
+2 kap         binary        0.0566
+3 mn_log_loss binary        0.634 
+4 roc_auc     binary        0.605 
+```
+
+]
+
+---
+
+# Assess model fit
+
+.pull-left4[
+
+&lt;ul&gt;
+  &lt;li class="m1"&gt;&lt;span&gt;Use &lt;mono&gt;roc_curve()&lt;/mono&gt; to obtain sensitivity and specificity for every unique value of the predicted probabilities.&lt;/span&gt;&lt;/li&gt;&lt;br&gt;
+  &lt;ul class="level"&gt;
+    &lt;li&gt;&lt;span&gt;&lt;high&gt;Sensitivity&lt;/high&gt; = Of the truly positive cases, what proportion is classified as positive.&lt;/span&gt;&lt;/li&gt;&lt;br&gt;
+    &lt;li&gt;&lt;span&gt;&lt;high&gt;Specificity&lt;/high&gt; = Of the truly negative cases, what proportion is classified as negative.&lt;/span&gt;&lt;/li&gt;&lt;br&gt;
+  &lt;/ul&gt;
+  &lt;li class="m2"&gt;&lt;span&gt;Use &lt;mono&gt;autoplot()&lt;/mono&gt; to plot the ROC-curve based on the different combinations of sensitivity and specificity.&lt;/span&gt;&lt;/li&gt;
+&lt;/ul&gt;
+]
+
+.pull-right5[
+
+
+```r
+# ROC curve for logistic model
+logistic_pred %&gt;% 
+  roc_curve(truth = eyecor, .pred_yes) %&gt;% 
+  autoplot()
+```
+
+&lt;img src="Fitting_files/figure-html/unnamed-chunk-19-1.png" width="90%" style="display: block; margin: auto;" /&gt;
+
+]
+
+
+---
+
+class: middle, center
+
+&lt;h1&gt;&lt;a href=https://therbootcamp.github.io/ML_2022DHLab/_sessions/Fitting/Fitting_practical.html&gt;Practical&lt;/a&gt;&lt;/h1&gt;
+
+
+    </textarea>
+<style data-target="print-only">@media screen {.remark-slide-container{display:block;}.remark-slide-scaler{box-shadow:none;}}</style>
+<script src="https://remarkjs.com/downloads/remark-latest.min.js"></script>
+<script>var slideshow = remark.create({
+"highlightStyle": "github",
+"highlightLines": true,
+"countIncrementalSlides": false,
+"ratio": "16:9"
+});
+if (window.HTMLWidgets) slideshow.on('afterShowSlide', function (slide) {
+  window.dispatchEvent(new Event('resize'));
+});
+(function(d) {
+  var s = d.createElement("style"), r = d.querySelector(".remark-slide-scaler");
+  if (!r) return;
+  s.type = "text/css"; s.innerHTML = "@page {size: " + r.style.width + " " + r.style.height +"; }";
+  d.head.appendChild(s);
+})(document);
+
+(function(d) {
+  var el = d.getElementsByClassName("remark-slides-area");
+  if (!el) return;
+  var slide, slides = slideshow.getSlides(), els = el[0].children;
+  for (var i = 1; i < slides.length; i++) {
+    slide = slides[i];
+    if (slide.properties.continued === "true" || slide.properties.count === "false") {
+      els[i - 1].className += ' has-continuation';
+    }
+  }
+  var s = d.createElement("style");
+  s.type = "text/css"; s.innerHTML = "@media print { .has-continuation { display: none; } }";
+  d.head.appendChild(s);
+})(document);
+// delete the temporary CSS (for displaying all slides initially) when the user
+// starts to view slides
+(function() {
+  var deleted = false;
+  slideshow.on('beforeShowSlide', function(slide) {
+    if (deleted) return;
+    var sheets = document.styleSheets, node;
+    for (var i = 0; i < sheets.length; i++) {
+      node = sheets[i].ownerNode;
+      if (node.dataset["target"] !== "print-only") continue;
+      node.parentNode.removeChild(node);
+    }
+    deleted = true;
+  });
+})();
+// add `data-at-shortcutkeys` attribute to <body> to resolve conflicts with JAWS
+// screen reader (see PR #262)
+(function(d) {
+  let res = {};
+  d.querySelectorAll('.remark-help-content table tr').forEach(tr => {
+    const t = tr.querySelector('td:nth-child(2)').innerText;
+    tr.querySelectorAll('td:first-child .key').forEach(key => {
+      const k = key.innerText;
+      if (/^[a-z]$/.test(k)) res[k] = t;  // must be a single letter (key)
+    });
+  });
+  d.body.setAttribute('data-at-shortcutkeys', JSON.stringify(res));
+})(document);
+(function() {
+  "use strict"
+  // Replace <script> tags in slides area to make them executable
+  var scripts = document.querySelectorAll(
+    '.remark-slides-area .remark-slide-container script'
+  );
+  if (!scripts.length) return;
+  for (var i = 0; i < scripts.length; i++) {
+    var s = document.createElement('script');
+    var code = document.createTextNode(scripts[i].textContent);
+    s.appendChild(code);
+    var scriptAttrs = scripts[i].attributes;
+    for (var j = 0; j < scriptAttrs.length; j++) {
+      s.setAttribute(scriptAttrs[j].name, scriptAttrs[j].value);
+    }
+    scripts[i].parentElement.replaceChild(s, scripts[i]);
+  }
+})();
+(function() {
+  var links = document.getElementsByTagName('a');
+  for (var i = 0; i < links.length; i++) {
+    if (/^(https?:)?\/\//.test(links[i].getAttribute('href'))) {
+      links[i].target = '_blank';
+    }
+  }
+})();
+// adds .remark-code-has-line-highlighted class to <pre> parent elements
+// of code chunks containing highlighted lines with class .remark-code-line-highlighted
+(function(d) {
+  const hlines = d.querySelectorAll('.remark-code-line-highlighted');
+  const preParents = [];
+  const findPreParent = function(line, p = 0) {
+    if (p > 1) return null; // traverse up no further than grandparent
+    const el = line.parentElement;
+    return el.tagName === "PRE" ? el : findPreParent(el, ++p);
+  };
+
+  for (let line of hlines) {
+    let pre = findPreParent(line);
+    if (pre && !preParents.includes(pre)) preParents.push(pre);
+  }
+  preParents.forEach(p => p.classList.add("remark-code-has-line-highlighted"));
+})(document);</script>
+
+<script>
+slideshow._releaseMath = function(el) {
+  var i, text, code, codes = el.getElementsByTagName('code');
+  for (i = 0; i < codes.length;) {
+    code = codes[i];
+    if (code.parentNode.tagName !== 'PRE' && code.childElementCount === 0) {
+      text = code.textContent;
+      if (/^\\\((.|\s)+\\\)$/.test(text) || /^\\\[(.|\s)+\\\]$/.test(text) ||
+          /^\$\$(.|\s)+\$\$$/.test(text) ||
+          /^\\begin\{([^}]+)\}(.|\s)+\\end\{[^}]+\}$/.test(text)) {
+        code.outerHTML = code.innerHTML;  // remove <code></code>
+        continue;
+      }
+    }
+    i++;
+  }
+};
+slideshow._releaseMath(document);
+</script>
+<!-- dynamically load mathjax for compatibility with self-contained -->
+<script>
+(function () {
+  var script = document.createElement('script');
+  script.type = 'text/javascript';
+  script.src  = 'https://mathjax.rstudio.com/latest/MathJax.js?config=TeX-MML-AM_CHTML';
+  if (location.protocol !== 'file:' && /^https?:/.test(script.src))
+    script.src  = script.src.replace(/^https?:/, '');
+  document.getElementsByTagName('head')[0].appendChild(script);
+})();
+</script>
+  </body>
+</html>

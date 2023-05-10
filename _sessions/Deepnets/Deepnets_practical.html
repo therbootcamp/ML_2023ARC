@@ -1,0 +1,633 @@
+<!DOCTYPE html>
+
+<html>
+
+<head>
+
+<meta charset="utf-8" />
+<meta name="generator" content="pandoc" />
+<meta http-equiv="X-UA-Compatible" content="IE=EDGE" />
+
+
+
+
+<title>Deep neural networks</title>
+
+<script src="Deepnets_practical_files/header-attrs-2.16/header-attrs.js"></script>
+<script src="Deepnets_practical_files/jquery-3.6.0/jquery-3.6.0.min.js"></script>
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<link href="Deepnets_practical_files/bootstrap-3.3.5/css/bootstrap.min.css" rel="stylesheet" />
+<script src="Deepnets_practical_files/bootstrap-3.3.5/js/bootstrap.min.js"></script>
+<script src="Deepnets_practical_files/bootstrap-3.3.5/shim/html5shiv.min.js"></script>
+<script src="Deepnets_practical_files/bootstrap-3.3.5/shim/respond.min.js"></script>
+<style>h1 {font-size: 34px;}
+       h1.title {font-size: 38px;}
+       h2 {font-size: 30px;}
+       h3 {font-size: 24px;}
+       h4 {font-size: 18px;}
+       h5 {font-size: 16px;}
+       h6 {font-size: 12px;}
+       code {color: inherit; background-color: rgba(0, 0, 0, 0.04);}
+       pre:not([class]) { background-color: white }</style>
+<script src="Deepnets_practical_files/navigation-1.1/tabsets.js"></script>
+<link href="Deepnets_practical_files/highlightjs-9.12.0/default.css" rel="stylesheet" />
+<script src="Deepnets_practical_files/highlightjs-9.12.0/highlight.js"></script>
+
+<style type="text/css">
+  code{white-space: pre-wrap;}
+  span.smallcaps{font-variant: small-caps;}
+  span.underline{text-decoration: underline;}
+  div.column{display: inline-block; vertical-align: top; width: 50%;}
+  div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+  ul.task-list{list-style: none;}
+    </style>
+
+<style type="text/css">code{white-space: pre;}</style>
+<script type="text/javascript">
+if (window.hljs) {
+  hljs.configure({languages: []});
+  hljs.initHighlightingOnLoad();
+  if (document.readyState && document.readyState === "complete") {
+    window.setTimeout(function() { hljs.initHighlighting(); }, 0);
+  }
+}
+</script>
+
+
+
+
+
+
+<link rel="stylesheet" href="practical.css" type="text/css" />
+
+
+
+<style type = "text/css">
+.main-container {
+  max-width: 940px;
+  margin-left: auto;
+  margin-right: auto;
+}
+img {
+  max-width:100%;
+}
+.tabbed-pane {
+  padding-top: 12px;
+}
+.html-widget {
+  margin-bottom: 20px;
+}
+button.code-folding-btn:focus {
+  outline: none;
+}
+summary {
+  display: list-item;
+}
+details > summary > p:only-child {
+  display: inline;
+}
+pre code {
+  padding: 0;
+}
+</style>
+
+
+
+<!-- tabsets -->
+
+<style type="text/css">
+.tabset-dropdown > .nav-tabs {
+  display: inline-table;
+  max-height: 500px;
+  min-height: 44px;
+  overflow-y: auto;
+  border: 1px solid #ddd;
+  border-radius: 4px;
+}
+
+.tabset-dropdown > .nav-tabs > li.active:before {
+  content: "";
+  font-family: 'Glyphicons Halflings';
+  display: inline-block;
+  padding: 10px;
+  border-right: 1px solid #ddd;
+}
+
+.tabset-dropdown > .nav-tabs.nav-tabs-open > li.active:before {
+  content: "&#xe258;";
+  border: none;
+}
+
+.tabset-dropdown > .nav-tabs.nav-tabs-open:before {
+  content: "";
+  font-family: 'Glyphicons Halflings';
+  display: inline-block;
+  padding: 10px;
+  border-right: 1px solid #ddd;
+}
+
+.tabset-dropdown > .nav-tabs > li.active {
+  display: block;
+}
+
+.tabset-dropdown > .nav-tabs > li > a,
+.tabset-dropdown > .nav-tabs > li > a:focus,
+.tabset-dropdown > .nav-tabs > li > a:hover {
+  border: none;
+  display: inline-block;
+  border-radius: 4px;
+  background-color: transparent;
+}
+
+.tabset-dropdown > .nav-tabs.nav-tabs-open > li {
+  display: block;
+  float: none;
+}
+
+.tabset-dropdown > .nav-tabs > li {
+  display: none;
+}
+</style>
+
+<!-- code folding -->
+
+
+
+
+</head>
+
+<body>
+
+
+<div class="container-fluid main-container">
+
+
+
+
+<div id="header">
+
+
+
+<h1 class="title toc-ignore">Deep neural networks</h1>
+<h4 class="author"><table style='table-layout:fixed;width:100%;border:0;padding:0;margin:0'>
+<col width='10%'>
+<col width='10%'>
+<tr style="border:none">
+<td style="display:block;width:100%;text-align:left;vertical-align:bottom;padding:0;margin:0;border:none" nowrap>
+<a href='https://therbootcamp.github.io/ML_2022DHLab/'>
+<i class='fas fa-clock' style='font-size:.9em;' ></i> </a>
+<a href='https://cdsbasel.github.io/neuralnetworks/'>
+<i class='fas fa-home' style='font-size:.9em;'></i> </a>
+<a href='mailto:dirk.wulff@unibas.ch'>
+<i class='fas fa-envelope' style='font-size: .9em;'></i> </a>
+<a href='https://cdsbasel.github.io/neuralnetworks/'>
+<font style='font-style:normal'>The R Bootcamp @ DHLab</font> </a>
+</td>
+<td style="width:100%;vertical-align:bottom;text-align:right;padding:0;margin:0;border:none">
+<img src='https://raw.githubusercontent.com/therbootcamp/therbootcamp.github.io/master/_sessions/_image/by-sa.png' style='height:15px;width:80px'/>
+</td>
+</tr>
+</table></h4>
+
+</div>
+
+
+<p align="center">
+<img width="100%" src="image/fashion_banner.png" margin=0>
+</p>
+<div id="section" class="section level1 tabset">
+<h1 class="tabset"></h1>
+<div id="overview" class="section level2">
+<h2>Overview</h2>
+<p>By the end of this practical you will know how to:</p>
+<ol style="list-style-type: decimal">
+<li>Use <code>Keras</code> to build deepforward neural networks.</li>
+<li>Use <code>Keras</code> to fit and evaluate deepforward neural
+networks. .</li>
+<li>Use <code>Keras</code> to optimize the predictive performance of
+deepforward neural networks.</li>
+</ol>
+</div>
+<div id="tasks" class="section level2">
+<h2>Tasks</h2>
+<div id="a---setup" class="section level3">
+<h3>A - Setup</h3>
+<ol style="list-style-type: decimal">
+<li><p>Open your <code>neuralnets</code> R project.</p></li>
+<li><p>Open a new R script. Save it as a new file called
+<code>deep_nn_practical.R</code> in the <code>2_Code</code>
+folder.</p></li>
+<li><p>Using <code>library()</code> load the the packages
+<code>tidyverse</code> and <code>keras</code></p></li>
+</ol>
+<pre class="r"><code># install.packages(&quot;tidyverse&quot;)
+# install.packages(&quot;keras&quot;)
+
+# Load packages necessary for this exercise
+library(tidyverse)
+library(keras)</code></pre>
+<ol start="4" style="list-style-type: decimal">
+<li>Run the code below to load the <code>fashion.RDS</code> dataset as a
+new object.</li>
+</ol>
+<pre class="r"><code># MNIST fashion data
+fashion &lt;- readRDS(file = &quot;1_Data/fashion.RDS&quot;)</code></pre>
+<ol start="5" style="list-style-type: decimal">
+<li>Take a look at the contents of the <code>fashion</code> object using
+<code>str()</code>. You will see a list with two elements named
+<code>train</code> and <code>test</code>, which consist of two elements
+<code>x</code> (the images) and <code>y</code> (the item depicted).</li>
+</ol>
+<pre class="r"><code># Inspect contents
+str(fashion)</code></pre>
+<ol start="6" style="list-style-type: decimal">
+<li>Now <code>source()</code> the <code>helper.R</code> file in your
+<code>2_Code</code> folder.</li>
+</ol>
+<pre class="r"><code># Load helper.R
+source(&quot;2_Code/helper.R&quot;)</code></pre>
+</div>
+<div id="b---data-preprocessing" class="section level3">
+<h3>B - Data preprocessing</h3>
+<ol style="list-style-type: decimal">
+<li>Before you get started modeling the data using neural networks, some
+preprocessing needs to be done. First, split into its individual
+elements that is into <code>images</code> and <code>items</code>
+separately for training and test. Use the code below.</li>
+</ol>
+<pre class="r"><code># split digit  train
+c(fashion_train_images, fashion_train_items) %&lt;-% fashion$train
+
+# split digit  test
+c(fashion_test_images, fashion_test_items) %&lt;-% fashion$test</code></pre>
+<ol start="3" style="list-style-type: decimal">
+<li>Now use the <code>array_reshape</code> function to serialize the
+images of both training and test, such that every image is a vector of
+<code>28*28=784</code> elements (and resulting object a matrix with that
+many columns). Use the code below.</li>
+</ol>
+<pre class="r"><code># reshape images
+fashion_train_images_serialized &lt;- array_reshape(fashion_train_images, c(nrow(fashion_train_images), 784))
+fashion_test_images_serialized &lt;- array_reshape(fashion_test_images, c(nrow(fashion_test_images), 784))</code></pre>
+<ol start="4" style="list-style-type: decimal">
+<li>Also normalize the images by dividing them by 255, the maximum
+greyscale value.</li>
+</ol>
+<pre class="r"><code># rescale images
+fashion_train_images_serialized &lt;- fashion_train_images_serialized / 255
+fashion_test_images_serialized &lt;- fashion_test_images_serialized / 255</code></pre>
+<ol start="5" style="list-style-type: decimal">
+<li>Now, expand the criterion, such that instead of a single integer,
+the criterion is a one-hot coded vector, with a <code>1</code> sitting
+in the position of the integer and <code>0</code>s otherwise.</li>
+</ol>
+<pre class="r"><code># expand criterion
+fashion_train_items_onehot &lt;- to_categorical(fashion_train_items, 10)
+fashion_test_items_onehot &lt;- to_categorical(fashion_test_items, 10)</code></pre>
+<ol start="6" style="list-style-type: decimal">
+<li>Use <code>head(fashion_train_items_onehot)</code> to inspect the
+first few rows and compare them to
+<code>head(fashion_train_items)</code>. Do things line up?</li>
+</ol>
+</div>
+<div id="c---illustrate" class="section level3">
+<h3>C - Illustrate</h3>
+<ol style="list-style-type: decimal">
+<li>Before visualizing the images, create a vector that contains the
+labels for the 10 different fashion items.</li>
+</ol>
+<pre class="r"><code># fashion items
+fashion_labels = c(&#39;T-shirt/top&#39;,
+                   &#39;Trouser&#39;,
+                   &#39;Pullover&#39;,
+                   &#39;Dress&#39;,
+                   &#39;Coat&#39;, 
+                   &#39;Sandal&#39;,
+                   &#39;Shirt&#39;,
+                   &#39;Sneaker&#39;,
+                   &#39;Bag&#39;,
+                   &#39;Ankle boot&#39;)</code></pre>
+<ol start="2" style="list-style-type: decimal">
+<li>Now use the <code>plt_imgs()</code> function, which you have loaded
+earlier with the <code>helper.R</code> script, to illustrate the images.
+You have add a <code>1</code>, because the indices in
+<code>fashion_train_items</code> start at <code>0</code>.</li>
+</ol>
+<pre class="r"><code># rescale images
+plt_imgs(fashion_train_images[1:25,,],fashion_labels[fashion_train_items[1:25]+1])</code></pre>
+</div>
+<div id="d---build-network" class="section level3">
+<h3>D - Build network</h3>
+<ol style="list-style-type: decimal">
+<li>Alright, use <code>keras_model_sequential()</code> to start building
+a network.</li>
+</ol>
+<pre class="r"><code># begin building network
+net &lt;- keras_model_sequential()</code></pre>
+<ol start="2" style="list-style-type: decimal">
+<li>Ok, for now, let us build the most simple model with single input
+and output layers. To do this, add a single <code>layer_dense()</code>.
+Inside the function you will have to specify three arguments:
+<code>input_shape</code> and <code>activation</code>. For a moment,
+think about what values to use for these three given the kind of data
+that you wish to model. The answers come in a sec. </li>
+</ol>
+<pre class="r"><code># add layer
+net %&gt;% layer_dense(
+  input_shape = XX,
+  units = XX,
+  activation = &quot;XX&quot;
+  )</code></pre>
+<ol start="3" style="list-style-type: decimal">
+<li><p>The correct solutions are <code>input_shape = 784</code> to
+specify that there must be<code>784</code> input nodes, one for each
+pixel, <code>units =  10</code> to specify that there must be 10
+different output nodes, and <code>activation = 'softmax'</code> to
+specify that the final activation should be a probability that sums to
+<code>1</code> across all output nodes. After you have entered these
+values, use <code>summary(net)</code> to see the model
+information.</p></li>
+<li><p>Take a look at the <code>Param #</code> column in the print out.
+Why is the number <code>7850</code> rather than
+<code>7840 = 784 * 10</code>? Any ideas?</p></li>
+<li><p>Yes, <code>keras</code> automatically adds a biases to each node
+in a layer.</p></li>
+</ol>
+</div>
+<div id="e---compile-network" class="section level3">
+<h3>E - Compile network</h3>
+<ol style="list-style-type: decimal">
+<li>Use <code>compile()</code> to compile the network. You will need to
+specify at least two arguments: <code>optimizer</code> and
+<code>loss</code>. Think about what we’ve used in the presentation.
+Would the same values make sense here?</li>
+</ol>
+<pre class="r"><code># loss, optimizers, &amp; metrics
+net %&gt;% compile(
+  optimizer = &#39;XX&#39;, 
+  loss = &#39;XX&#39;,
+  metrics = c(&#39;accuracy&#39;)
+  )</code></pre>
+<ol start="2" style="list-style-type: decimal">
+<li>Yes, the fashion dataset has exactly the same properties as the
+digit dataset. So, plug in <code>optimizer = 'adam'</code> and
+<code>loss = categorical_crossentropy</code> and run the chunk. You see
+I’ve also added <code>'accuracy'</code> as an additional metric, which
+can be useful to track during fitting, as it is much easier to interpret
+than <code>crossentropy</code>.</li>
+</ol>
+</div>
+<div id="f---fit-network" class="section level3">
+<h3>F - Fit network</h3>
+<ol style="list-style-type: decimal">
+<li>You’ve come to the point where the magic happens. Fit the network
+using <code>fit()</code>. Specify, the arguments <code>x</code>,
+<code>y</code>, <code>batch_size</code>, and <code>epoch</code>. Think
+for a moment, what the appropriate values for these arguments could
+be.</li>
+</ol>
+<pre class="r"><code># loss, optimizers, &amp; metrics
+history &lt;- net %&gt;% fit(
+  x = XX, 
+  y = XX,
+  batch_size = XX,
+  epochs = XX
+  )</code></pre>
+<ol start="2" style="list-style-type: decimal">
+<li><p>The arguments <code>x</code> and <code>y</code> specify the
+training features and training criterion, respectively, so
+<code>x = fashion_train_images_serialized</code> and
+<code>y = fashion_train_items_onehot</code>. The arguments
+<code>batch_size</code> and <code>epochs</code> control how often the
+weights will be updated and for how many iterations of the data set.
+Useful (and somewhat arbitrary) values are <code>batch_size = 32</code>
+and <code>epochs = 10</code>. Use these values and then run the
+chunk.</p></li>
+<li><p>The <code>fit</code> function automatically provides with useful
+information on the progression of fit indices. You can additionally use
+the <code>history</code> object to get the same illustration to create a
+<code>ggplot</code>. Run <code>plot(history) + theme_minimal()</code>.
+When you inspect the plot, what tells you that the network indeed has
+learned? And how good is the final performance of the network?</p></li>
+<li><p>The network has learned, which can be gathered by the decrease in
+<code>loss</code> and the increase in <code>accuracy</code>. The
+non-linear pattern is very characteristic, almost always most of the
+gains are achieved in the first epoch or two. To get accurate values on
+the final performance you can simply print <code>history</code>. What do
+you think, how well will this network perform in predicting fashion
+items out-of-sample? Find out in the next section.</p></li>
+</ol>
+</div>
+<div id="g---evaluate-network" class="section level3">
+<h3>G - Evaluate network</h3>
+<ol style="list-style-type: decimal">
+<li>Evaluation of the performance of neural networks should always only
+be done on the basis of true prediction, using data that was not used
+during training. Evaluate the networks predictive performance using
+<code>evaluate()</code> while supplying the function with the test
+images and items.</li>
+</ol>
+<pre class="r"><code># evaluate
+net %&gt;% evaluate(XX, XX, verbose = 0)</code></pre>
+<ol start="2" style="list-style-type: decimal">
+<li><p>The network is slightly worse than in training, but still pretty
+good given that guessing performance is only <code>10%</code> accuracy.
+This, again, is very characteristic. In machine learning “simple” models
+often get a long way towards the desired level of performance. Though,
+one might question whether a model with 750 parameters can still be
+considered “simple”.</p></li>
+<li><p>Compare the predictions made by the network with the actual
+fashion labels. Do you note any patterns? Can you maybe understand the
+errors that the network has made.</p></li>
+</ol>
+<pre class="r"><code># compare predictions to truth
+pred = net %&gt;% predict(fashion_test_images_serialized) %&gt;% k_argmax() %&gt;% as.numeric()
+table(fashion_labels[fashion_test_items+1], fashion_labels[pred+1])</code></pre>
+</div>
+<div id="h---build-evaluate-deeper-network" class="section level3">
+<h3>H - Build &amp; evaluate deeper network</h3>
+<ol style="list-style-type: decimal">
+<li>Build a deeper neural network with two hidden, fully-connected
+layers with 256 and 128 units, respectively, and a <code>'relu'</code>
+activation function. See template below. The final layer will again be
+the output layer and must be supplied with the same values as before.
+Plot the summary at the end.</li>
+</ol>
+<pre class="r"><code># initialize deepnet
+deepnet &lt;- keras_model_sequential()
+
+# add layers
+deepnet %&gt;% 
+  layer_dense(input_shape = 784, units = XX, activation = &quot;XX&quot;) %&gt;% 
+  layer_dense(units = XX, activation = &quot;XX&quot;) %&gt;% 
+  layer_dense(units = XX, activation = &quot;XX&quot;)
+
+# model information
+summary(deepnet)</code></pre>
+<ol start="2" style="list-style-type: decimal">
+<li><p>How many parameters are there now in the network?</p></li>
+<li><p>A whole lot more parameters. There are more than 300 times as
+many parameters as before. Let’s see what this network can achieve.
+Compile and train the network using the exact same steps as before and
+then evaluate the network on the test data. The only change in the code
+you need to make is to replace <code>net</code> with
+<code>deepnet</code>.</p></li>
+<li><p>The test performance has improved by about 7% points. Not bad.
+Also the drop from fitting to testing performance is small suggesting
+minimal overfitting of the data. Let’s the see how far we can take it.
+Let’s build a real deep network</p></li>
+</ol>
+</div>
+<div id="i---build-evaluate-real-deep-network" class="section level3">
+<h3>I - Build &amp; evaluate real deep network</h3>
+<ol style="list-style-type: decimal">
+<li>Build a real deep network with two additional 256-node layers, two
+additional 128-node layer, and three additional layers 64-node layers.
+In the end, there should be three layers of each kind, sorted, as
+before, in descending order of the number of nodes. Take a look at the
+summary.</li>
+</ol>
+<pre class="r"><code># initialize realdeepnet
+realdeepnet &lt;- keras_model_sequential()
+
+# add layers
+realdeepnet %&gt;% 
+  layer_dense(input_shape = 784, units = XX, activation = &quot;XX&quot;) %&gt;% 
+  layer_dense(units = XX, activation = &quot;XX&quot;) %&gt;% 
+  layer_dense(units = XX, activation = &quot;XX&quot;) %&gt;% 
+  layer_dense(units = XX, activation = &quot;XX&quot;) %&gt;% 
+  layer_dense(units = XX, activation = &quot;XX&quot;) %&gt;% 
+  layer_dense(units = XX, activation = &quot;XX&quot;) %&gt;% 
+  layer_dense(units = XX, activation = &quot;XX&quot;) %&gt;% 
+  layer_dense(units = XX, activation = &quot;XX&quot;) %&gt;% 
+  layer_dense(units = XX, activation = &quot;XX&quot;) %&gt;% 
+  layer_dense(units = XX, activation = &quot;XX&quot;)
+
+# model information
+summary(realdeepnet)</code></pre>
+<ol start="2" style="list-style-type: decimal">
+<li><p>The number of parameters in network only increased by a factor of
+2, because the lion share stems from the weights between the input and
+the first hidden layer, which remained unchanged. Nonetheless, there is
+reason to believe that this network fares differently. Try it out using
+the exact same steps as before.</p></li>
+<li><p>The model did not fare a whole lot better. The fit performance
+increased a bit, but the predictive accuracy more or less remained
+constant. Fit the model again. To do this you can simply run the fit
+function again, which will lead to a continuation of training from where
+training ended before. After training has finished, evaluate the
+predictive accuracy again.</p></li>
+<li><p>Not all too much happening. Though, both fitting and prediction
+performance went up by another notch. This is again characteristic of
+neural networks. To really max out on performance, many epochs of
+training will often be necessary. However, at the same time risks to
+give the model opportunity to overfit the data.</p></li>
+</ol>
+</div>
+<div id="j---battling-overfitting" class="section level3">
+<h3>J - Battling overfitting</h3>
+<ol style="list-style-type: decimal">
+<li>To begin with create a <code>crazycomplexnet</code> which should
+have twice as many nodes in the first hidden layer than there are input
+nodes. Add as many hidden layers as you like and then run the network
+for <code>20</code> epochs for a batch size of <code>100</code> and
+evaluate the network’s performance.</li>
+</ol>
+<pre class="r"><code># initialize crazycomplexnet
+crazycomplexnet &lt;- keras_model_sequential()
+
+# add layers
+crazycomplexnet %&gt;% 
+  layer_dense(input_shape = 784, units = 1568, activation = &quot;relu&quot;) %&gt;% 
+  layer_dense(units = XX, activation = &quot;XX&quot;) %&gt;% 
+  layer_dense(units = 10, activation = &quot;softmax&quot;)
+
+# model information
+summary(crazycomplexnet)</code></pre>
+<ol start="2" style="list-style-type: decimal">
+<li>This should have upped the fitting performance, but possibly hurt
+the prediction performance. See whether adding
+<code>layour_dropout(rate = .3)</code> in between the
+<code>layer_dense()</code> helps preserve some more of the fitting
+performance for test. Layer dropout sets the activation of a random
+subset of nodes to zero, which effectively eliminates momentarily the
+weights emitting from the node and, thus, constrains model
+flexibility.</li>
+</ol>
+<pre class="r"><code># initialize crazycomplexnet
+crazycomplexnet &lt;- keras_model_sequential()
+
+# add layers
+crazycomplexnet %&gt;% 
+  layer_dense(input_shape = 784, units = 1568, activation = &quot;relu&quot;) %&gt;% 
+  layer_dropout(rate = XX) %&gt;% 
+  layer_dense(units = XX, activation = &quot;XX&quot;) %&gt;% 
+  layer_dropout(rate = XX)
+  layer_dense(units = 10, activation = &quot;softmax&quot;)
+
+# model information
+summary(crazycomplexnet)</code></pre>
+</div>
+</div>
+<div id="resources" class="section level2">
+<h2>Resources</h2>
+<div id="cheatsheet" class="section level3">
+<h3>Cheatsheet</h3>
+<figure>
+<center>
+<a href="https://github.com/rstudio/cheatsheets/raw/master/keras.pdf">
+<img src="image/keras_cheat.png" alt="Trulli" style="width:70%"></a><br>
+<font style="font-size:10px"> from
+<a href= "https://rstudio.com/resources/cheatsheets/">github.com/rstudio</a></font>
+</figure>
+</div>
+</div>
+</div>
+
+
+
+
+</div>
+
+<script>
+
+// add bootstrap table styles to pandoc tables
+function bootstrapStylePandocTables() {
+  $('tr.odd').parent('tbody').parent('table').addClass('table table-condensed');
+}
+$(document).ready(function () {
+  bootstrapStylePandocTables();
+});
+
+
+</script>
+
+<!-- tabsets -->
+
+<script>
+$(document).ready(function () {
+  window.buildTabsets("TOC");
+});
+
+$(document).ready(function () {
+  $('.tabset-dropdown > .nav-tabs > li').click(function () {
+    $(this).parent().toggleClass('nav-tabs-open');
+  });
+});
+</script>
+
+<!-- code folding -->
+
+
+<!-- dynamically load mathjax for compatibility with self-contained -->
+<script>
+  (function () {
+    var script = document.createElement("script");
+    script.type = "text/javascript";
+    script.src  = "https://mathjax.rstudio.com/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML";
+    document.getElementsByTagName("head")[0].appendChild(script);
+  })();
+</script>
+
+</body>
+</html>

@@ -1,0 +1,638 @@
+<!DOCTYPE html>
+<html lang="" xml:lang="">
+  <head>
+    <title>Models of the mind</title>
+    <meta charset="utf-8" />
+    <meta name="author" content="Machine Learning with R   The R Bootcamp @ DHLab                  " />
+    <script src="libs/header-attrs/header-attrs.js"></script>
+    <link href="libs/remark-css/default.css" rel="stylesheet" />
+    <link rel="stylesheet" href="baselrbootcamp.css" type="text/css" />
+  </head>
+  <body>
+    <textarea id="source">
+class: center, middle, inverse, title-slide
+
+.title[
+# Models of the mind
+]
+.author[
+### Machine Learning with R<br> <a href='https://therbootcamp.github.io'> The R Bootcamp @ DHLab </a> <br> <a href='https://therbootcamp.github.io/AML_2022DHLab/'> <i class='fas fa-clock' style='font-size:.9em;'></i> </a>  <a href='https://therbootcamp.github.io'> <i class='fas fa-home' style='font-size:.9em;' ></i> </a>  <a href='mailto:therbootcamp@gmail.com'> <i class='fas fa-envelope' style='font-size: .9em;'></i> </a>  <a href='https://www.linkedin.com/company/basel-r-bootcamp/'> <i class='fab fa-linkedin' style='font-size: .9em;'></i> </a>
+]
+.date[
+### September 2022
+]
+
+---
+
+
+layout: true
+
+&lt;div class="my-footer"&gt;
+  &lt;span style="text-align:center"&gt;
+    &lt;span&gt; 
+      &lt;img src="https://raw.githubusercontent.com/therbootcamp/therbootcamp.github.io/master/_sessions/_image/by-sa.png" height=14 style="vertical-align: middle"/&gt;
+    &lt;/span&gt;
+    &lt;a href="https://therbootcamp.github.io/"&gt;
+      &lt;span style="padding-left:82px"&gt; 
+        &lt;font color="#7E7E7E"&gt;
+          www.therbootcamp.com
+        &lt;/font&gt;
+      &lt;/span&gt;
+    &lt;/a&gt;
+    &lt;a href="https://therbootcamp.github.io/"&gt;
+      &lt;font color="#7E7E7E"&gt;
+      Machine Learning with R @ DHLab  | September 2022
+      &lt;/font&gt;
+    &lt;/a&gt;
+    &lt;/span&gt;
+  &lt;/div&gt; 
+
+---
+
+
+
+
+
+
+
+.pull-left3[
+
+# Neural processing in the brain
+
+&lt;ul&gt;
+  &lt;li class="m1"&gt;&lt;span&gt;Efforts are made to build neural network models that &lt;high&gt;mimick the brain's architectural properties&lt;/high&gt; concerning, e.g., the visual system.&lt;/span&gt;&lt;/li&gt;
+&lt;/ul&gt;
+
+]
+
+
+.pull-right6[
+
+&lt;br&gt;&lt;br&gt;
+
+&lt;p align = "center"&gt;
+&lt;img src="image/brain.png"&gt;&lt;br&gt;
+&lt;font style="font-size:10px"&gt;from &lt;a href="https://neuwritesd.org/2015/10/22/deep-neural-networks-help-us-read-your-mind/"&gt;neuwritesd.org&lt;/a&gt;, see &lt;a href="https://www.pnas.org/content/111/23/8619"&gt;this&lt;/a&gt;&lt;/font&gt;
+&lt;/p&gt;
+
+]
+
+
+---
+
+.pull-left3[
+
+# Semantic space
+
+&lt;ul&gt;
+  &lt;li class="m1"&gt;&lt;span&gt;Many cognitive models build on some for of a &lt;high&gt;mnemonic representation of words&lt;/high&gt; and their meaning, which can be apprximated using network-based vector space models.&lt;/span&gt;&lt;/li&gt;
+  &lt;li class="m2"&gt;&lt;span&gt;&lt;high&gt;Tasks&lt;/high&gt; linked to vector space models:&lt;/span&gt;&lt;/li&gt;
+  &lt;ul&gt;
+      &lt;li&gt;&lt;span&gt;Verbal fluency&lt;/span&gt;&lt;/li&gt;
+      &lt;li&gt;&lt;span&gt;Similarity ratings&lt;/span&gt;&lt;/li&gt;
+      &lt;li&gt;&lt;span&gt;Paired associated learning&lt;/span&gt;&lt;/li&gt;
+      &lt;li&gt;&lt;span&gt;Free recall&lt;/span&gt;&lt;/li&gt;
+      &lt;li&gt;&lt;span&gt;Verbal reasoning&lt;/span&gt;&lt;/li&gt;
+      &lt;li&gt;&lt;span&gt;etc.&lt;/span&gt;&lt;/li&gt;
+  &lt;/ul&gt;
+&lt;/ul&gt;
+
+]
+
+
+.pull-right6[
+
+&lt;p align = "center"&gt;
+&lt;img src="image/wordspace.png" height=600px&gt;
+&lt;/p&gt;
+
+]
+
+---
+
+.pull-left3[
+
+# Walks in semantic space
+
+&lt;ul&gt;
+  &lt;li class="m1"&gt;&lt;span&gt;A popular idea is that retrieval from (semantic) memory acts like a &lt;high&gt;random walk through the word vector space&lt;/high&gt;.&lt;/span&gt;&lt;/li&gt;
+  &lt;li class="m2"&gt;&lt;span&gt;&lt;high&gt;Verbal fluency&lt;/high&gt; sequences are consistent with this notion barring the occasional jump.&lt;/span&gt;&lt;/li&gt;
+&lt;/ul&gt;
+
+]
+
+
+.pull-right6[
+
+&lt;p align = "center"&gt;
+&lt;img src="image/wordspace1.png" height=600px&gt;
+&lt;/p&gt;
+
+]
+
+---
+
+.pull-left3[
+
+
+# Walks in semantic space
+
+&lt;ul&gt;
+  &lt;li class="m1"&gt;&lt;span&gt;A popular idea is that retrieval from (semantic) memory acts like a &lt;high&gt;random walk through the word vector space&lt;/high&gt;.&lt;/span&gt;&lt;/li&gt;
+  &lt;li class="m2"&gt;&lt;span&gt;&lt;high&gt;Verbal fluency&lt;/high&gt; sequences are consistent with this notion barring the occasional jump.&lt;/span&gt;&lt;/li&gt;
+&lt;/ul&gt;
+
+]
+
+
+.pull-right6[
+
+&lt;p align = "center"&gt;
+&lt;img src="image/wordspace2.png" height=600px&gt;
+&lt;/p&gt;
+
+]
+
+
+---
+
+.pull-left3[
+
+# Walks in semantic space
+
+&lt;ul&gt;
+  &lt;li class="m1"&gt;&lt;span&gt;A popular idea is that retrieval from (semantic) memory acts like a &lt;high&gt;random walk through the word vector space&lt;/high&gt;.&lt;/span&gt;&lt;/li&gt;
+  &lt;li class="m2"&gt;&lt;span&gt;&lt;high&gt;Verbal fluency&lt;/high&gt; sequences are consistent with this notion barring the occasional jump.&lt;/span&gt;&lt;/li&gt;
+&lt;/ul&gt;
+
+]
+
+
+.pull-right6[
+
+&lt;p align = "center"&gt;
+&lt;img src="image/wordspace3.png" height=600px&gt;
+&lt;/p&gt;
+
+]
+
+---
+
+.pull-left3[
+
+# Walks in semantic space
+
+&lt;ul&gt;
+  &lt;li class="m1"&gt;&lt;span&gt;A popular idea is that retrieval from (semantic) memory acts like a &lt;high&gt;random walk through the word vector space&lt;/high&gt;.&lt;/span&gt;&lt;/li&gt;
+  &lt;li class="m2"&gt;&lt;span&gt;&lt;high&gt;Verbal fluency&lt;/high&gt; sequences are consistent with this notion barring the occasional jump.&lt;/span&gt;&lt;/li&gt;
+&lt;/ul&gt;
+
+]
+
+
+.pull-right6[
+
+&lt;p align = "center"&gt;
+&lt;img src="image/wordspace3.png" height=600px&gt;
+&lt;/p&gt;
+
+]
+
+---
+
+.pull-left3[
+
+# Hopfield
+
+&lt;ul&gt;
+  &lt;li class="m1"&gt;&lt;span&gt;Hopfield networks are a form of recurrent neural network, that can be used as &lt;high&gt;models of recognition&lt;/high&gt;.&lt;/span&gt;&lt;/li&gt;
+  &lt;li class="m2"&gt;&lt;span&gt;They can be using Hebbian learning: &lt;high&gt;fire together, wire together&lt;/high&gt;.&lt;/span&gt;&lt;/li&gt;
+&lt;/ul&gt;
+
+`$$\Large \Delta w_{ij}=\eta \cdot a_{i}\cdot a_{j}$$`
+
+]
+
+
+.pull-right6[
+
+&lt;br&gt;&lt;br&gt;
+
+&lt;p align = "center"&gt;
+&lt;img src="image/hopfield.png" height=460px&gt;
+&lt;/p&gt;
+
+]
+
+
+---
+
+.pull-left3[
+
+# Hopfield
+
+&lt;ul&gt;
+  &lt;li class="m1"&gt;&lt;span&gt;Hopfield networks are a form of recurrent neural network, that can be used as &lt;high&gt;models of recognition&lt;/high&gt;.&lt;/span&gt;&lt;/li&gt;
+  &lt;li class="m2"&gt;&lt;span&gt;They can be using Hebbian learning: &lt;high&gt;fire together, wire together&lt;/high&gt;.&lt;/span&gt;&lt;/li&gt;
+&lt;/ul&gt;
+
+`$$\Large \Delta w_{ij}=\eta \cdot a_{i}\cdot a_{j}$$`
+
+]
+
+
+.pull-right6[
+
+&lt;br&gt;&lt;br&gt;
+
+&lt;p align = "center"&gt;
+&lt;img src="image/hopfield1.png" height=460px&gt;
+&lt;/p&gt;
+
+]
+
+---
+
+.pull-left3[
+
+# Hopfield
+
+&lt;ul&gt;
+  &lt;li class="m1"&gt;&lt;span&gt;Hopfield networks are a form of recurrent neural network, that can be used as &lt;high&gt;models of recognition&lt;/high&gt;.&lt;/span&gt;&lt;/li&gt;
+  &lt;li class="m2"&gt;&lt;span&gt;They can be using Hebbian learning: &lt;high&gt;fire together, wire together&lt;/high&gt;.&lt;/span&gt;&lt;/li&gt;
+&lt;/ul&gt;
+
+`$$\Large \Delta w_{ij}=\eta \cdot a_{i}\cdot a_{j}$$`
+
+]
+
+
+.pull-right6[
+
+&lt;br&gt;&lt;br&gt;
+
+&lt;p align = "center"&gt;
+&lt;img src="image/hopfield2.png" height=460px&gt;
+&lt;/p&gt;
+
+]
+
+---
+
+.pull-left3[
+
+# Hopfield
+
+&lt;ul&gt;
+  &lt;li class="m1"&gt;&lt;span&gt;Hopfield networks are a form of recurrent neural network, that can be used as &lt;high&gt;models of recognition and associative memory&lt;/high&gt; .&lt;/span&gt;&lt;/li&gt;
+  &lt;li class="m2"&gt;&lt;span&gt;They can be using Hebbian learning: &lt;high&gt;fire together, wire together&lt;/high&gt;.&lt;/span&gt;&lt;/li&gt;
+&lt;/ul&gt;
+
+`$$\Large \Delta w_{ij}=\eta \cdot a_{i}\cdot a_{j}$$`
+
+]
+
+
+.pull-right6[
+
+&lt;br&gt;&lt;br&gt;
+
+&lt;p align = "center"&gt;
+&lt;img src="image/hopfield3.png" height=460px&gt;
+&lt;/p&gt;
+
+]
+
+
+---
+
+.pull-left3[
+
+# Cognitive consistency
+
+&lt;ul&gt;
+  &lt;li class="m1"&gt;&lt;span&gt;Recursive networks can be used to predict the dynamics and outcomes of &lt;high&gt;consistency-driven cognitive reasoning&lt;/high&gt;.&lt;/span&gt;&lt;/li&gt;
+  &lt;li class="m2"&gt;&lt;span&gt;Domains:&lt;/span&gt;&lt;/li&gt;
+  &lt;ul&gt;
+    &lt;li&gt;&lt;span&gt;Dissonance theory&lt;/span&gt;&lt;/li&gt;  
+    &lt;li&gt;&lt;span&gt;Opinion formation&lt;/span&gt;&lt;/li&gt; 
+    &lt;li&gt;&lt;span&gt;Inference&lt;/span&gt;&lt;/li&gt;
+    &lt;li&gt;&lt;span&gt;Decision making&lt;/span&gt;&lt;/li&gt; 
+  &lt;/ul&gt;
+&lt;/ul&gt;
+
+]
+
+
+.pull-right6[
+
+&lt;br&gt;&lt;br&gt;
+
+&lt;p align = "center"&gt;
+&lt;img src="image/fest1.png" height=460px&gt;&lt;br&gt;
+&lt;font style="font-size:10px"&gt;from &lt;a href="https://journals.sagepub.com/doi/10.1207/s15327957pspr0101_3"&gt;Read, Vanman, &amp; Miller (1997)&lt;/a&gt;
+&lt;/p&gt;
+
+]
+
+---
+
+.pull-left3[
+
+# Cognitive consistency
+
+&lt;ul&gt;
+  &lt;li class="m1"&gt;&lt;span&gt;Recursive networks can be used to predict the dynamics and outcomes of &lt;high&gt;consistency-driven cognitive reasoning&lt;/high&gt;.&lt;/span&gt;&lt;/li&gt;
+  &lt;li class="m2"&gt;&lt;span&gt;Domains:&lt;/span&gt;&lt;/li&gt;
+  &lt;ul&gt;
+    &lt;li&gt;&lt;span&gt;Dissonance theory&lt;/span&gt;&lt;/li&gt;  
+    &lt;li&gt;&lt;span&gt;Opinion formation&lt;/span&gt;&lt;/li&gt; 
+    &lt;li&gt;&lt;span&gt;Inference&lt;/span&gt;&lt;/li&gt;
+    &lt;li&gt;&lt;span&gt;Decision making&lt;/span&gt;&lt;/li&gt; 
+  &lt;/ul&gt;
+&lt;/ul&gt;
+
+]
+
+
+.pull-right6[
+
+&lt;br&gt;&lt;br&gt;
+
+&lt;p align = "center"&gt;
+&lt;img src="image/fest2.png" height=460px&gt;&lt;br&gt;
+&lt;font style="font-size:10px"&gt;from &lt;a href="https://journals.sagepub.com/doi/10.1207/s15327957pspr0101_3"&gt;Read, Vanman, &amp; Miller (1997)&lt;/a&gt;
+&lt;/p&gt;
+
+]
+
+---
+
+.pull-left3[
+
+# Cognitive consistency
+
+&lt;ul&gt;
+  &lt;li class="m1"&gt;&lt;span&gt;Recursive networks can be used to predict the dynamics and outcomes of &lt;high&gt;consistency-driven cognitive reasoning&lt;/high&gt;.&lt;/span&gt;&lt;/li&gt;
+  &lt;li class="m2"&gt;&lt;span&gt;Domains:&lt;/span&gt;&lt;/li&gt;
+  &lt;ul&gt;
+    &lt;li&gt;&lt;span&gt;Dissonance theory&lt;/span&gt;&lt;/li&gt;  
+    &lt;li&gt;&lt;span&gt;Opinion formation&lt;/span&gt;&lt;/li&gt; 
+    &lt;li&gt;&lt;span&gt;Inference&lt;/span&gt;&lt;/li&gt;
+    &lt;li&gt;&lt;span&gt;Decision making&lt;/span&gt;&lt;/li&gt; 
+  &lt;/ul&gt;
+&lt;/ul&gt;
+
+]
+
+
+.pull-right6[
+
+&lt;br&gt;&lt;br&gt;
+
+&lt;p align = "center"&gt;
+&lt;img src="image/socpsy1.png" height=460px&gt;&lt;br&gt;
+&lt;font style="font-size:10px"&gt;from &lt;a href="https://journals.sagepub.com/doi/10.1207/s15327957pspr0101_3"&gt;Read, Vanman, &amp; Miller (1997)&lt;/a&gt;
+&lt;/p&gt;
+
+]
+
+---
+
+.pull-left3[
+
+# Cognitive consistency
+
+&lt;ul&gt;
+  &lt;li class="m1"&gt;&lt;span&gt;Recursive networks can be used to predict the dynamics and outcomes of &lt;high&gt;consistency-driven cognitive reasoning&lt;/high&gt;.&lt;/span&gt;&lt;/li&gt;
+  &lt;li class="m2"&gt;&lt;span&gt;Domains:&lt;/span&gt;&lt;/li&gt;
+  &lt;ul&gt;
+    &lt;li&gt;&lt;span&gt;Dissonance theory&lt;/span&gt;&lt;/li&gt;  
+    &lt;li&gt;&lt;span&gt;Opinion formation&lt;/span&gt;&lt;/li&gt; 
+    &lt;li&gt;&lt;span&gt;Inference&lt;/span&gt;&lt;/li&gt;
+    &lt;li&gt;&lt;span&gt;Decision making&lt;/span&gt;&lt;/li&gt; 
+  &lt;/ul&gt;
+&lt;/ul&gt;
+
+]
+
+
+.pull-right6[
+
+&lt;br&gt;&lt;br&gt;
+
+&lt;p align = "center"&gt;
+&lt;img src="image/socpsy1.png" height=460px&gt;&lt;br&gt;
+&lt;font style="font-size:10px"&gt;from &lt;a href="https://journals.sagepub.com/doi/10.1207/s15327957pspr0101_3"&gt;Read, Vanman, &amp; Miller (1997)&lt;/a&gt;
+&lt;/p&gt;
+
+]
+
+---
+
+.pull-left3[
+
+# Cognitive consistency
+
+&lt;ul&gt;
+  &lt;li class="m1"&gt;&lt;span&gt;Recursive networks can be used to predict the dynamics and outcomes of &lt;high&gt;consistency-driven cognitive reasoning&lt;/high&gt;.&lt;/span&gt;&lt;/li&gt;
+  &lt;li class="m2"&gt;&lt;span&gt;Domains:&lt;/span&gt;&lt;/li&gt;
+  &lt;ul&gt;
+    &lt;li&gt;&lt;span&gt;Dissonance theory&lt;/span&gt;&lt;/li&gt;  
+    &lt;li&gt;&lt;span&gt;Opinion formation&lt;/span&gt;&lt;/li&gt; 
+    &lt;li&gt;&lt;span&gt;Inference&lt;/span&gt;&lt;/li&gt;
+    &lt;li&gt;&lt;span&gt;Decision making&lt;/span&gt;&lt;/li&gt; 
+  &lt;/ul&gt;
+&lt;/ul&gt;
+
+]
+
+
+.pull-right6[
+
+&lt;br&gt;&lt;br&gt;
+
+&lt;p align = "center"&gt;
+&lt;img src="image/glöck.png" height=460px&gt;&lt;br&gt;
+&lt;font style="font-size:10px"&gt;from &lt;a href="https://www.econstor.eu/bitstream/10419/26939/1/572287593.PDF"&gt;Glöckner &amp; Betsch (2008)&lt;/a&gt;
+&lt;/p&gt;
+
+]
+
+---
+
+.pull-left3[
+
+# Cognitive consistency
+
+&lt;ul&gt;
+  &lt;li class="m1"&gt;&lt;span&gt;Recursive networks can be used to predict the dynamics and outcomes of &lt;high&gt;consistency-driven cognitive reasoning&lt;/high&gt;.&lt;/span&gt;&lt;/li&gt;
+  &lt;li class="m2"&gt;&lt;span&gt;Domains:&lt;/span&gt;&lt;/li&gt;
+  &lt;ul&gt;
+    &lt;li&gt;&lt;span&gt;Dissonance theory&lt;/span&gt;&lt;/li&gt;  
+    &lt;li&gt;&lt;span&gt;Opinion formation&lt;/span&gt;&lt;/li&gt; 
+    &lt;li&gt;&lt;span&gt;Inference&lt;/span&gt;&lt;/li&gt;
+    &lt;li&gt;&lt;span&gt;Decision making&lt;/span&gt;&lt;/li&gt; 
+  &lt;/ul&gt;
+&lt;/ul&gt;
+
+]
+
+
+.pull-right6[
+
+&lt;br&gt;&lt;br&gt;
+
+&lt;p align = "center"&gt;
+&lt;img src="image/glöck2.png" height=460px&gt;&lt;br&gt;
+&lt;font style="font-size:10px"&gt;from &lt;a href="https://www.econstor.eu/bitstream/10419/32204/1/605761744.pdf"&gt;Glöckner &amp; Herbold(2008)&lt;/a&gt;
+&lt;/p&gt;
+
+]
+
+
+---
+
+class: middle, center
+
+&lt;h1&gt;&lt;a href="https://cdsbasel.github.io/neuralnetworks/menu/schedule &amp; materials.html"&gt;Materials&lt;/a&gt;&lt;/h1&gt;
+
+
+
+    </textarea>
+<style data-target="print-only">@media screen {.remark-slide-container{display:block;}.remark-slide-scaler{box-shadow:none;}}</style>
+<script src="https://remarkjs.com/downloads/remark-latest.min.js"></script>
+<script>var slideshow = remark.create({
+"highlightStyle": "github",
+"highlightLines": true,
+"countIncrementalSlides": false,
+"ratio": "16:9"
+});
+if (window.HTMLWidgets) slideshow.on('afterShowSlide', function (slide) {
+  window.dispatchEvent(new Event('resize'));
+});
+(function(d) {
+  var s = d.createElement("style"), r = d.querySelector(".remark-slide-scaler");
+  if (!r) return;
+  s.type = "text/css"; s.innerHTML = "@page {size: " + r.style.width + " " + r.style.height +"; }";
+  d.head.appendChild(s);
+})(document);
+
+(function(d) {
+  var el = d.getElementsByClassName("remark-slides-area");
+  if (!el) return;
+  var slide, slides = slideshow.getSlides(), els = el[0].children;
+  for (var i = 1; i < slides.length; i++) {
+    slide = slides[i];
+    if (slide.properties.continued === "true" || slide.properties.count === "false") {
+      els[i - 1].className += ' has-continuation';
+    }
+  }
+  var s = d.createElement("style");
+  s.type = "text/css"; s.innerHTML = "@media print { .has-continuation { display: none; } }";
+  d.head.appendChild(s);
+})(document);
+// delete the temporary CSS (for displaying all slides initially) when the user
+// starts to view slides
+(function() {
+  var deleted = false;
+  slideshow.on('beforeShowSlide', function(slide) {
+    if (deleted) return;
+    var sheets = document.styleSheets, node;
+    for (var i = 0; i < sheets.length; i++) {
+      node = sheets[i].ownerNode;
+      if (node.dataset["target"] !== "print-only") continue;
+      node.parentNode.removeChild(node);
+    }
+    deleted = true;
+  });
+})();
+// add `data-at-shortcutkeys` attribute to <body> to resolve conflicts with JAWS
+// screen reader (see PR #262)
+(function(d) {
+  let res = {};
+  d.querySelectorAll('.remark-help-content table tr').forEach(tr => {
+    const t = tr.querySelector('td:nth-child(2)').innerText;
+    tr.querySelectorAll('td:first-child .key').forEach(key => {
+      const k = key.innerText;
+      if (/^[a-z]$/.test(k)) res[k] = t;  // must be a single letter (key)
+    });
+  });
+  d.body.setAttribute('data-at-shortcutkeys', JSON.stringify(res));
+})(document);
+(function() {
+  "use strict"
+  // Replace <script> tags in slides area to make them executable
+  var scripts = document.querySelectorAll(
+    '.remark-slides-area .remark-slide-container script'
+  );
+  if (!scripts.length) return;
+  for (var i = 0; i < scripts.length; i++) {
+    var s = document.createElement('script');
+    var code = document.createTextNode(scripts[i].textContent);
+    s.appendChild(code);
+    var scriptAttrs = scripts[i].attributes;
+    for (var j = 0; j < scriptAttrs.length; j++) {
+      s.setAttribute(scriptAttrs[j].name, scriptAttrs[j].value);
+    }
+    scripts[i].parentElement.replaceChild(s, scripts[i]);
+  }
+})();
+(function() {
+  var links = document.getElementsByTagName('a');
+  for (var i = 0; i < links.length; i++) {
+    if (/^(https?:)?\/\//.test(links[i].getAttribute('href'))) {
+      links[i].target = '_blank';
+    }
+  }
+})();
+// adds .remark-code-has-line-highlighted class to <pre> parent elements
+// of code chunks containing highlighted lines with class .remark-code-line-highlighted
+(function(d) {
+  const hlines = d.querySelectorAll('.remark-code-line-highlighted');
+  const preParents = [];
+  const findPreParent = function(line, p = 0) {
+    if (p > 1) return null; // traverse up no further than grandparent
+    const el = line.parentElement;
+    return el.tagName === "PRE" ? el : findPreParent(el, ++p);
+  };
+
+  for (let line of hlines) {
+    let pre = findPreParent(line);
+    if (pre && !preParents.includes(pre)) preParents.push(pre);
+  }
+  preParents.forEach(p => p.classList.add("remark-code-has-line-highlighted"));
+})(document);</script>
+
+<script>
+slideshow._releaseMath = function(el) {
+  var i, text, code, codes = el.getElementsByTagName('code');
+  for (i = 0; i < codes.length;) {
+    code = codes[i];
+    if (code.parentNode.tagName !== 'PRE' && code.childElementCount === 0) {
+      text = code.textContent;
+      if (/^\\\((.|\s)+\\\)$/.test(text) || /^\\\[(.|\s)+\\\]$/.test(text) ||
+          /^\$\$(.|\s)+\$\$$/.test(text) ||
+          /^\\begin\{([^}]+)\}(.|\s)+\\end\{[^}]+\}$/.test(text)) {
+        code.outerHTML = code.innerHTML;  // remove <code></code>
+        continue;
+      }
+    }
+    i++;
+  }
+};
+slideshow._releaseMath(document);
+</script>
+<!-- dynamically load mathjax for compatibility with self-contained -->
+<script>
+(function () {
+  var script = document.createElement('script');
+  script.type = 'text/javascript';
+  script.src  = 'https://mathjax.rstudio.com/latest/MathJax.js?config=TeX-MML-AM_CHTML';
+  if (location.protocol !== 'file:' && /^https?:/.test(script.src))
+    script.src  = script.src.replace(/^https?:/, '');
+  document.getElementsByTagName('head')[0].appendChild(script);
+})();
+</script>
+  </body>
+</html>

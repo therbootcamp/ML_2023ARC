@@ -1,0 +1,352 @@
+---
+title: "Representation"
+author: "<table style='table-layout:fixed;width:100%;border:0;padding:0;margin:0'><col width='10%'><col width='10%'>
+  <tr style='border:none'>
+    <td style='display:block;width:100%;text-align:left;vertical-align:bottom;padding:0;margin:0;border:none' nowrap>
+      <a href='https://therbootcamp.github.io/ML_2022DHLab/'>
+        <i class='fas fa-clock' style='font-size:.9em;' ></i>
+      </a>
+      <a href='https://cdsbasel.github.io/neuralnetworks/'>
+        <i class='fas fa-home' style='font-size:.9em;'></i>
+      </a>
+      <a href='mailto:dirk.wulff@unibas.ch'>
+        <i class='fas fa-envelope' style='font-size: .9em;'></i>
+      </a>
+      <a href='https://cdsbasel.github.io/neuralnetworks/'>
+        <font style='font-style:normal'>The R Bootcamp @ DHLab</font>
+      </a>
+    </td>
+    <td style='width:100%;vertical-align:bottom;text-align:right;padding:0;margin:0;border:none'>
+      <img src='https://raw.githubusercontent.com/therbootcamp/therbootcamp.github.io/master/_sessions/_image/by-sa.png' style='height:15px;width:80px'/>
+    </td>
+  </tr></table>"
+output:
+  html_document:
+    css: practical.css
+    self_contained: no
+---
+
+```{r setup, echo = FALSE, include=FALSE}
+knitr::opts_chunk$set(comment = NA, 
+                      fig.width = 6, 
+                      fig.height = 6,
+                      fig.align = 'center',
+                      echo = FALSE, 
+                      eval = FALSE, 
+                      warning = FALSE,
+                      message = FALSE)
+
+options(digits = 3)
+
+require(tidyverse)
+library(tidyverse)
+library(keras)
+
+# fashion <- readRDS(file = "../neuralnets/1_Data/fashion.RDS")
+# source("../neuralnets/2_Code/helper.R")
+
+plot_embedding = function(act){
+  par(mar=c(0,0,0,0))
+  image(1:ncol(act), 1:nrow(act), t(act), 
+      col = gray((0:255)/255), 
+      xaxt = 'n', yaxt = 'n')
+  }
+
+plot_cosine = function(cos){
+  par(mar=c(0,0,0,0))
+  cos = (apply(cos, 2, rev))
+  image(1:ncol(cos), 1:nrow(cos), t(cos), 
+      col = gray((0:255)/255), 
+      xaxt = 'n', yaxt = 'n')
+  }
+
+cosine = function(vecs) vecs %*% t(vecs) / (sqrt(rowSums(vecs ** 2)) %*% sqrt(t(rowSums(vecs ** 2))))
+
+plot_cosine_mds = function(cos, items, col = TRUE){
+  norm = function(x) {x = x + abs(min(x)) ; x / max(x)}
+  a = cmdscale(1-norm(cos))
+  par(mar=c(0,0,0,0))
+  if(col) cols = viridis::viridis(length(unique(items))) else cols=rep('black', length(unique(items)))
+  names(cols) = unique(items)
+  plot.new();plot.window(range(a[,1]),range(a[,2]))
+  text(a[,1],a[,2],labels = items, 
+       col = cols[items], cex=.5, font=1)
+  #mtext(expression(italic(z)^2),side=3,cex=1.2)
+  }
+
+```
+
+<p align="center">
+<img width="100%" src="image/repr.png" margin=0>
+</p>
+
+# {.tabset}
+
+## Overview
+
+By the end of this practical you will know how to:
+
+1. Extract embeddings from weights.
+2. Extract and visualize similarities between embeddings. 
+
+## Tasks
+
+### A - Setup
+
+1. Open your `TheRBootcamp` R project. 
+
+2. Open a new R script. Save it as a new file called `representation_practical.R` in the `2_Code` folder.  
+
+```{r}
+# Done!
+```
+
+3. Using `library()` load the the packages `tidyverse` and `keras`
+
+```{r, echo = TRUE, eval = TRUE, message = FALSE}
+# install.packages("tidyverse")
+# install.packages("keras")
+
+# Load packages necessary for this exercise
+library(tidyverse)
+library(keras)
+```
+
+
+4. Now `source()` the `helper_2.R` file in your `2_Code` folder.
+
+```{r, echo = TRUE}
+# Load helper.R
+source("2_Code/helper_2.R")
+```
+
+<br>
+<p style="font-size:20px;background-color:#6ABA9A;color:white;padding-left:20px" align="left" width=100%>
+Part 1: <b>Fashion</b>
+</p>
+
+### B - Fit network
+
+1. Run the code below to load the `fashion.RDS` dataset as a new object.
+
+```{r, echo = TRUE, eval = FALSE, message = FALSE, warning = FALSE}
+# MNIST fashion data
+fashion <- readRDS(file = "1_Data/fashion.RDS")
+```
+
+2. Remind yourself of the contents of the `fashion` object using `str()`. 
+
+```{r, echo = TRUE}
+# Inspect contents
+str(digit)
+```
+
+3. Use the code below to run a two-hidden layer neural network predicting the fashion item. 
+
+```{r, echo = TRUE}
+
+# PREPARATIONS -------
+
+# fashion items
+fashion_labels <- c('T-shirt/top','Trouser','Pullover','Dress','Coat', 
+                   'Sandal','Shirt','Sneaker','Bag','Ankle boot')
+
+# split digit  train
+c(fashion_train_images, fashion_train_items) %<-% fashion$train
+
+# split digit  test
+c(fashion_test_images, fashion_test_items) %<-% fashion$test
+
+# reshape images
+fashion_train_images_serialized <- array_reshape(fashion_train_images, c(nrow(fashion_train_images), 784))
+fashion_test_images_serialized <- array_reshape(fashion_test_images, c(nrow(fashion_test_images), 784))
+
+# rescale images
+fashion_train_images_serialized <- fashion_train_images_serialized / 255
+fashion_test_images_serialized <- fashion_test_images_serialized / 255
+
+# expand criterion
+fashion_train_items_onehot <- to_categorical(fashion_train_items, 10)
+fashion_test_items_onehot <- to_categorical(fashion_test_items, 10)
+
+# MODELING -------
+
+# initialize deepnet
+net <- keras_model_sequential()
+
+# add layer
+net %>% 
+  layer_dense(input_shape = 784, units = 256, activation = "relu") %>% 
+  layer_dense(units = 144, activation = "relu") %>% 
+  layer_dense(units = 10, activation = "softmax")
+
+# model information
+summary(net)
+
+# loss, optimizers, & metrics
+net %>% compile(
+  optimizer = 'adam', 
+  loss = 'categorical_crossentropy',
+  metrics = c('accuracy')
+  )
+
+# fit network
+net %>% fit(
+  x = fashion_train_images_serialized, 
+  y = fashion_train_items_onehot,
+  epochs = 10
+  )
+
+```
+
+### C - Fashion embeddings
+
+1. Use the code below to extract the estimated weights and biases of the network. 
+
+```{r, echo = TRUE}
+# extract weights
+weights <- get_weights(net)
+ 
+```
+
+2. Using `str()` inspect the structure of the `weights` object. Do the contents line up with your expectations?
+
+```{r, echo = TRUE}
+# inspect weights
+str(weights)
+```
+
+3. There are six elements. Three containing the weights (elements 1, 3, 5) and three containing the biases (elements 2, 4, 6).  
+
+4. Use the first elements in `weights` to calculate the activation patterns, aka the embeddings, at the first  layers for the first `1,000` fashion items, ignoring the bias and the activation function. You'll see, this can be easily done using matrix multiplication `%*%`. 
+
+```{r, echo = TRUE}
+# inspect weights
+embedding <- fashion_train_images_serialized[1:1000, ] %*% weights[[1]]
+```
+
+5. Assess the dimensionality of `embedding` using `dim()`. Correct numbers of rows and columns?
+
+6. Use the `plot_embedding()` function, which you loaded earlier when you sourced the `helper_2.R` file, to visualize the activations. Rows in the plot will be the `1,000` fashion items and columns the `256` nodes of the embedding at the first hidden layer. Looks a bit messy right?
+
+```{r, echo = TRUE}
+# plot activation
+plot_embedding(embedding)
+```
+
+7. To bring some order into matters extract the first `1000` fashion items from `fashion_train_items` and then use those to order the rows in `embedding`.  
+
+```{r, echo = TRUE}
+# extract fashon items
+items <- fashion_train_items[1:1000]
+
+# order activations
+embedding <- embedding[order(items), ]
+```
+
+8. Now use again `plot_embedding()` to plot the embedding. Things should look a lot clearer. The bands correspond to the different items, with the `0`-item (`"T-shirt/top"`) at the bottom and the `9`-item (`"Angle boot"`) at the top. 
+
+### D - Fashion similarities
+
+1. Use the `cosine()` function from the `helper_2.R` file to determine the similarities between the fashion item vectors in the embedding. Cosine determines the angle between the locations of two fashion items in the `256` dimensional space that is the embedding. Cosine is algebraically close to the standard correlation coefficient. 
+
+```{r, echo = TRUE}
+# calculate cosine similarities
+fashion_cosines <- cosine(embedding)
+
+```
+
+2. Now use the `plot_cosine` function (also from the `helper_2.R` file) to plot the matrix of cosine values. The categories `0` to `9` go from top to bottom and from left to right. Light grey values indicate high cosine similarity, darker ones low cosine similarity. Try to make sense of the plot. 
+
+```{r, echo = TRUE}
+# Plot cosine similarities
+plot_cosine(fashion_cosines)
+```
+
+3. The cosine similarity plot shows several interesting patterns. First, items of one item type, as should be, are consistently more similar to themselves than to other item type. This can be gleaned from fact that the rectangles in the diagonal are always lightest in their respective columns. Second, some items types are closer to each other than others are. This can be gleaned from the fact that there are other light rectangle off the diagonal. Use the code below to visualize this information in a more intuitive way using multi-dimensional scaling. Yes, there is a function ready, `plot_cosine_mds()`. Try to make sense of the plot.    
+
+
+```{r, echo = TRUE}
+# calculate cosine similarities
+plot_cosine_mds(fashion_cosines, fashion_labels[items[order(items)]+1])
+```
+
+### E - Understanding prediction errors
+
+1. The cosine mds plot confirmed both the overall good separation of fashion items, but also that some item types are more similar to each other than others. Importantly, these patterns should translate into the errors that the model makes. Use the code below to determine the confusion matrix for the predictions of the test set. Do the confusions in prediction line up with the overlap of fashion items in the cosine mds?
+
+```{r, echo = TRUE}
+# prediction confusion matrix
+pred = net %>% predict(fashion_test_images_serialized) %>% k_argmax() %>% as.numeric()
+table(fashion_labels[fashion_test_items+1], fashion_labels[pred+1])
+```
+
+2. Yes, they do. The biggest prediction errors occur for the types `Coat`, `Pullover`, and `Shirt`, which in the cosine mds pretty much sit on top of each other. 
+
+### F - Optional: Deeper layers
+
+1. Carry out the same analyses as above, however, using the embedding at the second layer, which are little more complicated to determine, as the first layer's biases and the activation function need to be taken into account.  
+
+```{r, echo = TRUE}
+# second layer embedding
+relu = function(z) {z[z < 0] = 0; z}
+z_1 <- cbind(img_train[1:1000,],1) %*% rbind(weights[[1]], weights[[2]])
+a_1 <- t(apply(z_1, 1, relu))
+embedding <- a_1 %*% weights[[3]]
+```
+
+<br>
+<p style="font-size:20px;background-color:#6ABA9A;color:white;padding-left:20px" align="left" width=100%>
+Part 2: <b>Words</b>
+</p>
+
+### G - Word embeddings
+
+1. Run the code below to load the `capital.RDS` dataset as a new object.
+
+```{r, echo = TRUE, eval = FALSE, message = FALSE, warning = FALSE}
+# load embeddings
+capital <- readRDS(file = "1_Data/capital.RDS")
+```
+
+2. The dataset contains a pre-learned embedding on the basis of all of Wikipedia and a large website corpus. Use `rownames()` inspect to words for which embeddings are present.   
+```{r, echo = TRUE}
+# rownames of capital
+rownames(capital)
+```
+
+3. The dataset contains embeddings for a bunch of capitals and the respective countries. Use `plot_embedding()` to plot the capital embeddings.
+
+```{r, echo = TRUE}
+# plot capital embedding
+plot_embedding(capital)
+```
+
+4. Not much to see. Maybe a little bit of banding for the pairs of words belonging to one country, but certainly not much. Calculate the cosine similarities and plot them. 
+
+```{r, echo = TRUE}
+# plot capital
+capital_cosine = cosine(capital)
+plot_cosine(capital_cosine)
+```
+
+5. The cosine plot makes clear that corresponding capitals and countries are clearly more related to each other than non-corresponding capitals and countries. However, as before, there are also some high cosines off-diagonal. Bring more light into the matter by creating another cosine mds plot.    
+
+```{r, echo = TRUE}
+# plot capital
+capital_cosine = cosine(capital)
+plot_cosine_mds(capital_cosine, rownames(capital_cosine), col = F)
+```
+
+5. The cosine mds plot shows several interesting patterns. First, countries and capitals are clearly separated, suggesting that countries among themselves and capitals among themselves are more strongly related than between them. Second, countries and capitals seem to be the mirror image of each other, suggesting that there the embedding has "understood" the link between them. Third, countries and capitals are clearly arranged according to geography, suggesting that the embedding has also "understood" the layout of the world. 
+
+## Resources
+
+### Cheatsheet
+
+<figure>
+<center>
+<a href="https://github.com/rstudio/cheatsheets/raw/master/keras.pdf">
+  <img src="image/keras_cheat.png" alt="Trulli" style="width:70%"></a><br>
+ <font style="font-size:10px"> from <a href= "https://rstudio.com/resources/cheatsheets/">github.com/rstudio</a></font>
+</figure>

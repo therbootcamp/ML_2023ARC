@@ -1,2 +1,2 @@
-# ML_Oct2023_ARC
-ML with R at ARC, Oct 23
+# AML_2021-AMLD
+Applied machine learning workshop at AMLD 2021

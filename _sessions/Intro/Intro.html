@@ -1,0 +1,542 @@
+<!DOCTYPE html>
+<html lang="" xml:lang="">
+  <head>
+    <title>Welcome</title>
+    <meta charset="utf-8" />
+    <meta name="author" content="Machine Learning with R   The R Bootcamp @ DHLab                  " />
+    <script src="libs/header-attrs/header-attrs.js"></script>
+    <link href="libs/remark-css/default.css" rel="stylesheet" />
+    <link rel="stylesheet" href="baselrbootcamp.css" type="text/css" />
+  </head>
+  <body>
+    <textarea id="source">
+class: center, middle, inverse, title-slide
+
+.title[
+# Welcome
+]
+.author[
+### Machine Learning with R<br> <a href='https://therbootcamp.github.io'> The R Bootcamp @ DHLab </a> <br> <a href='https://therbootcamp.github.io/AML_2022DHLab/'> <i class='fas fa-clock' style='font-size:.9em;'></i> </a>  <a href='https://therbootcamp.github.io'> <i class='fas fa-home' style='font-size:.9em;' ></i> </a>  <a href='mailto:therbootcamp@gmail.com'> <i class='fas fa-envelope' style='font-size: .9em;'></i> </a>  <a href='https://www.linkedin.com/company/basel-r-bootcamp/'> <i class='fab fa-linkedin' style='font-size: .9em;'></i> </a>
+]
+.date[
+### September 2022
+]
+
+---
+
+
+layout: true
+
+&lt;div class="my-footer"&gt;
+  &lt;span style="text-align:center"&gt;
+    &lt;span&gt; 
+      &lt;img src="https://raw.githubusercontent.com/therbootcamp/therbootcamp.github.io/master/_sessions/_image/by-sa.png" height=14 style="vertical-align: middle"/&gt;
+    &lt;/span&gt;
+    &lt;a href="https://therbootcamp.github.io/"&gt;
+      &lt;span style="padding-left:82px"&gt; 
+        &lt;font color="#7E7E7E"&gt;
+          www.therbootcamp.com
+        &lt;/font&gt;
+      &lt;/span&gt;
+    &lt;/a&gt;
+    &lt;a href="https://therbootcamp.github.io/"&gt;
+      &lt;font color="#7E7E7E"&gt;
+      Machine Learning with R @ DHLab  | September 2022
+      &lt;/font&gt;
+    &lt;/a&gt;
+    &lt;/span&gt;
+  &lt;/div&gt; 
+
+---
+
+
+
+
+.pull-left6[
+
+&lt;br&gt;&lt;br&gt;&lt;br&gt;&lt;br&gt;
+
+
+# Aim
+
+&lt;br&gt;
+
+&gt; &lt;font style='font-size:40px;font-family:"Yanone Kaffeesatz";font-weight:500'&gt;The aim of this workshop is enable you to thoughtfully implement supervised machine learning methods, using tidymodels (day 1) and keras (day 2) in R.&lt;/font&gt;
+
+]
+
+.pull-right4[
+
+&lt;br&gt;&lt;br&gt;&lt;br&gt;&lt;br&gt;
+&lt;p align="center"&gt;&lt;img src="https://raw.githubusercontent.com/therbootcamp/therbootcamp.github.io/master/_sessions/_image/target.png" height="350"&gt;&lt;/p&gt;
+
+]
+
+
+---
+
+# What is machine learning?
+
+.pull-left45[
+
+&lt;b&gt;Machine learning is&lt;/b&gt;...
+
+
+&lt;/p&gt;
+
+
+]
+
+
+.pull-right45[
+
+&lt;p align = "center"&gt;
+&lt;img src="image/ml_robot.jpg" height=380px&gt;&lt;br&gt;
+&lt;font style="font-size:10px"&gt;from &lt;a href="https://medium.com/@dkwok94/machine-learning-for-my-grandma-ca242e97ef62"&gt;medium.com&lt;/a&gt;&lt;/font&gt;
+&lt;/p&gt;
+
+
+]
+
+---
+
+# What is machine learning?
+
+.pull-left45[
+
+&lt;b&gt;Machine learning is&lt;/b&gt;...
+
+&lt;p style="padding-left:20px"&gt;
+
+...a &lt;high&gt;field of artificial intelligence&lt;/high&gt;...&lt;br&gt;&lt;br&gt; 
+
+...that uses &lt;high&gt;statistical techniques&lt;/high&gt;... &lt;br&gt;&lt;br&gt;
+
+...to allow computer systems to &lt;high&gt;"learn"&lt;/high&gt;,...&lt;br&gt;&lt;br&gt;
+
+...i.e., to progressively &lt;high&gt;improve performance&lt;/high&gt; on a specific task...&lt;br&gt;&lt;br&gt;
+
+...from small or large amounts of &lt;high&gt;data&lt;/high&gt;,... &lt;br&gt;&lt;br&gt;
+
+....&lt;high&gt;without being explicitly programmed&lt;/high&gt;....&lt;br&gt;&lt;br&gt;
+
+....with the goal to &lt;high&gt;discover structure&lt;/high&gt; or &lt;/high&gt;improve decision making and predictions&lt;/high&gt;.
+
+&lt;/p&gt;
+
+
+]
+
+
+.pull-right45[
+
+&lt;p align = "center"&gt;
+&lt;img src="image/ml_robot.jpg" height=380px&gt;&lt;br&gt;
+&lt;font style="font-size:10px"&gt;from &lt;a href="https://medium.com/@dkwok94/machine-learning-for-my-grandma-ca242e97ef62"&gt;medium.com&lt;/a&gt;&lt;/font&gt;
+&lt;/p&gt;
+
+
+]
+
+
+
+---
+
+.pull-left3[
+
+# Types of machine learning tasks
+
+
+&lt;ul&gt;
+  &lt;li class="m1"&gt;&lt;span&gt;There are many types of machine learning tasks, each of which call for different models.&lt;/span&gt;&lt;/li&gt;
+  &lt;li class="m2"&gt;&lt;span&gt;&lt;high&gt;We will focus on supervised machine learning&lt;/high&gt;.&lt;/span&gt;&lt;/li&gt;
+&lt;/ul&gt;
+
+]
+
+.pull-right65[
+
+&lt;br&gt;&lt;br&gt;
+
+&lt;p align = "center"&gt;
+&lt;img src="image/mltypes.png" height=500px&gt;&lt;br&gt;
+&lt;font style="font-size:10px"&gt;from &lt;a href="image/mltypes.png"&gt;amazonaws.com&lt;/a&gt;&lt;/font&gt;
+&lt;/p&gt;
+]
+
+
+---
+
+# Supervised learning
+
+.pull-left45[
+
+&lt;ul&gt;
+  &lt;li class="m1"&gt;&lt;span&gt;&lt;high&gt;The &lt;high&gt;dominant type&lt;/high&gt; of machine learning.&lt;/span&gt;&lt;/li&gt;
+  &lt;li class="m2"&gt;&lt;span&gt;Supervised learning uses &lt;high&gt;labeled data&lt;/high&gt; to learn &lt;high&gt;a model&lt;/high&gt; that relates the criterion to the features.&lt;/span&gt;&lt;/li&gt;
+&lt;/ul&gt;
+
+
+]
+
+.pull-right45[
+
+&lt;p align = "center"&gt;
+&lt;img src="image/supervised.png"&gt;&lt;br&gt;
+&lt;/p&gt;
+]
+
+
+---
+
+# 2 types of supervised problems
+
+.pull-left5[
+
+There are two types of supervised learning problems typically can be approached &lt;high&gt;using the same model&lt;/high&gt;.
+
+&lt;font style="font-size:24px"&gt;&lt;b&gt;Regression&lt;/b&gt;&lt;/font&gt;
+
+Regression problems involve the &lt;high&gt;prediction of a quantitative feature&lt;/high&gt;. 
+
+E.g., predicting the cholesterol level as a function of age. 
+
+&lt;font style="font-size:24px"&gt;&lt;b&gt;Classification&lt;/b&gt;&lt;/font&gt;
+
+Classification problems involve the &lt;high&gt;prediction of a categorical feature&lt;/high&gt;.   
+
+E.g., predicting the origin of chest pain as a function of age and heart attack risk. 
+
+
+
+]
+
+.pull-right4[
+
+&lt;p align = "center"&gt;
+&lt;img src="image/twotypes.png" height=440px&gt;&lt;br&gt;
+&lt;/p&gt;
+
+]
+
+---
+
+# Three supervised algorithms
+
+&lt;p align="center"&gt;&lt;br&gt;
+&lt;img src="image/models.png" style="width:1000px"&gt;
+&lt;/p&gt;
+
+
+---
+
+# Neural networks
+
+&lt;p align = "center"&gt;
+&lt;img src="image/neural_nets.png"&gt;&lt;br&gt;
+&lt;font style="font-size:10px"&gt;adapted from &lt;a href="asimovinstitute.com"&gt;asimovinstitute.com&lt;/a&gt;&lt;/font&gt;
+&lt;/p&gt;
+
+
+---
+
+.pull-left4[
+
+# ML in R
+
+&lt;ul&gt;
+  &lt;li class="m1"&gt;&lt;span&gt;R has advanced tremendously with respect to ML.&lt;/span&gt;&lt;/li&gt;
+  &lt;li class="m2"&gt;&lt;span&gt;There exist &lt;high&gt;powerful and user-friendly&lt;/high&gt; tools for all ML steps and algorithms.&lt;/span&gt;&lt;/li&gt;
+&lt;/ul&gt;
+
+
+]
+
+.pull-right5[
+
+&lt;p align = "center"&gt;
+&lt;br&gt;&lt;br&gt;
+&lt;img src="image/ml.png" height=520px&gt;&lt;br&gt;
+&lt;/p&gt;
+
+]
+
+
+
+
+---
+
+.pull-left4[
+
+# Schedule 
+
+&lt;ul&gt;
+  &lt;li class="m1"&gt;&lt;span&gt;&lt;high&gt;Schedule&lt;/high&gt;
+  &lt;br&gt;&lt;br&gt;
+  &lt;ul class="level"&gt;
+    &lt;li&gt;&lt;span&gt;Intro to R&lt;/span&gt;&lt;/li&gt;
+    &lt;li&gt;&lt;span&gt;3 blocks on ML with R&lt;/span&gt;&lt;/li&gt;
+  &lt;/ul&gt;
+  &lt;/span&gt;&lt;/li&gt;
+  &lt;li class="m2"&gt;&lt;span&gt;&lt;high&gt;Block&lt;/high&gt;
+  &lt;br&gt;&lt;br&gt;
+  &lt;ul class="level"&gt;
+    &lt;li&gt;&lt;span&gt;Slide-based introduction&lt;/span&gt;&lt;/li&gt;
+    &lt;li&gt;&lt;span&gt;Many exercises&lt;/span&gt;&lt;/li&gt;
+  &lt;/ul&gt;
+  &lt;/span&gt;&lt;/li&gt;
+&lt;/ul&gt;
+
+
+]
+
+.pull-right45[
+&lt;br&gt;&lt;br&gt;
+&lt;img src="image/schedule.png" height="525" align="center"&gt;
+
+]
+
+
+---
+
+.pull-left45[
+
+# Introduction
+
+
+&lt;ul&gt;
+  &lt;li class="m1"&gt;&lt;span&gt;&lt;high&gt;Introduction&lt;/high&gt;
+  &lt;br&gt;&lt;br&gt;
+  &lt;ul class="level"&gt;
+    &lt;li&gt;&lt;span&gt;30-45 min&lt;/span&gt;&lt;/li&gt;
+    &lt;li&gt;&lt;span&gt;Concepts &amp; Code examples&lt;/span&gt;&lt;/li&gt;
+  &lt;/ul&gt;
+  &lt;/span&gt;&lt;/li&gt;
+  &lt;li class="m2"&gt;&lt;span&gt;&lt;high&gt;Materials&lt;/high&gt;
+  &lt;br&gt;&lt;br&gt;
+  &lt;ul class="level"&gt;
+    &lt;li&gt;&lt;span&gt;Permanently &lt;a href="https://therbootcamp.github.io/EDA_2019CSS/"&gt;available online&lt;/a&gt;&lt;/span&gt;&lt;/li&gt;
+    &lt;li&gt;&lt;span&gt;PDFs will be available later&lt;/span&gt;&lt;/li&gt;
+  &lt;/ul&gt;
+  &lt;/span&gt;&lt;/li&gt;
+&lt;/ul&gt;
+
+]
+
+.pull-right55[
+
+&lt;br&gt;
+
+&lt;p align="center"&gt;
+&lt;img src="https://img.freepik.com/free-vector/business-presentation_23-2147511785.jpg?size=338&amp;ext=jpg" style="width:250px"&gt;
+&lt;br&gt;
+&lt;font style="font-size:10px"&gt;from &lt;a href="www.Freepik.com"&gt;Freepik.com&lt;/a&gt;&lt;/font&gt;
+&lt;/p&gt;
+
+&lt;p align="center"&gt;
+&lt;img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcR5DZ7eRkgxeFuEMEtuVC9YHz2v0STxeQ9YJyW2T3PbXGIci_2Lig" style="width:250px"&gt;
+&lt;br&gt;
+&lt;font style="font-size:10px"&gt;from &lt;a href="www.Freepik.com"&gt;Freepik.com&lt;/a&gt;&lt;/font&gt;
+&lt;/p&gt;
+
+]
+
+
+---
+
+.pull-left45[
+
+# Practicals
+
+
+&lt;ul&gt;
+  &lt;li class="m1"&gt;&lt;span&gt;&lt;high&gt;Write your own scripts&lt;/high&gt;
+  &lt;br&gt;&lt;br&gt;
+  &lt;ul class="level"&gt;
+    &lt;li&gt;&lt;span&gt;20 - 50 tasks&lt;/span&gt;&lt;/li&gt;
+    &lt;li&gt;&lt;span&gt;Increasingly getting difficult.&lt;/span&gt;&lt;/li&gt;
+    &lt;li&gt;&lt;span&gt;Follow your own tempo.&lt;/span&gt;&lt;/li&gt;
+    &lt;li&gt;&lt;span&gt;Answers are added later.&lt;/span&gt;&lt;/li&gt;
+  &lt;/ul&gt;
+  &lt;/span&gt;&lt;/li&gt;
+&lt;/ul&gt;
+
+]
+
+.pull-right5[
+&lt;br&gt;
+
+  &lt;iframe src="https://therbootcamp.github.io/AML_2020AMLD/_sessions/Fitting/Fitting_practical.html" height="480px" width = "500px"&gt;&lt;/iframe&gt;
+
+  Example: &lt;a href="https://therbootcamp.github.io/AML_2020AMLD/_sessions/Fitting/Fitting_practical.html"&gt;Fitting Practical &lt;/a&gt;
+
+]
+
+---
+
+.pull-left4[
+# Introductions
+
+1. Who are you?
+
+2. Why do you want to learn about ML with R?
+
+3. How much experience do you have with ML and R?
+
+4. What's your favorite algorithm (ML or non-ML)?
+
+]
+
+.pull-right50[
+
+&lt;p align="center"&gt;&lt;br&gt;&lt;br&gt;&lt;br&gt;&lt;br&gt;
+&lt;img src="image/intro.jpg" style="width:500px"&gt;
+&lt;br&gt;
+&lt;font style="font-size:10px"&gt;from &lt;a href="https://unsplash.com/photos/SymZoeE8quA"&gt;unsplash.com&lt;/a&gt;&lt;/font&gt;
+&lt;/p&gt;
+
+]
+
+---
+
+class: middle, center
+
+&lt;h1&gt;&lt;a href=https://therbootcamp.github.io/ML_2022DHLab/index.html&gt;Schedule&lt;/a&gt;&lt;/h1&gt;
+
+    </textarea>
+<style data-target="print-only">@media screen {.remark-slide-container{display:block;}.remark-slide-scaler{box-shadow:none;}}</style>
+<script src="https://remarkjs.com/downloads/remark-latest.min.js"></script>
+<script>var slideshow = remark.create({
+"highlightStyle": "github",
+"highlightLines": true,
+"countIncrementalSlides": false,
+"ratio": "16:9"
+});
+if (window.HTMLWidgets) slideshow.on('afterShowSlide', function (slide) {
+  window.dispatchEvent(new Event('resize'));
+});
+(function(d) {
+  var s = d.createElement("style"), r = d.querySelector(".remark-slide-scaler");
+  if (!r) return;
+  s.type = "text/css"; s.innerHTML = "@page {size: " + r.style.width + " " + r.style.height +"; }";
+  d.head.appendChild(s);
+})(document);
+
+(function(d) {
+  var el = d.getElementsByClassName("remark-slides-area");
+  if (!el) return;
+  var slide, slides = slideshow.getSlides(), els = el[0].children;
+  for (var i = 1; i < slides.length; i++) {
+    slide = slides[i];
+    if (slide.properties.continued === "true" || slide.properties.count === "false") {
+      els[i - 1].className += ' has-continuation';
+    }
+  }
+  var s = d.createElement("style");
+  s.type = "text/css"; s.innerHTML = "@media print { .has-continuation { display: none; } }";
+  d.head.appendChild(s);
+})(document);
+// delete the temporary CSS (for displaying all slides initially) when the user
+// starts to view slides
+(function() {
+  var deleted = false;
+  slideshow.on('beforeShowSlide', function(slide) {
+    if (deleted) return;
+    var sheets = document.styleSheets, node;
+    for (var i = 0; i < sheets.length; i++) {
+      node = sheets[i].ownerNode;
+      if (node.dataset["target"] !== "print-only") continue;
+      node.parentNode.removeChild(node);
+    }
+    deleted = true;
+  });
+})();
+// add `data-at-shortcutkeys` attribute to <body> to resolve conflicts with JAWS
+// screen reader (see PR #262)
+(function(d) {
+  let res = {};
+  d.querySelectorAll('.remark-help-content table tr').forEach(tr => {
+    const t = tr.querySelector('td:nth-child(2)').innerText;
+    tr.querySelectorAll('td:first-child .key').forEach(key => {
+      const k = key.innerText;
+      if (/^[a-z]$/.test(k)) res[k] = t;  // must be a single letter (key)
+    });
+  });
+  d.body.setAttribute('data-at-shortcutkeys', JSON.stringify(res));
+})(document);
+(function() {
+  "use strict"
+  // Replace <script> tags in slides area to make them executable
+  var scripts = document.querySelectorAll(
+    '.remark-slides-area .remark-slide-container script'
+  );
+  if (!scripts.length) return;
+  for (var i = 0; i < scripts.length; i++) {
+    var s = document.createElement('script');
+    var code = document.createTextNode(scripts[i].textContent);
+    s.appendChild(code);
+    var scriptAttrs = scripts[i].attributes;
+    for (var j = 0; j < scriptAttrs.length; j++) {
+      s.setAttribute(scriptAttrs[j].name, scriptAttrs[j].value);
+    }
+    scripts[i].parentElement.replaceChild(s, scripts[i]);
+  }
+})();
+(function() {
+  var links = document.getElementsByTagName('a');
+  for (var i = 0; i < links.length; i++) {
+    if (/^(https?:)?\/\//.test(links[i].getAttribute('href'))) {
+      links[i].target = '_blank';
+    }
+  }
+})();
+// adds .remark-code-has-line-highlighted class to <pre> parent elements
+// of code chunks containing highlighted lines with class .remark-code-line-highlighted
+(function(d) {
+  const hlines = d.querySelectorAll('.remark-code-line-highlighted');
+  const preParents = [];
+  const findPreParent = function(line, p = 0) {
+    if (p > 1) return null; // traverse up no further than grandparent
+    const el = line.parentElement;
+    return el.tagName === "PRE" ? el : findPreParent(el, ++p);
+  };
+
+  for (let line of hlines) {
+    let pre = findPreParent(line);
+    if (pre && !preParents.includes(pre)) preParents.push(pre);
+  }
+  preParents.forEach(p => p.classList.add("remark-code-has-line-highlighted"));
+})(document);</script>
+
+<script>
+slideshow._releaseMath = function(el) {
+  var i, text, code, codes = el.getElementsByTagName('code');
+  for (i = 0; i < codes.length;) {
+    code = codes[i];
+    if (code.parentNode.tagName !== 'PRE' && code.childElementCount === 0) {
+      text = code.textContent;
+      if (/^\\\((.|\s)+\\\)$/.test(text) || /^\\\[(.|\s)+\\\]$/.test(text) ||
+          /^\$\$(.|\s)+\$\$$/.test(text) ||
+          /^\\begin\{([^}]+)\}(.|\s)+\\end\{[^}]+\}$/.test(text)) {
+        code.outerHTML = code.innerHTML;  // remove <code></code>
+        continue;
+      }
+    }
+    i++;
+  }
+};
+slideshow._releaseMath(document);
+</script>
+<!-- dynamically load mathjax for compatibility with self-contained -->
+<script>
+(function () {
+  var script = document.createElement('script');
+  script.type = 'text/javascript';
+  script.src  = 'https://mathjax.rstudio.com/latest/MathJax.js?config=TeX-MML-AM_CHTML';
+  if (location.protocol !== 'file:' && /^https?:/.test(script.src))
+    script.src  = script.src.replace(/^https?:/, '');
+  document.getElementsByTagName('head')[0].appendChild(script);
+})();
+</script>
+  </body>
+</html>
