@@ -2,10 +2,10 @@
 title: "Fitting"
 author: "Machine Learning with R<br>
   <a href='https://therbootcamp.github.io'>
-    The R Bootcamp @ DHLab
+    The R Bootcamp @ ARC
   </a>
   <br>
-  <a href='https://therbootcamp.github.io/AML_2022DHLab/'>
+  <a href='https://therbootcamp.github.io/AML_2023ARC/'>
     <i class='fas fa-clock' style='font-size:.9em;'></i>
   </a>&#8239; 
   <a href='https://therbootcamp.github.io'>
@@ -17,7 +17,7 @@ author: "Machine Learning with R<br>
   <a href='https://www.linkedin.com/company/basel-r-bootcamp/'>
     <i class='fab fa-linkedin' style='font-size: .9em;'></i>
   </a>"
-date: "September 2022"
+date: "May 2023"
 output:
   xaringan::moon_reader:
     css: ["default", "baselrbootcamp.css"]
@@ -45,7 +45,7 @@ layout: true
     </a>
     <a href="https://therbootcamp.github.io/">
       <font color="#7E7E7E">
-      Machine Learning with R @ DHLab  | September 2022
+      Machine Learning with R @ ARC  | May 2023
       </font>
     </a>
     </span>
@@ -984,6 +984,6 @@ logistic_pred %>%
 
 class: middle, center
 
-<h1><a href=https://therbootcamp.github.io/ML_2022DHLab/_sessions/Fitting/Fitting_practical.html>Practical</a></h1>
+<h1><a href=https://therbootcamp.github.io/ML_2023ARC/_sessions/Fitting/Fitting_practical.html>Practical</a></h1>
 
 

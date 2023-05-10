@@ -1,29 +1,12 @@
 ---
 title: "Fitting"
-author: "<table style='table-layout:fixed;width:100%;border:0;padding:0;margin:0'><col width='10%'><col width='10%'>
-  <tr style='border:none'>
-    <td style='display:block;width:100%;text-align:left;vertical-align:bottom;padding:0;margin:0;border:none' nowrap>
-      <font style='font-style:normal'>Machine Learning with R</font><br>
-      <a href='https://therbootcamp.github.io/ML_2022DHLab/'>
-        <i class='fas fa-clock' style='font-size:.9em;' ></i>
-      </a>
-      <a href='https://therbootcamp.github.io'>
-        <i class='fas fa-home' style='font-size:.9em;'></i>
-      </a>
-      <a href='mailto:therbootcamp@gmail.com'>
-        <i class='fas fa-envelope' style='font-size: .9em;'></i>
-      </a>
-      <a href='https://www.linkedin.com/company/basel-r-bootcamp/'>
-        <i class='fab fa-linkedin' style='font-size: .9em;'></i>
-      </a>
-      <a href='https://therbootcamp.github.io'>
-        <font style='font-style:normal'>The R Bootcamp @ DHLab</font>
-      </a>
-    </td>
-    <td style='width:100%;vertical-align:bottom;text-align:right;padding:0;margin:0;border:none'>
-      <img src='https://raw.githubusercontent.com/therbootcamp/therbootcamp.github.io/master/_sessions/_image/by-sa.png' style='height:15px;width:80px'/>
-    </td>
-  </tr></table>"
+author: "<font style='font-style:normal'>ML with R</font><br>
+<a href='https://therbootcamp.github.io/ML_2023ARC/'><i class='fas fa-clock' style='font-size:.9em;' ></i></a>
+<a href='https://therbootcamp.github.io'><i class='fas fa-home' style='font-size:.9em;'></i></a>
+<a href='mailto:therbootcamp@gmail.com'><i class='fas fa-envelope' style='font-size: .9em;'></i></a>
+<a href='https://www.linkedin.com/company/basel-r-bootcamp/'><i class='fab fa-linkedin' style='font-size: .9em;'></i></a>  
+<a href='https://therbootcamp.github.io'><font style='font-style:normal'>The R Bootcamp @ ARC</font></a><br>  
+<img src='https://raw.githubusercontent.com/therbootcamp/therbootcamp.github.io/master/_sessions/_image/by-sa.png' style='height:15px;width:80px'/>"
 output:
   html_document:
     css: practical.css
@@ -35,8 +18,8 @@ knitr::opts_chunk$set(comment = NA,
                       fig.width = 6, 
                       fig.height = 6,
                       fig.align = 'center',
-                      echo = TRUE, 
-                      eval = TRUE, 
+                      echo = FALSE, 
+                      eval = FALSE, 
                       warning = FALSE,
                       message = FALSE)
 
