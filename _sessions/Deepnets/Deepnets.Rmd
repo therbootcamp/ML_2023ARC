@@ -244,7 +244,7 @@ $$    L_{01} = {\begin{cases}{}
 $$H=\sum_i -y_i \cdot log(a_i^L) - (1-y_i) \cdot log(1-a_i^L)$$
 <p align="center"><u>Categorical cross-entropy</u></p>
 
-$$H=\sum_{i}\sum_{j} -y_{ij} \cdot log(a_{ij}^L) - (1-y_{ij}) \cdot log(1-a_{ij}^L)$$
+$$H=\sum_{i}\sum_{j} -y_{ij} \cdot log(a_{ij}^L)$$
 
 <p align="center"><u>Mean squared error</u></p>
 
@@ -653,7 +653,8 @@ digit_train[1:18]
 
 ```{r}
 # reshape & rescale images
-img_train <- array_reshape(img_train, c(nrow(img_train), 784))
+img_train <- array_reshape(img_train, 
+                           c(nrow(img_train), 784))
 img_train <- img_train / 255
 
 # expand criterion

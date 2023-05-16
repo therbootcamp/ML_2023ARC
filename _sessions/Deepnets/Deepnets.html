@@ -191,7 +191,7 @@ $$    L_{01} = {\begin{cases}{}
 `$$H=\sum_i -y_i \cdot log(a_i^L) - (1-y_i) \cdot log(1-a_i^L)$$`
 &lt;p align="center"&gt;&lt;u&gt;Categorical cross-entropy&lt;/u&gt;&lt;/p&gt;
 
-`$$H=\sum_{i}\sum_{j} -y_{ij} \cdot log(a_{ij}^L) - (1-y_{ij}) \cdot log(1-a_{ij}^L)$$`
+`$$H=\sum_{i}\sum_{j} -y_{ij} \cdot log(a_{ij}^L)$$`
 
 &lt;p align="center"&gt;&lt;u&gt;Mean squared error&lt;/u&gt;&lt;/p&gt;
 
@@ -612,7 +612,8 @@ digit_train[1:18]
 
 ```r
 # reshape &amp; rescale images
-img_train &lt;- array_reshape(img_train, c(nrow(img_train), 784))
+img_train &lt;- array_reshape(img_train, 
+                           c(nrow(img_train), 784))
 img_train &lt;- img_train / 255
 
 # expand criterion
@@ -984,7 +985,7 @@ model %&gt;% evaluate(img_test, digit_test)
 
 ```
 ##     loss accuracy 
-##    0.893    0.700
+##   0.8655   0.7400
 ```
 
 ]
