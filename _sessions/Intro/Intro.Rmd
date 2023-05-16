@@ -411,5 +411,5 @@ E.g., predicting the origin of chest pain as a function of age and heart attack 
 
 class: middle, center
 
-<h1><a href=https://therbootcamp.github.io/ML_2022DHLab/index.html>Schedule</a></h1>
+<h1><a href=https://therbootcamp.github.io/ML_2023ARC/index.html>Schedule</a></h1>
 
