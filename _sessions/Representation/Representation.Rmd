@@ -45,7 +45,7 @@ layout: true
     </a>
     <a href="https://therbootcamp.github.io/">
       <font color="#7E7E7E">
-      Machine Learning with R @ DHLab  | September 2022
+      Machine Learning with R @ ARC  | May 2022
       </font>
     </a>
     </span>

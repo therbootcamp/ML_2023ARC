@@ -85,61 +85,34 @@ You've got the essentials of Machine Learning covered!
 
 A very incomplete series of good books. Books covers are links leading in several cases to free online versions of the book.</high>.
 
-
+<br><br>
 <table width="80%" style="cellspacing:0; cellpadding:0; border:none;">
 
   <tr>    
 
   <td>
-  <a href="https://www.tmwr.org/"><img border="0" alt="W3Schools" src="https://www.tmwr.org/images/cover.png" height="140" ></a>
+  <a href="https://www.tmwr.org/"><img border="0" alt="W3Schools" src="https://www.tmwr.org/images/cover.png" height="220" ></a>
   </td>
 
     <td>
-  <a href="http://appliedpredictivemodeling.com/"><img border="0" alt="W3Schools" src="http://static1.squarespace.com/static/51156277e4b0b8b2ffe11c00/t/51157487e4b0b8b2ffe16829/1509217882069/?format=1500w" height="180" ></a>
+  <a href="http://appliedpredictivemodeling.com/"><img border="0" alt="W3Schools" src="http://static1.squarespace.com/static/51156277e4b0b8b2ffe11c00/t/51157487e4b0b8b2ffe16829/1509217882069/?format=1500w" height="220" ></a>
   </td>
   
         <td>
-  <a href="http://www-bcf.usc.edu/~gareth/ISL/ISLR%20First%20Printing.pdf"><img border="0" alt="W3Schools" src="https://images-na.ssl-images-amazon.com/images/I/41EaH4W9LVL._SX332_BO1,204,203,200_.jpg" height="180" ></a>
+  <a href="http://www-bcf.usc.edu/~gareth/ISL/ISLR%20First%20Printing.pdf"><img border="0" alt="W3Schools" src="https://images-na.ssl-images-amazon.com/images/I/41EaH4W9LVL._SX332_BO1,204,203,200_.jpg" height="220" ></a>
   </td>
   
         <td>
-  <a href="https://www.manning.com/books/deep-learning-with-r"><img border="0" alt="W3Schools" src="https://images-na.ssl-images-amazon.com/images/I/51h5d4dYaoL._SX396_BO1,204,203,200_.jpg" height="180" ></a>
+  <a href="https://www.manning.com/books/deep-learning-with-r"><img border="0" alt="W3Schools" src="https://images-na.ssl-images-amazon.com/images/I/51h5d4dYaoL._SX396_BO1,204,203,200_.jpg" height="220" ></a>
   </td>
 
   
   <td>
-  <a href="https://smltar.com/"><img border="0" alt="W3Schools" src="image/nlp.png" height="180" ></a>
+  <a href="https://www.deeplearningbook.org/"><img border="0" alt="W3Schools" src="image/goodfello.jpeg" height="220" ></a>
   </td>
   
   </tr>
-  
 
-  <tr style="background-color:#ffffff">
-
-    <td> 
-  <a href="http://r4ds.had.co.nz/"><img border="0" alt="W3Schools" src="http://r4ds.had.co.nz/cover.png" height="180"></a>
-  </td>
-
-  <td>
-  <a href="https://covers.oreillystatic.com/images/0636920028574/cat.gif"><img border="0" alt="W3Schools" src="https://covers.oreillystatic.com/images/0636920028574/cat.gif" height="180"></a>
-  </td>
-
-        <td>
-  <a href="https://csgillespie.github.io/efficientR/"><img border="0" alt="W3Schools" src="https://csgillespie.github.io/efficientR/figures/f0_web.png" height="180" ></a>
-  </td>
-
-  <td>
-  <a href="https://www.tidytextmining.com/"><img border="0" alt="W3Schools" src="https://www.tidytextmining.com/images/cover.png" height="180" ></a>
-  </td>
-  
-  
-  <td>
-  <a href="http://adv-r.had.co.nz/"><img border="0" alt="W3Schools" src="https://images.tandf.co.uk/common/jackets/amazon/978146658/9781466586963.jpg" height="180" ></a>
-  </td>
-
-
-  </tr>
-  
 
 
 </table>
@@ -234,8 +207,66 @@ The web is a great place to learn about R.
 
 ---
 
+# Other R courses
+
+<br><br>
+
+<table class="tg"  style="cellspacing:0; cellpadding:0; border:none;">
+<tr valign="top">
+  <col width="20%">
+  <col width="20%">
+  <col width="20%">
+  <col width="20%">
+  <col width="20%">
+  <td>
+    <p align="center">
+      <a class="project-link" href="https://therbootcamp.github.io/#courses" align="center">
+      <img src="https://therbootcamp.github.io/img/courses/0.png" height="180px" style="border-radius:50%;border:10px solid #E9ECEF"></img><br>
+      <font style="font-size:20px;weight:700"><br>Intro R<br>(1 day)<br></font>
+      
+    </p>
+  </td>
+  <td>
+    <p align="center">
+      <a class="project-link" href="https://therbootcamp.github.io/#courses" align="center">
+      <img src="https://therbootcamp.github.io/img/courses/1.png" height="180px" style="border-radius:50%;border:10px solid #E9ECEF"></img><br>
+      <font style="font-size:20px;weight:700"><br>Tidyverse<br>(2 day)<br></font>
+
+    </p>
+  </td>
+  <td>
+    <p align="center">
+      <a class="project-link" href="https://therbootcamp.github.io/#courses" align="center">
+      <img src="https://therbootcamp.github.io/img/courses/2.png" height="180px" style="border-radius:50%;border:10px solid #E9ECEF"></img><br>
+      <font style="font-size:20px;weight:700"><br>Statistics<br>(2 day)<br></font>
+
+      </a>
+    </p>
+  </td>
+  <td>
+    <p align="center">
+      <a class="project-link" href="https://therbootcamp.github.io/#courses" align="center">
+      <img src="https://therbootcamp.github.io/img/courses/4.png" height="180px" style="border-radius:50%;border:10px solid #E9ECEF"></img><br>
+      <font style="font-size:20px;weight:700"><br>Markdown<br>(1 day)<br></font>
+
+      </a>
+    </p>
+  </td>
+  <td>
+    <p align="center">
+      <a class="project-link" href="https://therbootcamp.github.io/#courses" align="center">
+            <img src="image/5.png" height="180px" style="border-radius:50%;border:10px solid #E9ECEF"></img><br>
+      <font style="font-size:20px;weight:700"><br>Shiny<br>(3 day)<br></font>
+
+      </a>
+    </p>
+  </td>
+  </tr>
+
+---
+
 .pull-left45[
-# Please give me feedback
+# Please give feedback
 <br><br>
 
 <p align = "center">
@@ -247,7 +278,7 @@ The web is a great place to learn about R.
 
 .pull-right45[
 
-<p align="center"><br><br><iframe src="https://docs.google.com/forms/d/e/1FAIpQLSdXM62m7wsFCx5UvwAYSq14hNQLcQOWq7yQx_hWL_21KqCtDA/viewform?embedded=true" width="430" height="550">Wird geladen...</iframe></p>
+<p align="center"><br><br><iframe src="https://docs.google.com/forms/d/e/1FAIpQLSf40NItajgQJoEy-mWYWwMBpOv5Za9U3v4yI_AdyqLqeQU5sw/viewform?embedded=true" width="460" height="540">Wird geladen...</iframe></p>
 
 ]
 
