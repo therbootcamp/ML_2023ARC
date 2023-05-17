@@ -213,15 +213,16 @@ The web is a great place to learn about R.
 
 <table class="tg"  style="cellspacing:0; cellpadding:0; border:none;">
 <tr valign="top">
-  <col width="20%">
-  <col width="20%">
-  <col width="20%">
-  <col width="20%">
-  <col width="20%">
+  <col width="16%">
+  <col width="16%">
+  <col width="16%">
+  <col width="16%">
+  <col width="16%">
+  <col width="16%">
   <td>
     <p align="center">
       <a class="project-link" href="https://therbootcamp.github.io/#courses" align="center">
-      <img src="https://therbootcamp.github.io/img/courses/0.png" height="180px" style="border-radius:50%;border:10px solid #E9ECEF"></img><br>
+      <img src="https://therbootcamp.github.io/img/courses/0.png" height="150px" style="border-radius:50%;border:10px solid #E9ECEF"></img><br>
       <font style="font-size:20px;weight:700"><br>Intro R<br>(1 day)<br></font>
       
     </p>
@@ -229,16 +230,24 @@ The web is a great place to learn about R.
   <td>
     <p align="center">
       <a class="project-link" href="https://therbootcamp.github.io/#courses" align="center">
-      <img src="https://therbootcamp.github.io/img/courses/1.png" height="180px" style="border-radius:50%;border:10px solid #E9ECEF"></img><br>
-      <font style="font-size:20px;weight:700"><br>Tidyverse<br>(2 day)<br></font>
+      <img src="https://therbootcamp.github.io/img/courses/1.png" height="150px" style="border-radius:50%;border:10px solid #E9ECEF"></img><br>
+      <font style="font-size:20px;weight:700"><br>Tidyverse<br>(2 days)<br></font>
 
     </p>
   </td>
   <td>
     <p align="center">
       <a class="project-link" href="https://therbootcamp.github.io/#courses" align="center">
-      <img src="https://therbootcamp.github.io/img/courses/2.png" height="180px" style="border-radius:50%;border:10px solid #E9ECEF"></img><br>
-      <font style="font-size:20px;weight:700"><br>Statistics<br>(2 day)<br></font>
+      <img src="image/7.png" height="150px" style="border-radius:50%;border:10px solid #E9ECEF"></img><br>
+      <font style="font-size:20px;weight:700"><br>Data Viz<br>(3-5 days)<br></font>
+
+    </p>
+  </td>
+  <td>
+    <p align="center">
+      <a class="project-link" href="https://therbootcamp.github.io/#courses" align="center">
+      <img src="https://therbootcamp.github.io/img/courses/2.png" height="150px" style="border-radius:50%;border:10px solid #E9ECEF"></img><br>
+      <font style="font-size:20px;weight:700"><br>Statistics<br>(2 days)<br></font>
 
       </a>
     </p>
@@ -246,7 +255,7 @@ The web is a great place to learn about R.
   <td>
     <p align="center">
       <a class="project-link" href="https://therbootcamp.github.io/#courses" align="center">
-      <img src="https://therbootcamp.github.io/img/courses/4.png" height="180px" style="border-radius:50%;border:10px solid #E9ECEF"></img><br>
+      <img src="https://therbootcamp.github.io/img/courses/4.png" height="150px" style="border-radius:50%;border:10px solid #E9ECEF"></img><br>
       <font style="font-size:20px;weight:700"><br>Markdown<br>(1 day)<br></font>
 
       </a>
@@ -255,8 +264,8 @@ The web is a great place to learn about R.
   <td>
     <p align="center">
       <a class="project-link" href="https://therbootcamp.github.io/#courses" align="center">
-            <img src="image/5.png" height="180px" style="border-radius:50%;border:10px solid #E9ECEF"></img><br>
-      <font style="font-size:20px;weight:700"><br>Shiny<br>(3 day)<br></font>
+            <img src="image/5.png" height="150px" style="border-radius:50%;border:10px solid #E9ECEF"></img><br>
+      <font style="font-size:20px;weight:700"><br>Shiny<br>(3 days)<br></font>
 
       </a>
     </p>
